@@ -49,6 +49,31 @@ run:
 	./$(TARGET)
 
 #==========================
+#|       ANALYZERS        |
+#==========================
+asan: $(OBJS)
+	@echo "...Running Address Santizer..."
+	@$(CC) -o $@ $^ $(CFLAGS) -fsanitize=address
+	@./$@
+	@rm $@
+
+ubsan: $(OBJS)
+	@echo "...Running Undefined Behavior Santizer..."
+	@$(CC) -o $@ $^ $(CFLAGS) -fsanitize=undefined
+	@./$@
+	@rm $@
+
+cppcheck-src:
+	@echo "...Running CPP Check in src..."
+	@cppcheck src
+
+cppcheck-test:
+	@echo "...Running CPP Check in test..."
+	@cppcheck --suppress=preprocessorErrorDirective --suppress=toomanyconfigs test
+
+cppcheck: cppcheck-src cppcheck-test
+
+#==========================
 #|       UNIT TESTS       |
 #==========================
 
