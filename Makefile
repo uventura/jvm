@@ -34,7 +34,8 @@ all: $(TARGET)
 #==========================
 $(TARGET): $(OBJS)
 	@echo "...Building JVM project..."
-	@$(CC) -o $@ $^ $(CFLAGS) -O3
+	@mkdir -p bin
+	@$(CC) -o bin/$@ $^ $(CFLAGS) -O3
 	@echo "...Successfully Compiled..."
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -45,7 +46,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 #|        RUN JVM         |
 #==========================
 run:
-	./$(TARGET)
+	./bin/$(TARGET)
 
 #==========================
 #|       ANALYZERS        |
