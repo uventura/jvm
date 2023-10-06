@@ -54,7 +54,9 @@ run:
 #|      CODING STYLE      |
 #==========================
 format:
-	find . -type f \( -name "*.c" -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -exec clang-format -i {} \;
+	@echo "> Applying Format"
+	@find . -type f \( -name "*.c" -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -exec clang-format -i {} \;
+	@echo "> Done"
 
 #==========================
 #|       ANALYZERS        |
