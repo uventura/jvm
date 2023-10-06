@@ -2,6 +2,7 @@
 #|       VARIABLES        |
 #==========================
 TARGET=jvm
+BIN_DIR=bin
 
 CC=gcc
 
@@ -34,8 +35,8 @@ all: $(TARGET)
 #==========================
 $(TARGET): $(OBJS)
 	@echo "...Building JVM project..."
-	@mkdir -p bin
-	@$(CC) -o bin/$@ $^ $(CFLAGS) -O3
+	@mkdir -p $(BIN_DIR)
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -O3
 	@echo "...Successfully Compiled..."
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -46,24 +47,23 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 #|        RUN JVM         |
 #==========================
 run:
-	./bin/$(TARGET)
+	./$(BIN_DIR)/$(TARGET)
 
 #==========================
 #|       ANALYZERS        |
 #==========================
 asan: $(OBJS)
 	@echo "...Running Address Santizer..."
-	@$(CC) -o bin/$@ $^ $(CFLAGS) -fsanitize=address
-	@mkdir -p bin
-	@./bin/$@
-	@rm bin/$@
+	@mkdir -p $(BIN_DIR)
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=address
+	@./$(BIN_DIR)/$@
+	@rm $(BIN_DIR)/$@
 
 ubsan: $(OBJS)
 	@echo "...Running Undefined Behavior Santizer..."
-	@$(CC) -o $@ $^ $(CFLAGS) -fsanitize=undefined
-	@mkdir -p bin
-	@./bin/$@
-	@rm bin/$@
+	@mkdir -p $(BIN_DIR)
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=undefined
+	@./$(BIN_DIR)/$@
 
 cppcheck-src:
 	@echo "...Running CPP Check in src..."
@@ -83,10 +83,10 @@ test_target: $(TEST_SRCS) $(LIB_SRCS)
 	@echo "------------------------"
 	@echo "< Testing JVM Project  >"
 	@echo "------------------------"
-	@$(CC) -o bin/$@ $^ $(CFLAGS) -Isrc
-	@mkdir -p bin
-	@./bin/$@
-	@rm bin/$@
+	@mkdir -p $(BIN_DIR)
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -Isrc
+	@./$(BIN_DIR)/$@
+	@rm $(BIN_DIR)/$@
 
 test: test_target
 
@@ -94,6 +94,6 @@ test: test_target
 #      CLEAN PROJECT      |
 #==========================
 clean:
-	@rm -rf $(TARGET) $(OBJS)
+	@rm -rf $(TARGET) $(OBJS) $($(BIN_DIR)_DIR)
 mrproper: clean
-	@rm -rf $(EXEC)
+	@rm -rf $(EXEC) $($(BIN_DIR)_DIR)
