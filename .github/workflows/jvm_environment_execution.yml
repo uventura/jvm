@@ -1,5 +1,4 @@
 name: JVM Environment Execution
-run-name: ${{ github.actor }} is beeing tested.
 on: [push]
 jobs:
   Build-Run-JVM-Machine:
@@ -22,12 +21,10 @@ jobs:
 
       - name: Compiling JVM project
         run: |
-          cd ${{ github.workspace }}
           make
 
       - name: Testing JVM Project
         run: |
-          cd ${{ github.workspace }}
           make test
 
       - name: Set up CPP Check
@@ -41,5 +38,4 @@ jobs:
 
       - name: Running CPP Check
         run: |
-          cd ${{ github.workspace }}
           make cppcheck
