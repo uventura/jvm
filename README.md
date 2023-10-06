@@ -19,7 +19,8 @@ Implementation of Java Virtual Machine using C language.
 
 ## Requirements
 In a Linux environment you will need:
-    * Clang         (e.g.: sudo apt install clang)
-    * LLVM          (e.g.: sudo apt install llvm)
-    * CPPCheck      (e.g.: sudo apt install cppcheck)
-    * GCC >= 9.0    (e.g.: sudo apt install build-essential)
+* Clang         (e.g.: sudo apt install clang)
+* LLVM          (e.g.: sudo apt install llvm)
+* CPPCheck      (e.g.: sudo apt install cppcheck)
+* GCC >= 9.0    (e.g.: sudo apt install build-essential)
+* Clang-Format  (e.g.: sudo apt install clang-format)
