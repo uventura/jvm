@@ -35,10 +35,10 @@ all: $(TARGET)
 #        BUILDING         |
 #==========================
 $(TARGET): $(OBJS)
-	@echo "...Building JVM project..."
+	@echo "> Building JVM project"
 	@mkdir -p $(BIN_DIR)
 	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -O3
-	@echo "...Successfully Compiled..."
+	@echo "> Successfully Compiled"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -62,28 +62,30 @@ format:
 #|       ANALYZERS        |
 #==========================
 analyze:$(OBJS)
-	@echo "...Running Clang Analyzer..."
+	@echo "> Running Clang Analyzer"
 	@$(CLANG) --analyze -o $(BIN_DIR)/$@ $^ $(CFLAGS)
 
-asan: $(OBJS)
-	@echo "...Running Address Santizer..."
+asan: $(SRCS)
+	@echo "> Running Address Santizer"
 	@mkdir -p $(BIN_DIR)
-	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=address
+	@$(CC) -fsanitize=address -g -o $(BIN_DIR)/$@ $^ $(CFLAGS)
+	@export ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer
+	@export ASAN_OPTIONS=detect_leaks=1
 	@./$(BIN_DIR)/$@
-	@rm $(BIN_DIR)/$@
+	@rm ./$(BIN_DIR)/$@
 
 ubsan: $(OBJS)
-	@echo "...Running Undefined Behavior Santizer..."
+	@echo "> Running Undefined Behavior Santizer"
 	@mkdir -p $(BIN_DIR)
 	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=undefined
 	@./$(BIN_DIR)/$@
 
 cppcheck-src:
-	@echo "...Running CPP Check in src..."
+	@echo "> Running CPP Check in src"
 	@cppcheck src
 
 cppcheck-test:
-	@echo "...Running CPP Check in test..."
+	@echo "> Running CPP Check in test"
 	@cppcheck --suppress=preprocessorErrorDirective --suppress=toomanyconfigs test
 
 cppcheck: cppcheck-src cppcheck-test
@@ -107,6 +109,4 @@ test: test_target
 #      CLEAN PROJECT      |
 #==========================
 clean:
-	@rm -rf $(TARGET) $(OBJS) $($(BIN_DIR)_DIR)
-mrproper: clean
-	@rm -rf $(EXEC) $($(BIN_DIR)_DIR)
+	@rm -rf $(TARGET) $(OBJS) $(BIN_DIR) $(TEST_OBJS)
