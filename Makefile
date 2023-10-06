@@ -9,7 +9,6 @@ CFLAGS=-W
 CFLAGS+=-Wall
 CFLAGS+=-ansi
 CFLAGS+=-pedantic
-CFLAGS+=-O3
 CFLAGS+=-std=c99
 
 SRC_DIR=src
@@ -35,7 +34,7 @@ all: $(TARGET)
 #==========================
 $(TARGET): $(OBJS)
 	@echo "...Building JVM project..."
-	$(CC) -o $@ $^ $(CFLAGS)
+	@$(CC) -o $@ $^ $(CFLAGS) -O3
 	@echo "...Successfully Compiled..."
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
