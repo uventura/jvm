@@ -5,6 +5,7 @@ TARGET=jvm
 BIN_DIR=bin
 
 CC=gcc
+CLANG=clang
 
 CFLAGS=-W
 CFLAGS+=-Wall
@@ -52,6 +53,10 @@ run:
 #==========================
 #|       ANALYZERS        |
 #==========================
+analyze:$(OBJS)
+	@echo "...Running Clang Analyzer..."
+	@$(CLANG) --analyze -o $(BIN_DIR)/$@ $^ $(CFLAGS)
+
 asan: $(OBJS)
 	@echo "...Running Address Santizer..."
 	@mkdir -p $(BIN_DIR)
