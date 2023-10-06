@@ -4,6 +4,9 @@ jobs:
   Build-Run-JVM-Machine:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
       - name: Set up GCC
         uses: egor-tensin/setup-gcc@v1
         with:
@@ -20,8 +23,7 @@ jobs:
         run: sudo apt install llvm
 
       - name: Compiling JVM project
-        run: |
-          make
+        run: make
 
       - name: Testing JVM Project
         run: |
