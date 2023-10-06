@@ -79,6 +79,7 @@ ubsan: $(OBJS)
 	@mkdir -p $(BIN_DIR)
 	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=undefined
 	@./$(BIN_DIR)/$@
+	@rm ./$(BIN_DIR)/$@
 
 cppcheck-src:
 	@echo "> Running CPP Check in src"
@@ -89,6 +90,8 @@ cppcheck-test:
 	@cppcheck --suppress=preprocessorErrorDirective --suppress=toomanyconfigs test
 
 cppcheck: cppcheck-src cppcheck-test
+
+check: cppcheck asan ubsan
 
 #==========================
 #|       UNIT TESTS       |
