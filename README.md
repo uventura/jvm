@@ -9,4 +9,5 @@ Implementation of Java Virtual Machine using C language.
     make ubsa       => Run Undefined Behavior Sanitizer
     make asan       => Run Address Sanitizer
     make cppcheck   => Run CPP Check
+    make format     => Run Code Style format
 ```

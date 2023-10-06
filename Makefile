@@ -51,6 +51,12 @@ run:
 	./$(BIN_DIR)/$(TARGET)
 
 #==========================
+#|      CODING STYLE      |
+#==========================
+format:
+	find . -type f \( -name "*.c" -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -exec clang-format -i {} \;
+
+#==========================
 #|       ANALYZERS        |
 #==========================
 analyze:$(OBJS)
