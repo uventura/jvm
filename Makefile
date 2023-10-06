@@ -48,7 +48,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 #|        RUN JVM         |
 #==========================
 run:
-	./$(BIN_DIR)/$(TARGET)
+	@./$(BIN_DIR)/$(TARGET)
 
 #==========================
 #|      CODING STYLE      |
