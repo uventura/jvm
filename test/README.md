@@ -41,3 +41,5 @@ int main()
 }
 ```
 4.Run test with `make test`
+
+More about doing tests you can find here http://www.throwtheswitch.org/unity
