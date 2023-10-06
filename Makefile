@@ -53,15 +53,17 @@ run:
 #==========================
 asan: $(OBJS)
 	@echo "...Running Address Santizer..."
-	@$(CC) -o $@ $^ $(CFLAGS) -fsanitize=address
-	@./$@
-	@rm $@
+	@$(CC) -o bin/$@ $^ $(CFLAGS) -fsanitize=address
+	@mkdir -p bin
+	@./bin/$@
+	@rm bin/$@
 
 ubsan: $(OBJS)
 	@echo "...Running Undefined Behavior Santizer..."
 	@$(CC) -o $@ $^ $(CFLAGS) -fsanitize=undefined
-	@./$@
-	@rm $@
+	@mkdir -p bin
+	@./bin/$@
+	@rm bin/$@
 
 cppcheck-src:
 	@echo "...Running CPP Check in src..."
@@ -81,9 +83,10 @@ test_target: $(TEST_SRCS) $(LIB_SRCS)
 	@echo "------------------------"
 	@echo "< Testing JVM Project  >"
 	@echo "------------------------"
-	@$(CC) -o $@ $^ $(CFLAGS) -Isrc
-	@./$@
-	@rm $@
+	@$(CC) -o bin/$@ $^ $(CFLAGS) -Isrc
+	@mkdir -p bin
+	@./bin/$@
+	@rm bin/$@
 
 test: test_target
 
