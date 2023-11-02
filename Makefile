@@ -37,12 +37,12 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	@echo "> Building JVM project"
 	@mkdir -p $(BIN_DIR)
-	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -O3
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -O3 -Isrc
 	@echo "> Successfully Compiled"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $< -Isrc
 
 #==========================
 #|        RUN JVM         |
