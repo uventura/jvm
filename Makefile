@@ -55,7 +55,8 @@ run:
 #==========================
 format:
 	@echo "> Applying Format"
-	@find . -type f \( -name "*.c" -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -exec clang-format -i {} \;
+	@find . -type f \( -name "*.c" \) -exec clang-format -i {} \;
+	@find . -type f \( -name "*.h" -o -name "*.hpp" \) -exec clang-format -i {} \;
 	@echo "> Done"
 
 #==========================

@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "unity/unity.h"
+#include <stdio.h>
 
 #include "test_read_bytes.h"
 

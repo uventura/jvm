@@ -4,16 +4,16 @@
 
 int main()
 {
-    FILE* file;
+    FILE *file;
     file = fopen("test/data/examples/HelloWorld.class", "rb");
 
-    if(!file)
+    if (!file)
     {
         printf("Couldn't open file...\n");
     }
 
     u4 cafe_babe = u4_read(file);
-    if(cafe_babe == 0xCAFEBABE)
+    if (cafe_babe == 0xCAFEBABE)
     {
         printf("Is Cafe Baby!!\n");
     }
