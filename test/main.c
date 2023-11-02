@@ -1,18 +1,21 @@
+#include <stdio.h>
 #include "unity/unity.h"
 
-#include "dummy_test.h"
+#include "test_read_bytes.h"
 
 void setUp(void)
 {
-  /* This is run before EACH TEST */
 }
 
-void tearDown(void){
+void tearDown(void)
+{
 }
 
 int main()
 {
     UNITY_BEGIN();
-    RUN_TEST(testing_unity_behavior);
+    RUN_TEST(testing_u2_read_cafe);
+    RUN_TEST(testing_u2_read_babe);
+    RUN_TEST(testing_u4_read_cafe_babe);
     return UNITY_END();
 }
