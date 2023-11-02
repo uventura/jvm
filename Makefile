@@ -68,7 +68,7 @@ analyze:$(OBJS)
 asan: $(SRCS)
 	@echo "> Running Address Santizer"
 	@mkdir -p $(BIN_DIR)
-	@$(CC) -fsanitize=address -g -o $(BIN_DIR)/$@ $^ $(CFLAGS)
+	@$(CC) -fsanitize=address -g -o $(BIN_DIR)/$@ $^ $(CFLAGS) -Isrc
 	@export ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer
 	@export ASAN_OPTIONS=detect_leaks=1
 	@./$(BIN_DIR)/$@
@@ -77,7 +77,7 @@ asan: $(SRCS)
 ubsan: $(OBJS)
 	@echo "> Running Undefined Behavior Santizer"
 	@mkdir -p $(BIN_DIR)
-	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=undefined
+	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -fsanitize=undefined -Isrc
 	@./$(BIN_DIR)/$@
 	@rm ./$(BIN_DIR)/$@
 
