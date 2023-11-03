@@ -15,8 +15,8 @@ typedef struct
     u2 this_class;
     u2 super_class;
     u2 interfaces_count;
-    u2 interfaces;
-    u2 *fields_count;
+    u2 *interfaces;
+    u2 fields_count;
     // field_info *fields;
     u2 methods_count;
     // method_info *methods;

@@ -1,8 +1,8 @@
 #include "unity/unity.h"
 #include <stdio.h>
 
-#include "test_read_bytes.h"
 #include "test_bootstrap.h"
+#include "test_read_bytes.h"
 
 void setUp(void)
 {
