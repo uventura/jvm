@@ -1,5 +1,10 @@
 #include "lib/base/file/read_bytes.h"
 
+u1 u1_read(FILE *file)
+{
+    return getc(file);
+}
+
 u2 u2_read(FILE *file)
 {
     u2 value = getc(file);
