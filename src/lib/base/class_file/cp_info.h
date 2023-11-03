@@ -82,7 +82,7 @@ typedef struct
         CONSTANT_Double_info Double;
         CONSTANT_NameAndType_info NameAndType_info;
         CONSTANT_Utf8_info Utf8;
-    };
+    } info;
 } cp_info;
 
 #endif
