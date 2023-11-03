@@ -1,10 +1,10 @@
+#include "unity/unity.h"
 #include <stdio.h>
 
 #include "lib/class_loader/bootstrap/bootstrap.h"
 
-int main()
+void test_bootrstrap_get_cafe_babe(void)
 {
     ClassFile class_file = load_class_file("data/examples/HelloWorld.class");
-    printf("%d %d\n", class_file.minor_version, class_file.major_version);
-    printf("%d\n", class_file.constant_pool_count);
+    TEST_ASSERT_EQUAL(class_file.magic, 0XCAFEBABE);
 }
