@@ -17,7 +17,7 @@ typedef struct
     u2 interfaces_count;
     u2 *interfaces;
     u2 fields_count;
-    // field_info *fields;
+    field_info *fields;
     u2 methods_count;
     // method_info *methods;
     u2 attributes_count;
