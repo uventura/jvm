@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Class File
 ClassFile load_class_file(const char *filepath)
 {
     FILE *class_file_element = fopen(filepath, "rb");
@@ -48,20 +49,12 @@ ClassFile load_class_file(const char *filepath)
 
 void free_class_file(ClassFile class_file)
 {
-    for (int i = 0; i < class_file.constant_pool_count; ++i)
-    {
-        const char *tag = get_info_name(class_file.constant_pool[i].tag);
-        if (strcmp(tag, "Utf8") == 0)
-        {
-            free(class_file.constant_pool[i].info.Utf8.bytes);
-        }
-    }
-
-    free(class_file.interfaces);
-
-    free(class_file.constant_pool);
+    free_constant_pool(class_file.constant_pool_count, class_file.constant_pool);
+    free_interfaces(class_file.interfaces);
+    free_fields(class_file.fields_count, class_file.fields);
 }
 
+// Constant Pool
 cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
 {
     cp_info *constant_pool = (cp_info *)malloc(sizeof(cp_info) * constant_pool_count);
@@ -120,6 +113,20 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
     return constant_pool;
 }
 
+void free_constant_pool(u2 constant_pool_count, cp_info* constant_pool)
+{
+    for (int i = 0; i < constant_pool_count; ++i)
+    {
+        const char *tag = get_info_name(constant_pool[i].tag);
+        if (strcmp(tag, "Utf8") == 0)
+        {
+            free(constant_pool[i].info.Utf8.bytes);
+        }
+    }
+    free(constant_pool);
+}
+
+// Interfaces
 u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
     u2 *interfaces = (u2 *)malloc(sizeof(u2) * interfaces_count);
@@ -132,6 +139,12 @@ u2 *load_interfaces(FILE *file, u2 interfaces_count)
     return interfaces;
 }
 
+void free_interfaces(u2* interfaces)
+{
+    free(interfaces);
+}
+
+// Fields
 field_info *load_field_info(FILE *file, u2 fields_count)
 {
     field_info *fields = (field_info *)malloc(sizeof(field_info) * fields_count);
@@ -161,4 +174,19 @@ field_info *load_field_info(FILE *file, u2 fields_count)
     }
 
     return fields;
+}
+
+void free_fields(u2 field_count, field_info *fields)
+{
+    field_info *field;
+    for(field = fields; field < fields + field_count; field++)
+    {
+        attribute_info *attribute;
+        for (attribute = field->attributes; attribute < field->attributes + field->attributes_count; attribute++)
+        {
+            free(attribute->info);
+        }
+        free(attribute);
+    }
+    free(fields);
 }
