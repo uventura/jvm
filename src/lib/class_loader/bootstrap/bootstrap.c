@@ -174,13 +174,8 @@ void free_fields(u2 field_count, field_info *fields)
     field_info *field;
     for (field = fields; field < fields + field_count; field++)
     {
-        // This function is creating leaking
-        // free_attributes(field->attributes_count, field->attributes);
-        attribute_info *attribute;
-        for (attribute = field->attributes; attribute < field->attributes + field->attributes_count; attribute++)
-        {
-            free(attribute->info);
-        }
+        free_attributes(field->attributes_count, field->attributes);
+        // TODO: Why do we need this second free?
         free(field->attributes);
     }
     free(fields);
@@ -208,12 +203,7 @@ void free_methods(u2 methods_count, method_info *methods)
     method_info *method;
     for (method = methods; method < methods + methods_count; method++)
     {
-        attribute_info *attribute;
-        for (attribute = method->attributes; attribute < method->attributes + method->attributes_count; attribute++)
-        {
-            free(attribute->info);
-        }
-        free(method->attributes);
+        free_attributes(method->attributes_count, method->attributes);
     }
     free(methods);
 }
