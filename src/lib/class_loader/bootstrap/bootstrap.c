@@ -3,6 +3,7 @@
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/class_file/field_info.h"
+#include "lib/base/class_file/method_info.h"
 #include "lib/base/file/read_bytes.h"
 
 #include <malloc.h>
@@ -41,6 +42,8 @@ ClassFile load_class_file(const char *filepath)
     class_file.interfaces = load_interfaces(class_file_element, class_file.interfaces_count);
     class_file.fields_count = u2_read(class_file_element);
     class_file.fields = load_field_info(class_file_element, class_file.fields_count);
+    class_file.methods_count = u2_read(class_file_element);
+    class_file.methods = load_method_info(class_file_element, class_file.methods_count);
 
     fclose(class_file_element);
 
@@ -52,6 +55,7 @@ void free_class_file(ClassFile class_file)
     free_constant_pool(class_file.constant_pool_count, class_file.constant_pool);
     free_interfaces(class_file.interfaces);
     free_fields(class_file.fields_count, class_file.fields);
+    free_methods(class_file.methods_count, class_file.methods);
 }
 
 // Constant Pool
@@ -113,7 +117,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
     return constant_pool;
 }
 
-void free_constant_pool(u2 constant_pool_count, cp_info* constant_pool)
+void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
 {
     for (int i = 0; i < constant_pool_count; ++i)
     {
@@ -139,7 +143,7 @@ u2 *load_interfaces(FILE *file, u2 interfaces_count)
     return interfaces;
 }
 
-void free_interfaces(u2* interfaces)
+void free_interfaces(u2 *interfaces)
 {
     free(interfaces);
 }
@@ -155,22 +159,7 @@ field_info *load_field_info(FILE *file, u2 fields_count)
         field->name_index = u2_read(file);
         field->descriptor_index = u2_read(file);
         field->attributes_count = u2_read(file);
-
-        attribute_info *attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
-        attribute_info *attribute;
-        for (attribute = attributes; attribute < attributes + field->attributes_count; attribute++)
-        {
-            attribute->attribute_name_index = u2_read(file);
-            attribute->attribute_length = u4_read(file);
-            attribute->info = (u1 *)malloc(sizeof(u1) * attribute->attribute_length);
-
-            u1 *info;
-            for (info = attribute->info; info < attribute->info + attribute->attribute_length; info++)
-            {
-                *info = u1_read(file);
-            }
-        }
-        field->attributes = attributes;
+        field->attributes = load_attribute_info(file, field->attributes_count);
     }
 
     return fields;
@@ -179,14 +168,67 @@ field_info *load_field_info(FILE *file, u2 fields_count)
 void free_fields(u2 field_count, field_info *fields)
 {
     field_info *field;
-    for(field = fields; field < fields + field_count; field++)
+    for (field = fields; field < fields + field_count; field++)
     {
-        attribute_info *attribute;
-        for (attribute = field->attributes; attribute < field->attributes + field->attributes_count; attribute++)
-        {
-            free(attribute->info);
-        }
-        free(attribute);
+        free_attributes(field->attributes_count, field->attributes);
     }
     free(fields);
+}
+
+// Methods
+method_info *load_method_info(FILE *file, u2 method_count)
+{
+    method_info *methods = (method_info *)malloc(sizeof(method_info) * method_count);
+    method_info *method;
+    for (method = methods; method < methods + method_count; method++)
+    {
+        method->access_flags = u2_read(file);
+        method->name_index = u2_read(file);
+        method->descriptor_index = u2_read(file);
+        method->attributes_count = u2_read(file);
+        method->attributes = load_attribute_info(file, method->attributes_count);
+    }
+
+    return methods;
+}
+
+void free_methods(u2 methods_count, method_info *methods)
+{
+    method_info *method;
+    for (method = methods; method < methods + methods_count; method++)
+    {
+        free_attributes(method->attributes_count, method->attributes);
+    }
+    free(methods);
+}
+
+// Attributes
+attribute_info *load_attribute_info(FILE *file, u2 attributes_count)
+{
+    attribute_info *attributes = (attribute_info *)malloc(sizeof(attribute_info) * attributes_count);
+    attribute_info *attribute;
+    for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
+    {
+        attribute->attribute_name_index = u2_read(file);
+        attribute->attribute_length = u4_read(file);
+        attribute->info = (u1 *)malloc(sizeof(u1) * attribute->attribute_length);
+
+        u1 *info;
+        for (info = attribute->info; info < attribute->info + attribute->attribute_length; info++)
+        {
+            *info = u1_read(file);
+        }
+    }
+
+    return attributes;
+}
+
+void free_attributes(u2 attributes_count, attribute_info *attributes)
+{
+    attribute_info *attribute;
+    for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
+    {
+        free(attribute->info);
+    }
+    free(attributes);
 }

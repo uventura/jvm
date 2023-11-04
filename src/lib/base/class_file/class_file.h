@@ -3,6 +3,7 @@
 
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/class_file/field_info.h"
+#include "lib/base/class_file/method_info.h"
 #include "lib/base/defines.h"
 
 typedef struct
@@ -20,7 +21,7 @@ typedef struct
     u2 fields_count;
     field_info *fields;
     u2 methods_count;
-    // method_info *methods;
+    method_info *methods;
     u2 attributes_count;
     // attribute_info *attributes;
 } ClassFile;
