@@ -103,7 +103,9 @@ test_target: $(TEST_SRCS) $(LIB_SRCS)
 	@echo "< Testing JVM Project  >"
 	@echo "------------------------"
 	@mkdir -p $(BIN_DIR)
-	@$(CC) -o $(BIN_DIR)/$@ $^ $(CFLAGS) -Isrc
+	@$(CC) -fsanitize=address -g -o $(BIN_DIR)/$@ $^ $(CFLAGS) -Isrc
+	@export ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer
+	@export ASAN_OPTIONS=detect_leaks=1
 	@./$(BIN_DIR)/$@
 	@rm $(BIN_DIR)/$@
 
