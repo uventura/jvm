@@ -14,7 +14,7 @@
 #define ACC_SYNTHETIC 0x1000
 #define ACC_ENUM 0x4000
 
-const char *get_access_flag_name(int id);
+const char *get_access_flag_name(u2 id);
 
 // Constant Pool Tags
 #define CONSTANT_Class 7
@@ -28,6 +28,8 @@ const char *get_access_flag_name(int id);
 #define CONSTANT_Double 6
 #define CONSTANT_NameAndType 12
 #define CONSTANT_Utf8 1
+
+const char *get_cp_info_name(u2 id);
 
 // Attributes Info
 typedef struct

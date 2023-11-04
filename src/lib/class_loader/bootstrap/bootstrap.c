@@ -117,7 +117,7 @@ void free_constant_pool(u2 constant_pool_count, cp_info* constant_pool)
 {
     for (int i = 0; i < constant_pool_count; ++i)
     {
-        const char *tag = get_info_name(constant_pool[i].tag);
+        const char *tag = get_cp_info_name(constant_pool[i].tag);
         if (strcmp(tag, "Utf8") == 0)
         {
             free(constant_pool[i].info.Utf8.bytes);
