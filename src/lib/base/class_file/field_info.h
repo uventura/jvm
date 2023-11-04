@@ -1,6 +1,7 @@
 #ifndef JVM_FIELD_INFO
 #define JVM_FIELD_INFO
 
+#include "lib/base/class_file/attribute_info.h"
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/defines.h"
 

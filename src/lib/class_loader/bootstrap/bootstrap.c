@@ -1,4 +1,5 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
+#include "lib/base/class_file/attribute_info.h"
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
@@ -44,6 +45,8 @@ ClassFile load_class_file(const char *filepath)
     class_file.fields = load_field_info(class_file_element, class_file.fields_count);
     class_file.methods_count = u2_read(class_file_element);
     class_file.methods = load_method_info(class_file_element, class_file.methods_count);
+    class_file.attributes_count = u2_read(class_file_element);
+    class_file.attributes = load_attribute_info(class_file_element, class_file.attributes_count);
 
     fclose(class_file_element);
 
@@ -56,6 +59,7 @@ void free_class_file(ClassFile class_file)
     free_interfaces(class_file.interfaces);
     free_fields(class_file.fields_count, class_file.fields);
     free_methods(class_file.methods_count, class_file.methods);
+    free_attributes(class_file.attributes_count, class_file.attributes);
 }
 
 // Constant Pool
@@ -170,7 +174,14 @@ void free_fields(u2 field_count, field_info *fields)
     field_info *field;
     for (field = fields; field < fields + field_count; field++)
     {
-        free_attributes(field->attributes_count, field->attributes);
+        // This function is creating leaking
+        // free_attributes(field->attributes_count, field->attributes);
+        attribute_info *attribute;
+        for (attribute = field->attributes; attribute < field->attributes + field->attributes_count; attribute++)
+        {
+            free(attribute->info);
+        }
+        free(field->attributes);
     }
     free(fields);
 }
@@ -197,7 +208,12 @@ void free_methods(u2 methods_count, method_info *methods)
     method_info *method;
     for (method = methods; method < methods + methods_count; method++)
     {
-        free_attributes(method->attributes_count, method->attributes);
+        attribute_info *attribute;
+        for (attribute = method->attributes; attribute < method->attributes + method->attributes_count; attribute++)
+        {
+            free(attribute->info);
+        }
+        free(method->attributes);
     }
     free(methods);
 }
@@ -225,6 +241,11 @@ attribute_info *load_attribute_info(FILE *file, u2 attributes_count)
 
 void free_attributes(u2 attributes_count, attribute_info *attributes)
 {
+    if (attributes_count == 0)
+    {
+        return;
+    }
+
     attribute_info *attribute;
     for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
     {

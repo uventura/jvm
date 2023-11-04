@@ -31,12 +31,4 @@ const char *get_access_flag_name(u2 id);
 
 const char *get_cp_info_name(u2 id);
 
-// Attributes Info
-typedef struct
-{
-    u2 attribute_name_index;
-    u4 attribute_length;
-    u1 *info;
-} attribute_info;
-
 #endif

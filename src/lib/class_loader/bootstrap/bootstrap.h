@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "lib/base/class_file/attribute_info.h"
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/class_file/field_info.h"

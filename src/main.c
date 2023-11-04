@@ -23,5 +23,7 @@ int main()
         printf("%d\n\n", class_field.methods[i].descriptor_index);
     }
 
+    printf("Attributes: %d\n", class_field.attributes_count);
+
     free_class_file(class_field);
 }
