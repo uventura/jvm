@@ -1,6 +1,8 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
+#include "lib/base/class_file/class_defines.h"
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
+#include "lib/base/class_file/field_info.h"
 #include "lib/base/file/read_bytes.h"
 
 #include <malloc.h>
@@ -35,10 +37,29 @@ ClassFile load_class_file(const char *filepath)
     class_file.this_class = u2_read(class_file_element);
     class_file.super_class = u2_read(class_file_element);
     class_file.interfaces_count = u2_read(class_file_element);
+    class_file.interfaces = load_interfaces(class_file_element, class_file.interfaces_count);
+    class_file.fields_count = u2_read(class_file_element);
+    class_file.fields = load_field_info(class_file_element, class_file.fields_count);
 
     fclose(class_file_element);
 
     return class_file;
+}
+
+void free_class_file(ClassFile class_file)
+{
+    for (int i = 0; i < class_file.constant_pool_count; ++i)
+    {
+        const char *tag = get_info_name(class_file.constant_pool[i].tag);
+        if (strcmp(tag, "Utf8") == 0)
+        {
+            free(class_file.constant_pool[i].info.Utf8.bytes);
+        }
+    }
+
+    free(class_file.interfaces);
+
+    free(class_file.constant_pool);
 }
 
 cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
@@ -99,16 +120,43 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
     return constant_pool;
 }
 
-void free_class_file(ClassFile class_file)
+u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
-    for (int i = 0; i < class_file.constant_pool_count; ++i)
+    u2 *interfaces = (u2 *)malloc(sizeof(u2) * interfaces_count);
+    u2 *interface;
+    for (interface = interfaces; interface < interfaces + interfaces_count; interface++)
     {
-        const char *tag = get_info_name(class_file.constant_pool[i].tag);
-        if (strcmp(tag, "Utf8") == 0)
-        {
-            free(class_file.constant_pool[i].info.Utf8.bytes);
-        }
+        interface = u2_read(file);
     }
 
-    free(class_file.constant_pool);
+    return interfaces;
+}
+
+field_info *load_field_info(FILE *file, u2 fields_count)
+{
+    field_info *fields = (field_info *)malloc(sizeof(field_info) * fields_count);
+    field_info *field;
+    for (field = fields; field < fields + fields_count; field++)
+    {
+        field->access_flags = u2_read(file);
+        field->name_index = u2_read(file);
+        field->descriptor_index = u2_read(file);
+        field->attributes_count = u2_read(file);
+
+        attribute_info *attributes = (attribute_info *)malloc(sizeof(attribute_info) * field->attributes_count);
+        attribute_info *attribute;
+        for (attribute = attributes; attribute < attributes + field->attributes_count; attribute++)
+        {
+            attribute->attribute_name_index = u2_read(file);
+            attribute->attribute_length = u4_read(file);
+            attribute->info = (u1 *)malloc(sizeof(u1) * attribute->attribute_length);
+
+            u1 *info;
+            for (info = attribute->info; info < attribute->info + attribute->attribute_length; info++)
+            {
+                info = u1_read(file);
+            }
+        }
+        field->attributes = attributes;
+    }
 }
