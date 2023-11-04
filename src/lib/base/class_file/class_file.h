@@ -2,6 +2,7 @@
 #define JVM_CLASS_FILE
 
 #include "lib/base/class_file/cp_info.h"
+#include "lib/base/class_file/field_info.h"
 #include "lib/base/defines.h"
 
 typedef struct
