@@ -126,7 +126,7 @@ u2 *load_interfaces(FILE *file, u2 interfaces_count)
     u2 *interface;
     for (interface = interfaces; interface < interfaces + interfaces_count; interface++)
     {
-        interface = u2_read(file);
+        *interface = u2_read(file);
     }
 
     return interfaces;
@@ -154,9 +154,11 @@ field_info *load_field_info(FILE *file, u2 fields_count)
             u1 *info;
             for (info = attribute->info; info < attribute->info + attribute->attribute_length; info++)
             {
-                info = u1_read(file);
+                *info = u1_read(file);
             }
         }
         field->attributes = attributes;
     }
+
+    return fields;
 }
