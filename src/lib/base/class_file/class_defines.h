@@ -1,6 +1,8 @@
 #ifndef JVM_CLASS_DEFINES
 #define JVM_CLASS_DEFINES
 
+#include "lib/base/defines.h"
+
 // Constant Pool Tags
 #define CONSTANT_Class 7
 #define CONSTANT_Fieldref 9
