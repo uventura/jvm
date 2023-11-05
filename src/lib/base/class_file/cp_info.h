@@ -86,6 +86,6 @@ typedef struct
     } info;
 } cp_info;
 
-const char *get_info_name(u2 id);
+void get_utf8_value(u2 index, cp_info *constant_pool, char *buffer);
 
 #endif
