@@ -34,7 +34,6 @@ void jvm_read_class(char *class_file_path)
 {
     ClassFile class_file = load_class_file(class_file_path);
 
-
     // TODO: Change the code below
     printf("Fields Count: %d\n", class_file.fields_count);
     for (int i = 0; i < class_file.fields_count; ++i)
