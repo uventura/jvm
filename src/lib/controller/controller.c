@@ -35,21 +35,7 @@ void jvm_read_class(char *class_file_path)
 {
     ClassFile class_file = load_class_file(class_file_path);
 
-    printf("General Information:\n");
-    printf("   Minor Version: %d\n", class_file.minor_version);
-    printf("   Major Version: %d\n", class_file.major_version);
-    printf("   Constant Pool Count: %d\n", class_file.constant_pool_count);
-    printf("   Access Flags: 0x%x\n", class_file.access_flags);
-
-    // u2 this_class_index = class_file.constant_pool[class_file.this_class - 1].info.Class.name_index;
-    u2 this_class_index = class_file.this_class;
-    printf("   This Class: %d\n", this_class_index);
-
-    printf("   Interfaces Count: %d\n", class_file.interfaces_count);
-    printf("   Fields Count: %d\n", class_file.fields_count);
-    printf("   Methods Count: %d\n", class_file.methods_count);
-    printf("   Attributes Count: %d\n\n", class_file.fields_count);
-
+    jvm_display_general_information(class_file);
     jvm_display_constant_pool(class_file.constant_pool, class_file.constant_pool_count);
 
     free_class_file(class_file);
@@ -59,6 +45,25 @@ void jvm_run_class(char *class_file_path)
 {
     printf("[JVM ERROR] - Not Implemented yet\n");
     printf("Path: %s\n", class_file_path);
+}
+
+void jvm_display_general_information(ClassFile class_file)
+{
+    printf("General Information:\n");
+    printf("   Minor Version: %d\n", class_file.minor_version);
+    printf("   Major Version: %d\n", class_file.major_version);
+    printf("   Constant Pool Count: %d\n", class_file.constant_pool_count);
+    printf("   Access Flags: 0x%x\n", class_file.access_flags);
+
+    u2 this_class_index = class_file.constant_pool[class_file.this_class - 1].info.Class.name_index;
+    char this_class[200];
+    get_utf8_value(this_class_index - 1, class_file.constant_pool, this_class);
+    printf("   This Class: %d (%s)\n", this_class_index, this_class);
+
+    printf("   Interfaces Count: %d\n", class_file.interfaces_count);
+    printf("   Fields Count: %d\n", class_file.fields_count);
+    printf("   Methods Count: %d\n", class_file.methods_count);
+    printf("   Attributes Count: %d\n\n", class_file.fields_count);
 }
 
 void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
@@ -112,7 +117,7 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
             printf("      Length of byte string: %d\n", constant_pool_element->info.Utf8.length);
 
             char string[200];
-            get_utf8_value(index, constant_pool, string);
+            get_utf8_value(index - 1, constant_pool, string);
             printf("      String: %s\n", string);
             break;
         }
