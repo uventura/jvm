@@ -36,8 +36,8 @@ Reference: https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4
 // ConstantValue_attribute
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 constantvalue_index;
 } ConstantValue_attribute;
 
@@ -52,8 +52,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 max_stack;
     u2 max_locals;
     u4 code_length;
@@ -67,16 +67,16 @@ typedef struct
 // SourceFile_attribute
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 sourcefile_index;
 } SourceFile_attribute;
 
 // Exceptions_attribute
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 number_of_exceptions;
     u2 *exception_index_table;
 } Exceptions_attribute;
@@ -90,8 +90,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 line_number_table_length;
     Line_number_table *line_number_table;
 } LineNumberTable_attribute;
@@ -108,8 +108,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 local_variable_table_length;
     Local_variable_table *local_variable_table;
 } LocalVariableTable_attribute;
@@ -125,8 +125,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 number_of_classes;
     Classes *classes;
 } InnerClasses_attribute;
@@ -148,8 +148,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u2 num_bootstrap_methods;
     Bootstrap_methods *bootstrap_methods;
 } BootstrapMethods_attribute;
@@ -163,8 +163,8 @@ typedef struct
 
 typedef struct
 {
-    u2 attribute_name_index;
-    u4 attribute_length;
+    // u2 attribute_name_index;
+    // u4 attribute_length;
     u1 parameters_count;
     Parameters *parameters;
 } MethodParameters_attribute;
