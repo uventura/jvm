@@ -24,7 +24,7 @@ const char *get_access_flag_name(u2 id)
         return "enum";
     }
 
-    return "";
+    return "Undefined";
 }
 
 const char *get_cp_info_name(u2 id)
