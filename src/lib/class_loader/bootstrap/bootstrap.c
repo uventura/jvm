@@ -170,7 +170,7 @@ field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
     return fields;
 }
 
-void free_fields(u2 field_count, field_info *fields,cp_info *constant_pool)
+void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
 {
     field_info *field;
     for (field = fields; field < fields + field_count; field++)
@@ -199,7 +199,7 @@ method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_poo
     return methods;
 }
 
-void free_methods(u2 methods_count, method_info *methods,cp_info *constant_pool)
+void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
 {
     method_info *method;
     for (method = methods; method < methods + methods_count; method++)
@@ -356,7 +356,7 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
             free_attributes(attribute->info.code.attributes_count, attribute->info.code.attributes, constant_pool);
             free(attribute->info.code.exception_table);
         }
-        else if(!strcmp(type, "Exceptions"))
+        else if (!strcmp(type, "Exceptions"))
         {
             free(attribute->info.exceptions.exception_index_table);
         }
