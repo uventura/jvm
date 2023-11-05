@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "lib/base/file/read_bytes.h"
 
 u1 u1_read(FILE *file)
@@ -14,6 +16,8 @@ u2 u2_read(FILE *file)
 
 u4 u4_read(FILE *file)
 {
-    u4 word = (u2_read(file) << 16) | u2_read(file);
+    u4 half1 = u2_read(file);
+    u4 half2 = u2_read(file);
+    u4 word = (half1 << 16) | half2;
     return word;
 }
