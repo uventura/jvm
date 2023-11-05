@@ -40,7 +40,7 @@ void jvm_read_class(char *class_file_path)
     {
         printf("%d\n", class_file.fields[i].access_flags);
         printf("%d\n", class_file.fields[i].name_index);
-        printf("%d\n", class_file.fields[i].descriptor_index);
+        printf("%d\n\n", class_file.fields[i].descriptor_index);
     }
 
     printf("\nMethod Count: %d\n", class_file.methods_count);

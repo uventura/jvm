@@ -4,22 +4,17 @@
 #include "lib/base/defines.h"
 
 // Attribute Info
-typedef struct
-{
-    u2 attribute_name_index;
-    u4 attribute_length;
-    u1 *info;
-} attribute_info;
+typedef struct Attribute_info attribute_info;
 
 /*
 Reference: https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7
     - ConstantValue
     - Code
     - Exceptions
-    - SourceFile
+    - InnerClasses
     - LineNumberTable
     - LocalVariableTable
-    - InnerClasses
+    - SourceFile
     Synthetic
     Deprecated
     EnclosingMethod
@@ -31,7 +26,7 @@ Reference: https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4
     RuntimeVisibleParameterAnnotations
     RuntimeInvisibleParameterAnnotations
     AnnotationDefault
-    - StackMapTable
+    StackMapTable
     - BootstrapMethods
     RuntimeVisibleTypeAnnotations
     RuntimeInvisibleTypeAnnotations
@@ -64,7 +59,7 @@ typedef struct
     u4 code_length;
     u1 *code;
     u2 exception_table_length;
-    Exception_table exception_table;
+    Exception_table *exception_table;
     u2 attributes_count;
     attribute_info *attributes;
 } Code_attribute;
@@ -136,130 +131,12 @@ typedef struct
     Classes *classes;
 } InnerClasses_attribute;
 
-// StackMapTable
-typedef struct
-{
-    u1 tag;
-} Top_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 1 */
-} Integer_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 2 */
-} Float_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 5 */
-} Null_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 6 */
-} UninitializedThis_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 7 */
-    u2 cpool_index;
-} Object_variable_info;
-
-typedef struct Uninitialized_variable_info
-{
-    u1 tag; /* 8 */
-    u2 offset;
-} Uninitialized_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 4 */
-} Long_variable_info;
-
-typedef struct
-{
-    u1 tag; /* 3 */
-} Double_variable_info;
-
-typedef union {
-    Top_variable_info top_variable_info;
-    Integer_variable_info integer_variable_info;
-    Float_variable_info float_variable_info;
-    Long_variable_info long_variable_info;
-    Double_variable_info double_variable_info;
-    Null_variable_info null_variable_info;
-    UninitializedThis_variable_info uninitializedThis_variable_info;
-    Object_variable_info object_variable_info;
-    Uninitialized_variable_info uninitialized_variable_info;
-} verification_type_info;
-
-typedef struct
-{
-    u1 frame_type;
-} Same_frame;
-
-typedef struct
-{
-    u1 frame_type;
-    verification_type_info stack;
-} Same_locals_1_stack_item_frame;
-
-typedef struct
-{
-    u1 frame_type;
-    u2 offset_delta;
-    verification_type_info stack;
-} Same_locals_1_stack_item_frame_extended;
-
-typedef struct
-{
-    u1 frame_type;
-    u2 offset_delta;
-} Chop_frame;
-
-typedef struct
-{
-    u1 frame_type;
-    u2 offset_delta;
-} Same_frame_extended;
-
-typedef struct
-{
-    u1 frame_type;
-    u2 offset_delta;
-    verification_type_info *locals;
-} Append_frame;
-
-typedef struct
-{
-    u1 frame_type; /* 255 */
-    u2 offset_delta;
-    u2 number_of_locals;
-    verification_type_info *locals;
-    u2 number_of_stack_items;
-    verification_type_info stack;
-} Full_frame;
-
-typedef union {
-    Same_frame same_frame;
-    Same_locals_1_stack_item_frame same_locals_1_stack_item_frame;
-    Same_locals_1_stack_item_frame_extended same_locals_1_stack_item_frame_extended;
-    Chop_frame chop_frame;
-    Same_frame_extended same_frame_extended;
-    Append_frame append_frame;
-    Full_frame full_frame;
-} stack_map_frame;
-
+// Synthetic
 typedef struct
 {
     u2 attribute_name_index;
     u4 attribute_length;
-    u2 number_of_entries;
-    stack_map_frame *entries;
-} StackMapTable_attribute;
+} Synthetic_attribute;
 
 // BootstrapMethods
 typedef struct
@@ -291,5 +168,24 @@ typedef struct
     u1 parameters_count;
     Parameters *parameters;
 } MethodParameters_attribute;
+
+// Attribute Info
+typedef union {
+    ConstantValue_attribute constant_value;
+    Code_attribute code;
+    Exceptions_attribute exceptions;
+    InnerClasses_attribute inner_classes;
+    SourceFile_attribute source_file;
+    LineNumberTable_attribute line_number_table;
+    LocalVariableTable_attribute local_variable_table;
+    Synthetic_attribute synthetic;
+} attributes_type_info;
+
+struct Attribute_info
+{
+    u2 attribute_name_index;
+    u4 attribute_length;
+    attributes_type_info info;
+};
 
 #endif

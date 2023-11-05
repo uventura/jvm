@@ -42,11 +42,12 @@ ClassFile load_class_file(const char *filepath)
     class_file.interfaces_count = u2_read(class_file_element);
     class_file.interfaces = load_interfaces(class_file_element, class_file.interfaces_count);
     class_file.fields_count = u2_read(class_file_element);
-    class_file.fields = load_field_info(class_file_element, class_file.fields_count);
+    class_file.fields = load_field_info(class_file_element, class_file.fields_count, class_file.constant_pool);
     class_file.methods_count = u2_read(class_file_element);
-    class_file.methods = load_method_info(class_file_element, class_file.methods_count);
+    class_file.methods = load_method_info(class_file_element, class_file.methods_count, class_file.constant_pool);
     class_file.attributes_count = u2_read(class_file_element);
-    class_file.attributes = load_attribute_info(class_file_element, class_file.attributes_count);
+    class_file.attributes =
+        load_attribute_info(class_file_element, class_file.attributes_count, class_file.constant_pool);
 
     fclose(class_file_element);
 
@@ -55,11 +56,11 @@ ClassFile load_class_file(const char *filepath)
 
 void free_class_file(ClassFile class_file)
 {
-    free_constant_pool(class_file.constant_pool_count, class_file.constant_pool);
     free_interfaces(class_file.interfaces);
-    free_fields(class_file.fields_count, class_file.fields);
-    free_methods(class_file.methods_count, class_file.methods);
-    free_attributes(class_file.attributes_count, class_file.attributes);
+    free_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
+    free_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
+    free_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool);
+    free_constant_pool(class_file.constant_pool_count, class_file.constant_pool);
 }
 
 // Constant Pool
@@ -153,7 +154,7 @@ void free_interfaces(u2 *interfaces)
 }
 
 // Fields
-field_info *load_field_info(FILE *file, u2 fields_count)
+field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
 {
     field_info *fields = (field_info *)malloc(sizeof(field_info) * fields_count);
     field_info *field;
@@ -163,18 +164,18 @@ field_info *load_field_info(FILE *file, u2 fields_count)
         field->name_index = u2_read(file);
         field->descriptor_index = u2_read(file);
         field->attributes_count = u2_read(file);
-        field->attributes = load_attribute_info(file, field->attributes_count);
+        field->attributes = load_attribute_info(file, field->attributes_count, constant_pool);
     }
 
     return fields;
 }
 
-void free_fields(u2 field_count, field_info *fields)
+void free_fields(u2 field_count, field_info *fields,cp_info *constant_pool)
 {
     field_info *field;
     for (field = fields; field < fields + field_count; field++)
     {
-        free_attributes(field->attributes_count, field->attributes);
+        free_attributes(field->attributes_count, field->attributes, constant_pool);
         // TODO: Why do we need this second free?
         free(field->attributes);
     }
@@ -182,7 +183,7 @@ void free_fields(u2 field_count, field_info *fields)
 }
 
 // Methods
-method_info *load_method_info(FILE *file, u2 method_count)
+method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_pool)
 {
     method_info *methods = (method_info *)malloc(sizeof(method_info) * method_count);
     method_info *method;
@@ -192,24 +193,24 @@ method_info *load_method_info(FILE *file, u2 method_count)
         method->name_index = u2_read(file);
         method->descriptor_index = u2_read(file);
         method->attributes_count = u2_read(file);
-        method->attributes = load_attribute_info(file, method->attributes_count);
+        method->attributes = load_attribute_info(file, method->attributes_count, constant_pool);
     }
 
     return methods;
 }
 
-void free_methods(u2 methods_count, method_info *methods)
+void free_methods(u2 methods_count, method_info *methods,cp_info *constant_pool)
 {
     method_info *method;
     for (method = methods; method < methods + methods_count; method++)
     {
-        free_attributes(method->attributes_count, method->attributes);
+        free_attributes(method->attributes_count, method->attributes, constant_pool);
     }
     free(methods);
 }
 
 // Attributes
-attribute_info *load_attribute_info(FILE *file, u2 attributes_count)
+attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *constant_pool)
 {
     attribute_info *attributes = (attribute_info *)malloc(sizeof(attribute_info) * attributes_count);
     attribute_info *attribute;
@@ -217,19 +218,124 @@ attribute_info *load_attribute_info(FILE *file, u2 attributes_count)
     {
         attribute->attribute_name_index = u2_read(file);
         attribute->attribute_length = u4_read(file);
-        attribute->info = (u1 *)malloc(sizeof(u1) * attribute->attribute_length);
 
-        u1 *info;
-        for (info = attribute->info; info < attribute->info + attribute->attribute_length; info++)
-        {
-            *info = u1_read(file);
-        }
+        char type[100];
+        memcpy(type, constant_pool[attribute->attribute_name_index - 1].info.Utf8.bytes,
+               constant_pool[attribute->attribute_name_index - 1].info.Utf8.length);
+        type[constant_pool[attribute->attribute_name_index - 1].info.Utf8.length] = '\0';
+
+        attribute->info = load_attribute_type(file, type, constant_pool);
     }
 
     return attributes;
 }
 
-void free_attributes(u2 attributes_count, attribute_info *attributes)
+attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool)
+{
+    attributes_type_info attribute;
+    if (!strcmp(type, "ConstantValue"))
+    {
+        attribute.constant_value.constantvalue_index = u2_read(file);
+    }
+    else if (!strcmp(type, "Code"))
+    {
+        attribute.code.max_stack = u2_read(file);
+        attribute.code.max_locals = u2_read(file);
+        attribute.code.code_length = u4_read(file);
+        attribute.code.code = (u1 *)malloc(sizeof(u1) * attribute.code.code_length);
+        u1 *code;
+        for (code = attribute.code.code; code < attribute.code.code + attribute.code.code_length; code++)
+        {
+            *code = u1_read(file);
+        }
+        attribute.code.exception_table_length = u2_read(file);
+        attribute.code.exception_table =
+            (Exception_table *)malloc(sizeof(Exception_table) * attribute.code.exception_table_length);
+        Exception_table *exception_table;
+        for (exception_table = attribute.code.exception_table;
+             exception_table < attribute.code.exception_table + attribute.code.exception_table_length;
+             exception_table++)
+        {
+            exception_table->start_pc = u2_read(file);
+            exception_table->end_pc = u2_read(file);
+            exception_table->handler_pc = u2_read(file);
+            exception_table->catch_type = u2_read(file);
+        }
+        attribute.code.attributes_count = u2_read(file);
+        attribute.code.attributes = load_attribute_info(file, attribute.code.attributes_count, constant_pool);
+    }
+    else if (!strcmp(type, "Exceptions"))
+    {
+        attribute.exceptions.number_of_exceptions = u2_read(file);
+        attribute.exceptions.exception_index_table =
+            (u2 *)malloc(sizeof(u2) * attribute.exceptions.number_of_exceptions);
+        u2 *index;
+        for (index = attribute.exceptions.exception_index_table;
+             index < attribute.exceptions.exception_index_table + attribute.exceptions.number_of_exceptions; index++)
+        {
+            *index = u2_read(file);
+        }
+    }
+    else if (!strcmp(type, "InnerClasses"))
+    {
+        attribute.inner_classes.number_of_classes = u2_read(file);
+        attribute.inner_classes.classes =
+            (Classes *)malloc(sizeof(Classes) * attribute.inner_classes.number_of_classes);
+        Classes *classes;
+        for (classes = attribute.inner_classes.classes;
+             classes < attribute.inner_classes.classes + attribute.inner_classes.number_of_classes; classes++)
+        {
+            classes->inner_class_info_index = u2_read(file);
+            classes->outer_class_info_index = u2_read(file);
+            classes->inner_name_index = u2_read(file);
+            classes->inner_class_access_flags = u2_read(file);
+        }
+    }
+    else if (!strcmp(type, "SourceFile"))
+    {
+        attribute.source_file.sourcefile_index = u2_read(file);
+    }
+    else if (!strcmp(type, "LineNumberTable"))
+    {
+        attribute.line_number_table.line_number_table_length = u2_read(file);
+        attribute.line_number_table.line_number_table = (Line_number_table *)malloc(
+            sizeof(Line_number_table) * attribute.line_number_table.line_number_table_length);
+        Line_number_table *line_number_table;
+        for (line_number_table = attribute.line_number_table.line_number_table;
+             line_number_table <
+             attribute.line_number_table.line_number_table + attribute.line_number_table.line_number_table_length;
+             line_number_table++)
+        {
+            line_number_table->start_pc = u2_read(file);
+            line_number_table->line_number = u2_read(file);
+        };
+    }
+    else if (!strcmp(type, "LocalVariableTable"))
+    {
+        attribute.local_variable_table.local_variable_table_length = u2_read(file);
+        attribute.local_variable_table.local_variable_table = (Local_variable_table *)malloc(
+            sizeof(Local_variable_table) * attribute.local_variable_table.local_variable_table_length);
+        Local_variable_table *local_variable_table;
+        for (local_variable_table = attribute.local_variable_table.local_variable_table;
+             local_variable_table < attribute.local_variable_table.local_variable_table +
+                                        attribute.local_variable_table.local_variable_table_length;
+             local_variable_table++)
+        {
+            local_variable_table->start_pc = u2_read(file);
+            local_variable_table->length = u2_read(file);
+            local_variable_table->name_index = u2_read(file);
+            local_variable_table->descriptor_index = u2_read(file);
+            local_variable_table->index = u2_read(file);
+        }
+    }
+    else if (!strcmp(type, "Synthetic"))
+    {
+        // Does Nothing
+    }
+    return attribute;
+}
+
+void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool)
 {
     if (attributes_count == 0)
     {
@@ -239,7 +345,29 @@ void free_attributes(u2 attributes_count, attribute_info *attributes)
     attribute_info *attribute;
     for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
     {
-        free(attribute->info);
+        char type[100];
+        memcpy(type, constant_pool[attribute->attribute_name_index - 1].info.Utf8.bytes,
+               constant_pool[attribute->attribute_name_index - 1].info.Utf8.length);
+        type[constant_pool[attribute->attribute_name_index - 1].info.Utf8.length] = '\0';
+
+        if (!strcmp(type, "Code"))
+        {
+            free(attribute->info.code.code);
+            free_attributes(attribute->info.code.attributes_count, attribute->info.code.attributes, constant_pool);
+            free(attribute->info.code.exception_table);
+        }
+        else if(!strcmp(type, "Exceptions"))
+        {
+            free(attribute->info.exceptions.exception_index_table);
+        }
+        else if (!strcmp(type, "InnerClasses"))
+        {
+            free(attribute->info.inner_classes.classes);
+        }
+        else if (!strcmp(type, "LineNumberTable"))
+        {
+            free(attribute->info.local_variable_table.local_variable_table);
+        }
     }
     free(attributes);
 }

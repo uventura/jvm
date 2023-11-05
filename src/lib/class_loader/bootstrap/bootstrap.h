@@ -18,13 +18,14 @@ void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool);
 u2 *load_interfaces(FILE *file, u2 interfaces_count);
 void free_interfaces(u2 *interfaces);
 
-field_info *load_field_info(FILE *file, u2 fields_count);
-void free_fields(u2 field_count, field_info *fields);
+field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool);
+void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool);
 
-method_info *load_method_info(FILE *file, u2 method_count);
-void free_methods(u2 methods_count, method_info *methods);
+method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_pool);
+void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool);
 
-attribute_info *load_attribute_info(FILE *file, u2 attributes_count);
-void free_attributes(u2 attributes_count, attribute_info *attributes);
+attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *constant_pool);
+attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool);
+void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool);
 
 #endif
