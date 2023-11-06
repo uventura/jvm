@@ -37,6 +37,8 @@ void jvm_read_class(char *class_file_path)
 
     jvm_display_general_information(class_file);
     jvm_display_constant_pool(class_file.constant_pool, class_file.constant_pool_count);
+    // jvm_display_interfaces();
+    jvm_display_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
 
     free_class_file(class_file);
 }
@@ -49,7 +51,7 @@ void jvm_run_class(char *class_file_path)
 
 void jvm_display_general_information(ClassFile class_file)
 {
-    printf("General Information:\n");
+    printf("<General Information>\n");
     printf("   Minor Version: %d\n", class_file.minor_version);
     printf("   Major Version: %d\n", class_file.major_version);
     printf("   Constant Pool Count: %d\n", class_file.constant_pool_count);
@@ -68,14 +70,14 @@ void jvm_display_general_information(ClassFile class_file)
 
 void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
 {
-    printf("Constant Pool:\n");
+    printf("<Constant Pool>\n");
     cp_info *constant_pool_element;
     u4 index = 0;
-    for (constant_pool_element = constant_pool; constant_pool_element < constant_pool_count + constant_pool;
+    for (constant_pool_element = constant_pool; constant_pool_element < constant_pool_count + constant_pool - 1;
          constant_pool_element++)
     {
         index += 1;
-        printf("   [%03d] Tag: %d (%s)\n", index, constant_pool_element->tag,
+        printf("   [%d] Tag: %d (%s)\n", index, constant_pool_element->tag,
                get_cp_info_name(constant_pool_element->tag));
 
         switch (constant_pool_element->tag)
@@ -126,5 +128,25 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
             break;
         }
         }
+    }
+}
+
+void jvm_display_fields(u2 fields_count, field_info *fields, cp_info* constant_pool)
+{
+    printf("\n<Fields>\n");
+    field_info *field;
+    for(field = fields; field < fields + fields_count; field++)
+    {
+        char field_string[400];
+        get_utf8_value(field->name_index - 1, constant_pool, field_string);
+        printf("   Name: %d (%s)\n", field->name_index, field_string);
+
+        get_utf8_value(field->descriptor_index - 1, constant_pool, field_string);
+        printf("   Descriptor: %d (%s)\n", field->descriptor_index, field_string);
+
+        printf("   Access Flags: 0x%x\n", field->access_flags);
+        printf("   Attributes Count: %d\n\n", field->attributes_count);
+
+        // TODO: Display Attributes
     }
 }
