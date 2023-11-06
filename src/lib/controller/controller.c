@@ -91,27 +91,31 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
             printf("      Class Name: %d\n", constant_pool_element->info.Methodref.class_index);
             printf("      Name and Type: %d\n", constant_pool_element->info.Methodref.name_and_type_index);
             break;
-        // case CONSTANT_InterfaceMethodref:
-        //
-        //     break;
-        // case CONSTANT_String:
-        //
-        //     break;
-        // case CONSTANT_Integer:
-        //
-        //     break;
-        // case CONSTANT_Float:
-        //
-        //     break;
-        // case CONSTANT_Long:
-        //
-        //     break;
-        // case CONSTANT_Double:
-        //
-        //     break;
-        // case CONSTANT_NameAndType:
-        //
-        //     break;
+        case CONSTANT_InterfaceMethodref:
+            printf("      Class Name: %d\n", constant_pool_element->info.InterfaceMethodref.class_index);
+            printf("      Name and Type: %d\n", constant_pool_element->info.InterfaceMethodref.name_and_type_index);
+            break;
+        case CONSTANT_String:
+            printf("      String Index: %d\n", constant_pool_element->info.String.string_index);
+            break;
+        case CONSTANT_Integer:
+            printf("      Bytes: %u\n", constant_pool_element->info.Integer.bytes);
+            break;
+        case CONSTANT_Float:
+            printf("      Bytes: %u\n", constant_pool_element->info.Float.bytes);
+            break;
+        case CONSTANT_Long:
+            printf("      High Bytes: %u\n", constant_pool_element->info.Long.high_bytes);
+            printf("      Low Bytes: %u\n", constant_pool_element->info.Long.low_bytes);
+            break;
+        case CONSTANT_Double:
+            printf("      High Bytes: %u\n", constant_pool_element->info.Double.high_bytes);
+            printf("      Low Bytes: %u\n", constant_pool_element->info.Double.low_bytes);
+            break;
+        case CONSTANT_NameAndType:
+            printf("      Name Index: %d\n", constant_pool_element->info.NameAndType.name_index);
+            printf("      Descriptor Index: %d\n", constant_pool_element->info.NameAndType.descriptor_index);
+            break;
         case CONSTANT_Utf8: {
             printf("      Length of byte array: %d\n", constant_pool_element->info.Utf8.length);
             printf("      Length of byte string: %d\n", constant_pool_element->info.Utf8.length);
