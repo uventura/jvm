@@ -40,6 +40,7 @@ void jvm_read_class(char *class_file_path)
     // jvm_display_interfaces();
     jvm_display_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
     jvm_display_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
+    jvm_display_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool);
 
     free_class_file(class_file);
 }
@@ -167,6 +168,21 @@ void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *consta
         printf("   Access Flags: 0x%x\n", method->access_flags);
         printf("   Attributes Count: %d\n", method->attributes_count);
         printf("   Attributes:\n");
+        // TODO: Display Attributes
+        printf("\n");
+    }
+}
+
+void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool)
+{
+    printf("<Attributes>\n");
+    attribute_info *attribute;
+    for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
+    {
+        char attribute_string[400];
+        get_utf8_value(attribute->attribute_name_index - 1, constant_pool, attribute_string);
+        printf("   Attribute name index: %d (%s)\n", attribute->attribute_name_index, attribute_string);
+        printf("   Attribute length: %d\n", attribute->attribute_length);
         // TODO: Display Attributes
         printf("\n");
     }
