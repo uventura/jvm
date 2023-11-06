@@ -37,7 +37,7 @@ void jvm_read_class(char *class_file_path)
 
     jvm_display_general_information(class_file);
     jvm_display_constant_pool(class_file.constant_pool, class_file.constant_pool_count);
-    // jvm_display_interfaces();
+    jvm_display_interfaces(class_file.interfaces_count, class_file.interfaces, class_file.constant_pool);
     jvm_display_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
     jvm_display_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
     jvm_display_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool);
@@ -130,6 +130,19 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
             break;
         }
         }
+    }
+}
+
+void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *constant_pool)
+{
+    printf("<Interfaces>\n");
+    u2* interface;
+    for(interface = interfaces; interface < interfaces + interfaces_count; interface++)
+    {
+        u2 index = constant_pool[*interface - 1].info.Class.name_index;
+        char interface_string[200];
+        get_utf8_value(index - 1, constant_pool, interface_string);
+        printf("   Interface: %d (%s)\n", *interface, interface_string);
     }
 }
 
