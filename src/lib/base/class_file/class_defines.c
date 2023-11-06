@@ -1,5 +1,6 @@
 #include "lib/base/class_file/class_defines.h"
 
+// Function to get an access flag's name based on its ID.
 const char *get_access_flag_name(u2 id)
 {
     switch (id)
@@ -27,6 +28,7 @@ const char *get_access_flag_name(u2 id)
     return "";
 }
 
+// Function to get the type of a constant based on its ID.
 const char *get_cp_info_name(u2 id)
 {
     switch (id)
