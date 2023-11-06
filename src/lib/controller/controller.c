@@ -67,7 +67,7 @@ void jvm_display_general_information(ClassFile class_file)
     printf("   Interfaces Count: %d\n", class_file.interfaces_count);
     printf("   Fields Count: %d\n", class_file.fields_count);
     printf("   Methods Count: %d\n", class_file.methods_count);
-    printf("   Attributes Count: %d\n\n", class_file.fields_count);
+    printf("   Attributes Count: %d\n\n", class_file.attributes_count);
 }
 
 void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
