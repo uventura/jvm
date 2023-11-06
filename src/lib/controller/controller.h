@@ -3,6 +3,8 @@
 
 #include "lib/base/defines.h"
 
+// Header with the prototypes for the main JVM functions.
+
 int jvm_run(int argc, char **argv);
 
 void jvm_read_class(char *class_file_path);
