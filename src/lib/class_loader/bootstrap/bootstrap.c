@@ -12,19 +12,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Class File
+/*
+    Class File
+    Opens the ".class" file for reading, checking for faults in the process.
+    Creates a "class_file" struct to store the elements read from the bytecode, closes the file and returns the struct.
+*/
 ClassFile load_class_file(const char *filepath)
 {
     FILE *class_file_element = fopen(filepath, "rb");
 
-    if (!class_file_element)
+    if (!class_file_element)            // Verifies if "class_file_element" is "NULL".
     {
         printf("[Class Loader - Bootstrap](ERROR) Couldn't open file...\n");
         exit(-1);
     }
 
     u4 cafe_babe = u4_read(class_file_element);
-    if (cafe_babe != 0xCAFEBABE)
+    if (cafe_babe != 0xCAFEBABE)        // Verifies if the signature of the ".class" file is correct.
     {
         printf("[Class Loader - Bootstrap](ERROR) This is not a .class file...\n");
         exit(-1);
@@ -54,6 +58,7 @@ ClassFile load_class_file(const char *filepath)
     return class_file;
 }
 
+// Function to free the memory allocated to the "class_file" struct.
 void free_class_file(ClassFile class_file)
 {
     free_interfaces(class_file.interfaces);
@@ -63,7 +68,11 @@ void free_class_file(ClassFile class_file)
     free_constant_pool(class_file.constant_pool_count, class_file.constant_pool);
 }
 
-// Constant Pool
+/*
+    Constant Pool
+    Reads the bytecode of the "constant_pool", saving the data in a "cp_info" struct that is returned to the caller.
+    In order to read each element correctly, their corresponding types (tags) are determined beforehand.
+*/
 cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
 {
     cp_info *constant_pool = (cp_info *)malloc(sizeof(cp_info) * constant_pool_count);
@@ -122,6 +131,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
     return constant_pool;
 }
 
+// Function to free the memory allocated to a "cp_info" struct.
 void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
 {
     for (int i = 0; i < constant_pool_count; ++i)
@@ -135,7 +145,10 @@ void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
     free(constant_pool);
 }
 
-// Interfaces
+/*
+    Interfaces
+    Reads the bytecode relative to the number of interfaces of the ".class" file.
+*/
 u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
     u2 *interfaces = (u2 *)malloc(sizeof(u2) * interfaces_count);
@@ -148,12 +161,16 @@ u2 *load_interfaces(FILE *file, u2 interfaces_count)
     return interfaces;
 }
 
+// Function to free the memory allocated to a interface.
 void free_interfaces(u2 *interfaces)
 {
     free(interfaces);
 }
 
-// Fields
+/*
+    Fields
+    Reads the bytecode corresponding to the fields, saving the data in a "field_info" struct that is returned.
+*/
 field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
 {
     field_info *fields = (field_info *)malloc(sizeof(field_info) * fields_count);
@@ -170,6 +187,7 @@ field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
     return fields;
 }
 
+// Function to free the memory allocated to a "field_info" struct.
 void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
 {
     field_info *field;
@@ -182,7 +200,10 @@ void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
     free(fields);
 }
 
-// Methods
+/*
+    Methods
+    Reads the bytecode of the methods, stores the data in a "method_info" struct that is returned.
+*/
 method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_pool)
 {
     method_info *methods = (method_info *)malloc(sizeof(method_info) * method_count);
@@ -199,6 +220,7 @@ method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_poo
     return methods;
 }
 
+// Function to free the memory allocated to a "method_info" struct.
 void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
 {
     method_info *method;
@@ -209,7 +231,10 @@ void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool
     free(methods);
 }
 
-// Attributes
+/*
+    Attributes
+    Reads the bytecode relative to the attributes, storing the date in a "attribute_info" struct that is returned.
+*/
 attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *constant_pool)
 {
     attribute_info *attributes = (attribute_info *)malloc(sizeof(attribute_info) * attributes_count);
@@ -230,6 +255,7 @@ attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *co
     return attributes;
 }
 
+// Auxiliary function utilized to determine the type of the attribute.
 attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool)
 {
     attributes_type_info attribute;
@@ -335,6 +361,7 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
     return attribute;
 }
 
+// Function to free the memory allocated to a "attribute_info" struct.
 void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool)
 {
     if (attributes_count == 0)
