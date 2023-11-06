@@ -19,7 +19,8 @@ void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_
 
 void jvm_print_spaces(u4 spaces_count);
 
-void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
+void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool,
+                                          u4 spaces_count);
 void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
 void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
 
