@@ -49,14 +49,6 @@ void test_bootstrap_access_flags_soma(void){
     free_class_file(class_file);
 }
 
-void test_bootstrap_this_class_soma(void){
-
-    ClassFile class_file = load_class_file("data/examples/Soma.class");
-    TEST_ASSERT_EQUAL(0, class_file.this_class);
-    free_class_file(class_file);
-
-}
-
 void test_bootstrap_interfaces_count_soma(void){
 
     ClassFile class_file = load_class_file("data/examples/Soma.class");
@@ -88,6 +80,18 @@ void test_bootstrap_attributes_count_soma(void){
     free_class_file(class_file);
 
 }
+
+void test_bootstrap_this_class_soma(void){
+    ClassFile class_file = load_class_file("data/examples/Soma.class");
+    char element[100];
+    get_utf8_value(5, &class_file.constant_pool[class_file.this_class], element);
+    printf("%c", element[0]);
+    printf("%c", element[1]);
+    TEST_ASSERT_EQUAL(0, strcmp(element, "Soma"));
+    free_class_file(class_file);
+}
+
+// TESTING SOMETHING ...
 
 
 
