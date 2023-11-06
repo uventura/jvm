@@ -8,6 +8,8 @@
 // Reference: https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.5
 //            https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7
 
+// Header defining the struct for fields.
+
 typedef struct
 {
     u2 access_flags;
