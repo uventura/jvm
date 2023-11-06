@@ -40,7 +40,7 @@ void jvm_read_class(char *class_file_path)
     jvm_display_interfaces(class_file.interfaces_count, class_file.interfaces, class_file.constant_pool);
     jvm_display_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
     jvm_display_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
-    jvm_display_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool);
+    jvm_display_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool, 0);
 
     free_class_file(class_file);
 }
@@ -137,13 +137,13 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
 void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *constant_pool)
 {
     printf("<Interfaces>\n");
-    if(interfaces_count == 0)
+    if (interfaces_count == 0)
     {
         printf("   No Interfaces\n\n");
         return;
     }
-    u2* interface;
-    for(interface = interfaces; interface < interfaces + interfaces_count; interface++)
+    u2 *interface;
+    for (interface = interfaces; interface < interfaces + interfaces_count; interface++)
     {
         u2 index = constant_pool[*interface - 1].info.Class.name_index;
         char interface_string[200];
@@ -156,7 +156,7 @@ void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *consta
 void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_pool)
 {
     printf("<Fields>\n");
-    if(fields_count == 0)
+    if (fields_count == 0)
     {
         printf("   No Fields\n\n");
         return;
@@ -175,7 +175,7 @@ void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_p
         printf("   Access Flags: 0x%x\n", field->access_flags);
         printf("   Attributes Count: %d\n\n", field->attributes_count);
 
-        // TODO: Display Attributes
+        jvm_display_attributes(field->attributes_count, field->attributes, constant_pool, DEFAULT_SPACES);
     }
 }
 
@@ -193,23 +193,123 @@ void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *consta
         printf("   Descriptor: %d (%s)\n", method->descriptor_index, method_string);
         printf("   Access Flags: 0x%x\n", method->access_flags);
         printf("   Attributes Count: %d\n", method->attributes_count);
-        printf("   Attributes:\n");
-        // TODO: Display Attributes
+        jvm_display_attributes(method->attributes_count, method->attributes, constant_pool, DEFAULT_SPACES);
         printf("\n");
     }
 }
 
-void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool)
+void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool, u4 spaces_count)
 {
+    jvm_print_spaces(spaces_count);
     printf("<Attributes>\n");
+    if(attributes_count == 0)
+    {
+        jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+        printf("No Attributes\n");
+        return;
+    }
+
     attribute_info *attribute;
     for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
     {
         char attribute_string[400];
         get_utf8_value(attribute->attribute_name_index - 1, constant_pool, attribute_string);
-        printf("   Attribute name index: %d (%s)\n", attribute->attribute_name_index, attribute_string);
-        printf("   Attribute length: %d\n", attribute->attribute_length);
-        // TODO: Display Attributes
-        printf("\n");
+
+        jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+        printf("Attribute name index: %d (%s)\n", attribute->attribute_name_index, attribute_string);
+
+        jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+        printf("Attribute length: %d\n", attribute->attribute_length);
+
+       jvm_display_specific_attributes_info(attribute_string, attribute, constant_pool, spaces_count + DEFAULT_SPACES);
     }
+}
+
+void jvm_print_spaces(u4 spaces_count)
+{
+    for (u4 i = 0; i < spaces_count; i++)
+    {
+        printf(" ");
+    }
+}
+
+
+void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    jvm_print_spaces(spaces_count);
+    printf("<Specific Info - ");
+
+    if (!strcmp(type, "ConstantValue"))
+    {
+        // TODO
+    }
+    else if(!strcmp(type, "Code"))
+    {
+        jvm_display_attrib_code(attribute, constant_pool, spaces_count);
+    }
+    else if (!strcmp(type, "SourceFile"))
+    {
+        jvm_display_attrib_source_file(attribute, constant_pool, spaces_count);
+    }
+    else
+    {
+        printf("Undefined>\n");
+    }
+}
+
+void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    printf("Code>\n");
+
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("* Bytecode:\n");
+
+    u1* code;
+    for(code = attribute->info.code.code; code < attribute->info.code.code + attribute->info.code.code_length; code++)
+    {
+        jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+        printf("0x%x\n", *code);
+    }
+
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("* Exception Table:\n");
+    if(attribute->info.code.exception_table_length == 0)
+    {
+        jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+        printf("No Exceptions\n");
+    }
+    else
+    {
+        jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+        printf("| Start PC |   End PC  | Handler PC | Catch Type |\n");
+        Exception_table* exception_element;
+        for(exception_element = attribute->info.code.exception_table; exception_element < attribute->info.code.exception_table + attribute->info.code.exception_table_length; exception_element++)
+        {
+            jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+            printf("|  %05d   |   %05d   |    %05d   |    %05d   |\n", exception_element->start_pc, exception_element->end_pc, exception_element->handler_pc, exception_element->catch_type);
+        }
+    }
+
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("* Misc:\n");
+
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Maximum Stack Size: %d\n", attribute->info.code.max_stack);
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Maximum Local Variables: %d\n", attribute->info.code.max_locals);
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Code Length: %d\n", attribute->info.code.code_length);
+
+    jvm_display_attributes(attribute->info.code.attributes_count, attribute->info.code.attributes, constant_pool, spaces_count + DEFAULT_SPACES);
+}
+
+void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    char source_string[400];
+    printf("Source File>\n");
+
+    get_utf8_value(attribute->info.source_file.sourcefile_index - 1, constant_pool, source_string);
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+
+    printf("Source File Name Index: %d (%s)\n", attribute->info.source_file.sourcefile_index, source_string);
 }
