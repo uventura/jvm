@@ -131,11 +131,17 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
         }
         }
     }
+    printf("\n");
 }
 
 void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *constant_pool)
 {
     printf("<Interfaces>\n");
+    if(interfaces_count == 0)
+    {
+        printf("   No Interfaces\n\n");
+        return;
+    }
     u2* interface;
     for(interface = interfaces; interface < interfaces + interfaces_count; interface++)
     {
@@ -144,11 +150,18 @@ void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *consta
         get_utf8_value(index - 1, constant_pool, interface_string);
         printf("   Interface: %d (%s)\n", *interface, interface_string);
     }
+    printf("\n");
 }
 
 void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_pool)
 {
-    printf("\n<Fields>\n");
+    printf("<Fields>\n");
+    if(fields_count == 0)
+    {
+        printf("   No Fields\n\n");
+        return;
+    }
+
     field_info *field;
     for (field = fields; field < fields + fields_count; field++)
     {
