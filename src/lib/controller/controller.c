@@ -7,7 +7,7 @@
 
 /*
     Function that parses the command line arguments.
-    The program requires two arguments to be passed:
+    The program requires the user to pass two arguments:
         - the execution mode ("-read" or "-run");
         - the qualified name for the ".class" file.
 */
