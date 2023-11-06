@@ -36,7 +36,6 @@ int jvm_run(int argc, char **argv)
     return 0;
 }
 
-
 /*
     Function that reads the bytecode of the ".class" file passed as an argument.
     The bytecode information is stored in a "class_file" struct, which is then printed on the terminal.
