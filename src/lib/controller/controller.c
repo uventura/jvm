@@ -5,9 +5,15 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/controller/controller.h"
 
+/*
+    Function that parses the command line arguments.
+    The program requires two arguments to be passed:
+        - the execution mode ("-read" or "-run");
+        - the qualified name for the ".class" file.
+*/
 int jvm_run(int argc, char **argv)
 {
-    if (argc != 3)
+    if (argc != 3)                      // Returns an error if the number of arguments is incorrect.
     {
         printf("[JVM - ERROR] Missing Arguments\n");
         return -1;
@@ -21,7 +27,7 @@ int jvm_run(int argc, char **argv)
     {
         jvm_run_class(argv[2]);
     }
-    else
+    else                                // Returns an error if the the execution mode is invalid.
     {
         printf("[JVM - ERROR] Wrong Option");
         return -1;
@@ -30,6 +36,11 @@ int jvm_run(int argc, char **argv)
     return 0;
 }
 
+
+/*
+    Function that reads the bytecode of the ".class" file passed as an argument.
+    The bytecode information is stored in a "class_file" struct, which is then printed on the terminal.
+*/
 void jvm_read_class(char *class_file_path)
 {
     ClassFile class_file = load_class_file(class_file_path);
