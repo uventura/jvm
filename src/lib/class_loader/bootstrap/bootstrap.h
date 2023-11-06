@@ -9,6 +9,8 @@
 #include "lib/base/class_file/field_info.h"
 #include "lib/base/class_file/method_info.h"
 
+// Header with the prototypes for the functions to load the ".class" file bytecode and to free the allocated memory afterwards.
+
 ClassFile load_class_file(const char *filepath);
 void free_class_file(ClassFile class_file);
 
