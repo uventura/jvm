@@ -202,7 +202,7 @@ void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_
 {
     jvm_print_spaces(spaces_count);
     printf("<Attributes>\n");
-    if(attributes_count == 0)
+    if (attributes_count == 0)
     {
         jvm_print_spaces(spaces_count + DEFAULT_SPACES);
         printf("No Attributes\n");
@@ -221,7 +221,7 @@ void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_
         jvm_print_spaces(spaces_count + DEFAULT_SPACES);
         printf("Attribute length: %d\n", attribute->attribute_length);
 
-       jvm_display_specific_attributes_info(attribute_string, attribute, constant_pool, spaces_count + DEFAULT_SPACES);
+        jvm_display_specific_attributes_info(attribute_string, attribute, constant_pool, spaces_count + DEFAULT_SPACES);
     }
 }
 
@@ -233,8 +233,8 @@ void jvm_print_spaces(u4 spaces_count)
     }
 }
 
-
-void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool,
+                                          u4 spaces_count)
 {
     jvm_print_spaces(spaces_count);
     printf("<Specific Info - ");
@@ -243,7 +243,7 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     {
         // TODO
     }
-    else if(!strcmp(type, "Code"))
+    else if (!strcmp(type, "Code"))
     {
         jvm_display_attrib_code(attribute, constant_pool, spaces_count);
     }
@@ -264,8 +264,8 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
     jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("* Bytecode:\n");
 
-    u1* code;
-    for(code = attribute->info.code.code; code < attribute->info.code.code + attribute->info.code.code_length; code++)
+    u1 *code;
+    for (code = attribute->info.code.code; code < attribute->info.code.code + attribute->info.code.code_length; code++)
     {
         jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
         printf("0x%x\n", *code);
@@ -273,7 +273,7 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
 
     jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("* Exception Table:\n");
-    if(attribute->info.code.exception_table_length == 0)
+    if (attribute->info.code.exception_table_length == 0)
     {
         jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
         printf("No Exceptions\n");
@@ -282,11 +282,14 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
     {
         jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
         printf("| Start PC |   End PC  | Handler PC | Catch Type |\n");
-        Exception_table* exception_element;
-        for(exception_element = attribute->info.code.exception_table; exception_element < attribute->info.code.exception_table + attribute->info.code.exception_table_length; exception_element++)
+        Exception_table *exception_element;
+        for (exception_element = attribute->info.code.exception_table;
+             exception_element < attribute->info.code.exception_table + attribute->info.code.exception_table_length;
+             exception_element++)
         {
             jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
-            printf("|  %05d   |   %05d   |    %05d   |    %05d   |\n", exception_element->start_pc, exception_element->end_pc, exception_element->handler_pc, exception_element->catch_type);
+            printf("|  %05d   |   %05d   |    %05d   |    %05d   |\n", exception_element->start_pc,
+                   exception_element->end_pc, exception_element->handler_pc, exception_element->catch_type);
         }
     }
 
@@ -300,7 +303,8 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
     printf("Code Length: %d\n", attribute->info.code.code_length);
 
-    jvm_display_attributes(attribute->info.code.attributes_count, attribute->info.code.attributes, constant_pool, spaces_count + DEFAULT_SPACES);
+    jvm_display_attributes(attribute->info.code.attributes_count, attribute->info.code.attributes, constant_pool,
+                           spaces_count + DEFAULT_SPACES);
 }
 
 void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
