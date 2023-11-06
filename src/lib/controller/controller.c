@@ -39,6 +39,7 @@ void jvm_read_class(char *class_file_path)
     jvm_display_constant_pool(class_file.constant_pool, class_file.constant_pool_count);
     // jvm_display_interfaces();
     jvm_display_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
+    jvm_display_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
 
     free_class_file(class_file);
 }
@@ -131,11 +132,11 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
     }
 }
 
-void jvm_display_fields(u2 fields_count, field_info *fields, cp_info* constant_pool)
+void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_pool)
 {
     printf("\n<Fields>\n");
     field_info *field;
-    for(field = fields; field < fields + fields_count; field++)
+    for (field = fields; field < fields + fields_count; field++)
     {
         char field_string[400];
         get_utf8_value(field->name_index - 1, constant_pool, field_string);
@@ -148,5 +149,25 @@ void jvm_display_fields(u2 fields_count, field_info *fields, cp_info* constant_p
         printf("   Attributes Count: %d\n\n", field->attributes_count);
 
         // TODO: Display Attributes
+    }
+}
+
+void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
+{
+    printf("<Methods>\n");
+    method_info *method;
+    for (method = methods; method < methods + methods_count; method++)
+    {
+        char method_string[400];
+        get_utf8_value(method->name_index - 1, constant_pool, method_string);
+        printf("   Name: %d (%s)\n", method->name_index, method_string);
+
+        get_utf8_value(method->descriptor_index - 1, constant_pool, method_string);
+        printf("   Descriptor: %d (%s)\n", method->descriptor_index, method_string);
+        printf("   Access Flags: 0x%x\n", method->access_flags);
+        printf("   Attributes Count: %d\n", method->attributes_count);
+        printf("   Attributes:\n");
+        // TODO: Display Attributes
+        printf("\n");
     }
 }
