@@ -337,3 +337,32 @@ void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant
 
     printf("Source File Name Index: %d (%s)\n", attribute->info.source_file.sourcefile_index, source_string);
 }
+
+void jvm_display_attrib_constant_value(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("ConstantValue>\n");
+
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("ConstantValue Index: %d\n", attribute->info.constant_value.constantvalue_index);
+}
+
+void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("Exceptions>\n");
+
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Number of Exceptions: %d\n", attribute->info.exceptions.number_of_exceptions);
+
+    if (attribute->info.exceptions.number_of_exceptions > 0) {
+        jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+        printf("Exception Index Table:\n");
+
+        u2 *exception_index_table = attribute->info.exceptions.exception_index_table;
+        for (int i = 0; i < attribute->info.exceptions.number_of_exceptions; i++) {
+            jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
+            printf("[%d] Exception Index: %d\n", i, exception_index_table[i]);
+        }
+    }
+}
