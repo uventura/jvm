@@ -5,6 +5,8 @@
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/defines.h"
 
+// Header defining the struct for methods.
+
 typedef struct
 {
     u2 access_flags;
