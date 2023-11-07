@@ -3,6 +3,8 @@
 
 #include "lib/base/defines.h"
 
+// Header defining the structs that represent the different attributes.
+
 // Attribute Info
 typedef struct Attribute_info attribute_info;
 
