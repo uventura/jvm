@@ -126,6 +126,14 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
             constant_pool_element->info.Utf8.bytes = byte_ref;
             break;
         }
+        case CONSTANT_MethodHandle:
+            constant_pool_element->info.MethodHandle.reference_kind = u2_read(file);
+            constant_pool_element->info.MethodHandle.reference_index = u2_read(file);
+            break;
+        case CONSTANT_InvokeDynamic:
+            constant_pool_element->info.InvokeDynamic.bootstrap_method_attr_index = u2_read(file);
+            constant_pool_element->info.InvokeDynamic.name_and_type_index = u2_read(file);
+            break;
         }
     }
 
