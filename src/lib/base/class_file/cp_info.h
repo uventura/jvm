@@ -6,6 +6,8 @@
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/defines.h"
 
+// Header defining structs that represent constant pool types.
+
 typedef struct
 {
     u2 name_index;
