@@ -6,6 +6,10 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/controller/controller.h"
 
+// Function that parses the command line arguments.
+// The program requires the user to pass two arguments:
+//     - the execution mode ("-read" or "-run");
+//     - the qualified name for the ".class" file.
 int jvm_run(int argc, char **argv)
 {
     if (argc != 3)
@@ -31,6 +35,8 @@ int jvm_run(int argc, char **argv)
     return 0;
 }
 
+// Function that reads the bytecode of the ".class" file passed as an argument.
+// The bytecode information is stored in a "class_file" struct, which is then printed on the standard output stream.
 void jvm_read_class(char *class_file_path)
 {
     ClassFile class_file = load_class_file(class_file_path);
@@ -51,6 +57,7 @@ void jvm_run_class(char *class_file_path)
     printf("Path: %s\n", class_file_path);
 }
 
+// Function that prints the general information of a ".class" file in the standard output stream.
 void jvm_display_general_information(ClassFile class_file)
 {
     printf("<General Information>\n");
@@ -70,6 +77,7 @@ void jvm_display_general_information(ClassFile class_file)
     printf("   Attributes Count: %d\n\n", class_file.attributes_count);
 }
 
+// Function that prints the constant pool elements of a ".class" file in the standard output stream.
 void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
 {
     printf("<Constant Pool>\n");
@@ -134,6 +142,7 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
     printf("\n");
 }
 
+// Function that prints the details of the interfaces of a ".class" file in the standard output stream.
 void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *constant_pool)
 {
     printf("<Interfaces>\n");
@@ -153,6 +162,7 @@ void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *consta
     printf("\n");
 }
 
+// Function that prints the details of the fields of a ".class" file in the standard output stream.
 void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_pool)
 {
     printf("<Fields>\n");
@@ -179,6 +189,7 @@ void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_p
     }
 }
 
+// Function that prints the details of the methods of a ".class" file in the standard output stream.
 void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
 {
     printf("<Methods>\n");
@@ -198,6 +209,7 @@ void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *consta
     }
 }
 
+// Function that prints the attributes of a ".class" file in the standard output stream.
 void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool, u4 spaces_count)
 {
     jvm_print_spaces(spaces_count);
@@ -225,6 +237,7 @@ void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_
     }
 }
 
+// Auxiliary function for formatting purposes.
 void jvm_print_spaces(u4 spaces_count)
 {
     for (u4 i = 0; i < spaces_count; i++)
@@ -233,6 +246,7 @@ void jvm_print_spaces(u4 spaces_count)
     }
 }
 
+// Function that displays additional details of an attribute in the standard output stream.
 void jvm_display_specific_attributes_info(const char *type, attribute_info *attribute, cp_info *constant_pool,
                                           u4 spaces_count)
 {
@@ -257,6 +271,7 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     }
 }
 
+// Function for displaying code attribute.
 void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
 {
     printf("Code>\n");
@@ -307,6 +322,7 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
                            spaces_count + DEFAULT_SPACES);
 }
 
+// Function that prints the source file of the attribute in the standard output stream.
 void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
 {
     char source_string[400];
