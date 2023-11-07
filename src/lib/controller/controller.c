@@ -255,11 +255,15 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
 
     if (!strcmp(type, "ConstantValue"))
     {
-        // TODO
+        jvm_display_attrib_constant_value(attribute, constant_pool, spaces_count);
     }
     else if (!strcmp(type, "Code"))
     {
         jvm_display_attrib_code(attribute, constant_pool, spaces_count);
+    }
+    else if (!strcmp(type, "Exceptions"))
+    {
+        jvm_display_attrib_exceptions(attribute, constant_pool, spaces_count);
     }
     else if (!strcmp(type, "SourceFile"))
     {
