@@ -3,6 +3,8 @@
 
 #include "lib/base/defines.h"
 
+// Header defining the different access flags and constant pool tags, as well as the prototypes for functions to get then.
+
 // Access Flags
 #define ACC_PUBLIC 0x0001
 #define ACC_PRIVATE 0x0002
