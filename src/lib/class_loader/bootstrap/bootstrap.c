@@ -19,14 +19,14 @@ ClassFile load_class_file(const char *filepath)
 {
     FILE *class_file_element = fopen(filepath, "rb");
 
-    if (!class_file_element)            // Verifies if "class_file_element" is "NULL".
+    if (!class_file_element)
     {
         printf("[Class Loader - Bootstrap](ERROR) Couldn't open file...\n");
         exit(-1);
     }
 
     u4 cafe_babe = u4_read(class_file_element);
-    if (cafe_babe != 0xCAFEBABE)        // Verifies if the signature of the ".class" file is correct.
+    if (cafe_babe != 0xCAFEBABE)
     {
         printf("[Class Loader - Bootstrap](ERROR) This is not a .class file...\n");
         exit(-1);
@@ -80,35 +80,40 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
         switch (constant_pool_element->tag)
         {
         case CONSTANT_Class:
-            fread((void *)&(constant_pool_element->info.Class), sizeof(CONSTANT_Class_info), 1, file);
+            constant_pool_element->info.Class.name_index = u2_read(file);
             break;
         case CONSTANT_Fieldref:
-            fread((void *)&(constant_pool_element->info.Fieldref), sizeof(CONSTANT_Fieldref_info), 1, file);
+            constant_pool_element->info.Fieldref.class_index = u2_read(file);
+            constant_pool_element->info.Fieldref.name_and_type_index = u2_read(file);
             break;
         case CONSTANT_Methodref:
-            fread((void *)&(constant_pool_element->info.Methodref), sizeof(CONSTANT_Methodref_info), 1, file);
+            constant_pool_element->info.Methodref.class_index = u2_read(file);
+            constant_pool_element->info.Methodref.name_and_type_index = u2_read(file);
             break;
         case CONSTANT_InterfaceMethodref:
-            fread((void *)&(constant_pool_element->info.InterfaceMethodref), sizeof(CONSTANT_InterfaceMethodref_info),
-                  1, file);
+            constant_pool_element->info.InterfaceMethodref.class_index = u2_read(file);
+            constant_pool_element->info.InterfaceMethodref.name_and_type_index = u2_read(file);
             break;
         case CONSTANT_String:
-            fread((void *)&(constant_pool_element->info.String), sizeof(CONSTANT_String_info), 1, file);
+            constant_pool_element->info.String.string_index = u2_read(file);
             break;
         case CONSTANT_Integer:
-            fread((void *)&(constant_pool_element->info.Integer), sizeof(CONSTANT_Integer_info), 1, file);
+            constant_pool_element->info.Integer.bytes = u4_read(file);
             break;
         case CONSTANT_Float:
-            fread((void *)&(constant_pool_element->info.Float), sizeof(CONSTANT_Float_info), 1, file);
+            constant_pool_element->info.Float.bytes = u4_read(file);
             break;
         case CONSTANT_Long:
-            fread((void *)&(constant_pool_element->info.Long), sizeof(CONSTANT_Long_info), 1, file);
+            constant_pool_element->info.Long.high_bytes = u4_read(file);
+            constant_pool_element->info.Long.low_bytes = u4_read(file);
             break;
         case CONSTANT_Double:
-            fread((void *)&(constant_pool_element->info.Double), sizeof(CONSTANT_Double_info), 1, file);
+            constant_pool_element->info.Double.high_bytes = u4_read(file);
+            constant_pool_element->info.Double.low_bytes = u4_read(file);
             break;
         case CONSTANT_NameAndType:
-            fread((void *)&(constant_pool_element->info.NameAndType), sizeof(CONSTANT_NameAndType_info), 1, file);
+            constant_pool_element->info.NameAndType.name_index = u2_read(file);
+            constant_pool_element->info.NameAndType.descriptor_index = u2_read(file);
             break;
         case CONSTANT_Utf8: {
             u2 length = u2_read(file);
@@ -142,7 +147,7 @@ void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
 }
 
 // Interfaces
-// Reads the bytecode relative to the number of interfaces of the ".class" file.
+// Reads the bytecode relative to the interfaces of the ".class" file.
 u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
     u2 *interfaces = (u2 *)malloc(sizeof(u2) * interfaces_count);
@@ -243,7 +248,7 @@ attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *co
     return attributes;
 }
 
-// Auxiliary function utilized to determine the type of the attribute.
+// Auxiliary function utilized to determine the type of the attribute and read it correctly.
 attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool)
 {
     attributes_type_info attribute;

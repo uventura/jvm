@@ -6,7 +6,7 @@
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/defines.h"
 
-// Header defining structs that represent "constant_pool" types.
+// Header defining structs that represent constant pool types.
 
 typedef struct
 {
@@ -73,7 +73,7 @@ typedef struct
 typedef struct
 {
     u1 tag;
-    union {
+    union {     // Uses "union" to serve as a "catchall" for different tag types.
         CONSTANT_Class_info Class;
         CONSTANT_Fieldref_info Fieldref;
         CONSTANT_Methodref_info Methodref;
@@ -88,6 +88,6 @@ typedef struct
     } info;
 } cp_info;
 
-const char *get_info_name(u2 id);
+void get_utf8_value(u2 index, cp_info *constant_pool, char *buffer);
 
 #endif

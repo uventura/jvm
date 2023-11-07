@@ -25,7 +25,7 @@ const char *get_access_flag_name(u2 id)
         return "enum";
     }
 
-    return "";
+    return "Undefined";
 }
 
 // Function to get the type of a constant based on its ID.
