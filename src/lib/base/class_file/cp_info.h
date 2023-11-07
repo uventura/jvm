@@ -72,6 +72,18 @@ typedef struct
 
 typedef struct
 {
+    u1 reference_kind;
+    u2 reference_index;
+} CONSTANT_MethodHandle_info;
+
+typedef struct
+{
+    u2 bootstrap_method_attr_index;
+    u2 name_and_type_index;
+} CONSTANT_InvokeDynamic_info;
+
+typedef struct
+{
     u1 tag;
     union {
         CONSTANT_Class_info Class;
@@ -85,6 +97,8 @@ typedef struct
         CONSTANT_Double_info Double;
         CONSTANT_NameAndType_info NameAndType;
         CONSTANT_Utf8_info Utf8;
+        CONSTANT_MethodHandle_info MethodHandle;
+        CONSTANT_InvokeDynamic_info InvokeDynamic;
     } info;
 } cp_info;
 
