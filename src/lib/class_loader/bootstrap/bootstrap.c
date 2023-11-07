@@ -230,7 +230,12 @@ void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool
 // Reads the bytecode relative to the attributes, storing the date in a "attribute_info" struct that is returned.
 attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *constant_pool)
 {
-    attribute_info *attributes = (attribute_info *) malloc((sizeof(attribute_info) * attributes_count));
+    if (attributes_count == 0)
+    {
+        return NULL;
+    }
+
+    attribute_info *attributes = (attribute_info *)malloc((sizeof(attribute_info) * attributes_count));
     attribute_info *attribute;
     for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
     {
