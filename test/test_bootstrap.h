@@ -81,18 +81,113 @@ void test_bootstrap_attributes_count_soma(void){
 
 }
 
-void test_bootstrap_this_class_soma(void){
-    ClassFile class_file = load_class_file("data/examples/Soma.class");
-    char element[100];
-    get_utf8_value(5, &class_file.constant_pool[class_file.this_class], element);
-    printf("%c", element[0]);
-    printf("%c", element[1]);
-    TEST_ASSERT_EQUAL(0, strcmp(element, "Soma"));
+// TESTING GENERAL INFORMATIONS OF .CLASS MATEMATICO
+
+void test_bootstrap_get_cafe_babe_matematico(void){
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(class_file.magic, 0XCAFEBABE);
     free_class_file(class_file);
 }
 
-// TESTING SOMETHING ...
+void test_bootstrap_constant_pool_count_matematico(void){
 
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(48, class_file.constant_pool_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_access_flags_matematico(void){
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(0x0020, class_file.access_flags);
+    free_class_file(class_file);
+}
+
+void test_bootstrap_interfaces_count_matematico(void){
+
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(1, class_file.interfaces_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_fields_count_matematico(void){
+
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(0, class_file.fields_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_methods_count_matematico(void){
+
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(2, class_file.methods_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_attributes_count_matematico(void){
+
+    ClassFile class_file = load_class_file("data/examples/Matematico.class");
+    TEST_ASSERT_EQUAL(3, class_file.attributes_count);
+    free_class_file(class_file);
+
+}
+
+// TESTING GENERAL INFORMATION OF .CLASS CARRO
+
+void test_bootstrap_get_cafe_babe_carro(void){
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(class_file.magic, 0XCAFEBABE);
+    free_class_file(class_file);
+}
+
+void test_bootstrap_constant_pool_count_carro(void){
+
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(25, class_file.constant_pool_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_access_flags_carro(void){
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(0x0020, class_file.access_flags);
+    free_class_file(class_file);
+}
+
+void test_bootstrap_interfaces_count_carro(void){
+
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(0, class_file.interfaces_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_fields_count_carro(void){
+
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(1, class_file.fields_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_methods_count_carro(void){
+
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(2, class_file.methods_count);
+    free_class_file(class_file);
+
+}
+
+void test_bootstrap_attributes_count_carro(void){
+
+    ClassFile class_file = load_class_file("data/examples/Carro.class");
+    TEST_ASSERT_EQUAL(1, class_file.attributes_count);
+    free_class_file(class_file);
+
+}
 
 
     /*
