@@ -6,6 +6,8 @@
 #include "lib/base/class_file/method_info.h"
 #include "lib/base/defines.h"
 
+// Definition of the struct that represents a ".class" file.
+
 typedef struct
 {
     u4 magic;
