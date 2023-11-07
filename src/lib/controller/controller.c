@@ -269,10 +269,15 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     {
         jvm_display_attrib_source_file(attribute, constant_pool, spaces_count);
     }
+    else if (!strcmp(type, "Synthetic"))
+    {
+        jvm_display_attrib_synthetic(attribute, constant_pool, spaces_count);
+    }
     else
     {
         printf("Undefined>\n");
     }
+    
 }
 
 // Function for displaying code attribute.
@@ -365,4 +370,15 @@ void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_
             printf("[%d] Exception Index: %d\n", i, exception_index_table[i]);
         }
     }
+}
+
+void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("Synthetic>\n");
+
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Attribute name index: %d\n", attribute->attribute_name_index);
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Attribute length: %d\n", attribute->attribute_length);
 }

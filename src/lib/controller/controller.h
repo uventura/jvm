@@ -27,6 +27,7 @@ void jvm_display_attrib_code(attribute_info *attribute, cp_info *constant_pool, 
 void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
 void jvm_display_attrib_constant_value(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
 void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
+void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count);
 
 
 #endif
