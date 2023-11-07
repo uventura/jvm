@@ -5,6 +5,8 @@
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/defines.h"
 
+// Header with the prototypes for the main JVM functions and to display the bytecode.
+
 int jvm_run(int argc, char **argv);
 
 void jvm_read_class(char *class_file_path);
