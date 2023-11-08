@@ -1,14 +1,20 @@
 # Java Virtual Machine (jvm)
 Implementation of Java Virtual Machine using C language.
 
-## How to Run and Build?
+## How to Build on Windows?
+In Poweshell type:
+```shell
+./build.ps1
+```
+
+## How to Run and Build (Linux)?
 ```
     make            => Build JVM project
     make run        => Run generated project
     make test       => Run tests
 ```
 
-## How to Run Analyzers and Formaters
+## How to Run Analyzers and Formaters (Linux)
 ```
     make ubsa       => Run Undefined Behavior Sanitizer
     make asan       => Run Address Sanitizer
