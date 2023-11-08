@@ -30,6 +30,8 @@ const char *get_access_flag_name(u2 id);
 #define CONSTANT_Double 6
 #define CONSTANT_NameAndType 12
 #define CONSTANT_Utf8 1
+#define CONSTANT_MethodHandle 15
+#define CONSTANT_InvokeDynamic 18
 
 const char *get_cp_info_name(u2 id);
 
