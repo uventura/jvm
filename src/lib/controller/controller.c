@@ -273,6 +273,10 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     {
         jvm_display_attrib_synthetic(attribute, constant_pool, spaces_count);
     }
+    else if (!strcmp(type, "InnerClasses")) // Adicione esta parte para InnerClasses
+    {
+        jvm_display_attrib_inner_classes(attribute, constant_pool, spaces_count);
+    }
     else
     {
         printf("Undefined>\n");
@@ -381,4 +385,35 @@ void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_p
     printf("Attribute name index: %d\n", attribute->attribute_name_index);
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
     printf("Attribute length: %d\n", attribute->attribute_length);
+}
+
+void jvm_display_attrib_inner_classes(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+{
+    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+    printf("InnerClasses>\n");
+
+    InnerClasses_attribute inner_classes = attribute->info.inner_classes;
+
+    jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+    printf("Number of Inner Classes: %d\n", inner_classes.number_of_classes);
+
+    if (inner_classes.number_of_classes > 0) {
+        jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
+        printf("Inner Classes Information:\n");
+
+        Classes *classes = inner_classes.classes;
+        for (int i = 0; i < inner_classes.number_of_classes; i++) {
+            jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
+            printf("[%d] Inner Class Info Index: %d\n", i, classes[i].inner_class_info_index);
+
+            jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
+            printf("    Outer Class Info Index: %d\n", classes[i].outer_class_info_index);
+
+            jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
+            printf("    Inner Class Name Index: %d\n", classes[i].inner_name_index);
+
+            jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
+            printf("    Inner Class Access Flags: 0x%x\n", classes[i].inner_class_access_flags);
+        }
+    }
 }
