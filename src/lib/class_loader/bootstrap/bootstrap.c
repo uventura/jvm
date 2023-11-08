@@ -220,10 +220,6 @@ void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
     for (field = fields; field < fields + field_count; field++)
     {
         free_attributes(field->attributes_count, field->attributes, constant_pool);
-        if (field->attributes_count != 0)
-        {
-            free(field->attributes);
-        }
     }
     free(fields);
 }
