@@ -110,6 +110,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
         case CONSTANT_Double:
             constant_pool_element->info.Double.high_bytes = u4_read(file);
             constant_pool_element->info.Double.low_bytes = u4_read(file);
+            constant_pool_element++;
             break;
         case CONSTANT_NameAndType:
             constant_pool_element->info.NameAndType.name_index = u2_read(file);
@@ -255,14 +256,14 @@ attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *co
                constant_pool[attribute->attribute_name_index - 1].info.Utf8.length);
         type[constant_pool[attribute->attribute_name_index - 1].info.Utf8.length] = '\0';
 
-        attribute->info = load_attribute_type(file, type, constant_pool);
+        attribute->info = load_attribute_type(file, type, constant_pool, attribute->attribute_length);
     }
 
     return attributes;
 }
 
 // Auxiliary function utilized to determine the type of the attribute and read it correctly.
-attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool)
+attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool, u4 attributes_length)
 {
     attributes_type_info attribute;
     if (!strcmp(type, "ConstantValue"))
@@ -384,6 +385,15 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
         }
         attribute.bootstrap_methods.bootstrap_methods = bootstrap_methods;
     }
+    else
+    {
+        printf("Length: %d\n", attributes_length);
+        u4 count = 0;
+        for(count = 0; count < attributes_length; count++)
+        {
+            u1_read(file);
+        }
+    }
     return attribute;
 }
 
@@ -419,7 +429,7 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
         }
         else if (!strcmp(type, "LineNumberTable"))
         {
-            free(attribute->info.local_variable_table.local_variable_table);
+            // free(attribute->info.local_variable_table.local_variable_table);
         }
         else if (!strcmp(type, "BootstrapMethods"))
         {

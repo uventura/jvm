@@ -114,15 +114,15 @@ void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count)
             printf("      Bytes: %u\n", constant_pool_element->info.Integer.bytes);
             break;
         case CONSTANT_Float:
-            printf("      Bytes: %u\n", constant_pool_element->info.Float.bytes);
+            printf("      Bytes: %x\n", constant_pool_element->info.Float.bytes);
             break;
         case CONSTANT_Long:
-            printf("      High Bytes: %u\n", constant_pool_element->info.Long.high_bytes);
-            printf("      Low Bytes: %u\n", constant_pool_element->info.Long.low_bytes);
+            printf("      High Bytes: %x\n", constant_pool_element->info.Long.high_bytes);
+            printf("      Low Bytes: %x\n", constant_pool_element->info.Long.low_bytes);
             break;
         case CONSTANT_Double:
-            printf("      High Bytes: %u\n", constant_pool_element->info.Double.high_bytes);
-            printf("      Low Bytes: %u\n", constant_pool_element->info.Double.low_bytes);
+            printf("      High Bytes: %x\n", constant_pool_element->info.Double.high_bytes);
+            printf("      Low Bytes: %x\n", constant_pool_element->info.Double.low_bytes);
             break;
         case CONSTANT_NameAndType:
             printf("      Name Index: %d\n", constant_pool_element->info.NameAndType.name_index);

@@ -28,7 +28,7 @@ method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_poo
 void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool);
 
 attribute_info *load_attribute_info(FILE *file, u2 attributes_count, cp_info *constant_pool);
-attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool);
+attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *constant_pool, u4 attributes_length);
 void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *constant_pool);
 
 #endif
