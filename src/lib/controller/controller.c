@@ -230,6 +230,9 @@ void jvm_display_attributes(u2 attributes_count, attribute_info *attributes, cp_
     attribute_info *attribute;
     for (attribute = attributes; attribute < attributes + attributes_count; attribute++)
     {
+        jvm_print_spaces(spaces_count + DEFAULT_SPACES);
+        printf("<=+=+=+=+=+=+=>\n");
+
         char attribute_string[400];
         get_utf8_value(attribute->attribute_name_index - 1, constant_pool, attribute_string);
 
@@ -285,7 +288,7 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     }
     else
     {
-        printf("Undefined>\n");
+        printf("Undefined>\n\n");
     }
 }
 
@@ -363,7 +366,6 @@ void jvm_display_attrib_constant_value(attribute_info *attribute, cp_info *const
 
 void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
 {
-    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("Exceptions>\n");
 
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
@@ -385,7 +387,6 @@ void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_
 
 void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
 {
-    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("Synthetic>\n");
 
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
@@ -396,7 +397,6 @@ void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_p
 
 void jvm_display_attrib_inner_classes(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
 {
-    jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("InnerClasses>\n");
 
     InnerClasses_attribute inner_classes = attribute->info.inner_classes;
