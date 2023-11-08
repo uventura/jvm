@@ -30,14 +30,13 @@ int main()
 
     // TESTING GENERAL INFORMATIONS OF .CLASS MATEMATICO
 
-    /*
     RUN_TEST(test_bootstrap_get_cafe_babe_matematico); // SEGV ERROR A A PARTIR DAQUI
     RUN_TEST(test_bootstrap_constant_pool_count_matematico);
     RUN_TEST(test_bootstrap_access_flags_matematico);
     RUN_TEST(test_bootstrap_interfaces_count_matematico);
     RUN_TEST(test_bootstrap_fields_count_matematico);
     RUN_TEST(test_bootstrap_methods_count_matematico);
-    RUN_TEST(test_bootstrap_attributes_count_matematico);*/
+    RUN_TEST(test_bootstrap_attributes_count_matematico);
 
     // TESTING GENERAL INFORMATIONS OF .CLASS CARRO
 

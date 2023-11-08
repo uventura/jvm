@@ -382,6 +382,7 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
             }
             bootstrap_method->bootstrap_arguments = bootstrap_arguments;
         }
+        attribute.bootstrap_methods.bootstrap_methods = bootstrap_methods;
     }
     return attribute;
 }
@@ -422,7 +423,17 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
         }
         else if (!strcmp(type, "BootstrapMethods"))
         {
-            // free(attribute->info.bootstrap_methods.bootstrap_methods);
+            if(attribute->info.bootstrap_methods.num_bootstrap_methods != 0)
+            {
+                Bootstrap_methods* bootstrap_methods = attribute->info.bootstrap_methods.bootstrap_methods;
+                Bootstrap_methods* bootstrap_method;
+                for(bootstrap_method = bootstrap_methods; bootstrap_method < bootstrap_methods + attribute->info.bootstrap_methods.num_bootstrap_methods; bootstrap_method++)
+                {
+                    free(bootstrap_method->bootstrap_arguments);
+                }
+
+                free(attribute->info.bootstrap_methods.bootstrap_methods);
+            }
         }
     }
     free(attributes);
