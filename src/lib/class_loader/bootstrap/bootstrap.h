@@ -19,7 +19,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count);
 void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool);
 
 u2 *load_interfaces(FILE *file, u2 interfaces_count);
-void free_interfaces(u2 *interfaces);
+void free_interfaces(u2 interfaces_count, u2 *interfaces);
 
 field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool);
 void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool);

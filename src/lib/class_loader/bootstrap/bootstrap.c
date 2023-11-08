@@ -59,7 +59,7 @@ ClassFile load_class_file(const char *filepath)
 // Function to free the memory allocated to the "class_file" struct.
 void free_class_file(ClassFile class_file)
 {
-    free_interfaces(class_file.interfaces);
+    free_interfaces(class_file.interfaces_count, class_file.interfaces);
     free_fields(class_file.fields_count, class_file.fields, class_file.constant_pool);
     free_methods(class_file.methods_count, class_file.methods, class_file.constant_pool);
     free_attributes(class_file.attributes_count, class_file.attributes, class_file.constant_pool);
@@ -159,6 +159,11 @@ void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
 // Reads the bytecode relative to the interfaces of the ".class" file.
 u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
+    if(interfaces_count == 0)
+    {
+        return NULL;
+    }
+
     u2 *interfaces = (u2 *)malloc(sizeof(u2) * interfaces_count);
     u2 *interface;
     for (interface = interfaces; interface < interfaces + interfaces_count; interface++)
@@ -170,8 +175,13 @@ u2 *load_interfaces(FILE *file, u2 interfaces_count)
 }
 
 // Function to free the memory allocated to a interface.
-void free_interfaces(u2 *interfaces)
+void free_interfaces(u2 interfaces_count, u2 *interfaces)
 {
+    if (interfaces_count == 0)
+    {
+        return;
+    }
+
     free(interfaces);
 }
 
@@ -179,6 +189,11 @@ void free_interfaces(u2 *interfaces)
 // Reads the bytecode corresponding to the fields, saving the data in a "field_info" struct that is returned.
 field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
 {
+    if(fields_count == 0)
+    {
+        return NULL;
+    }
+
     field_info *fields = (field_info *)malloc(sizeof(field_info) * fields_count);
     field_info *field;
     for (field = fields; field < fields + fields_count; field++)
@@ -196,12 +211,19 @@ field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
 // Function to free the memory allocated to a "field_info" struct.
 void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
 {
+    if (field_count == 0)
+    {
+        return;
+    }
+
     field_info *field;
     for (field = fields; field < fields + field_count; field++)
     {
         free_attributes(field->attributes_count, field->attributes, constant_pool);
-        // TODO: Why do we need this second free?
-        free(field->attributes);
+        if (field->attributes_count != 0)
+        {
+            free(field->attributes);
+        }
     }
     free(fields);
 }
@@ -210,6 +232,11 @@ void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
 // Reads the bytecode of the methods, stores the data in a "method_info" struct that is returned.
 method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_pool)
 {
+    if(method_count == 0)
+    {
+        return NULL;
+    }
+
     method_info *methods = (method_info *)malloc(sizeof(method_info) * method_count);
     method_info *method;
     for (method = methods; method < methods + method_count; method++)
@@ -227,6 +254,11 @@ method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_poo
 // Function to free the memory allocated to a "method_info" struct.
 void free_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
 {
+    if (methods_count == 0)
+    {
+        return;
+    }
+
     method_info *method;
     for (method = methods; method < methods + methods_count; method++)
     {
