@@ -429,7 +429,11 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
         }
         else if (!strcmp(type, "LineNumberTable"))
         {
-            // free(attribute->info.local_variable_table.local_variable_table);
+            free(attribute->info.line_number_table.line_number_table);
+        }
+        else if (!strcmp(type, "LocalVariableTable"))
+        {
+            free(attribute->info.local_variable_table.local_variable_table);
         }
         else if (!strcmp(type, "BootstrapMethods"))
         {
