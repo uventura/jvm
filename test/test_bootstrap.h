@@ -194,26 +194,3 @@ void test_bootstrap_attributes_count_carro(void)
     TEST_ASSERT_EQUAL(1, class_file.attributes_count);
     free_class_file(class_file);
 }
-
-/*
-
-SÓ PRA ME ORIENTAR AQUI, OK?
-
-class_file.magic = cafe_babe;
-class_file.minor_version = u2_read(class_file_element);
-class_file.major_version = u2_read(class_file_element);
-class_file.constant_pool_count = u2_read(class_file_element);
-class_file.constant_pool = load_constant_pool(class_file_element, class_file.constant_pool_count);
-class_file.access_flags = u2_read(class_file_element);
-class_file.this_class = u2_read(class_file_element);
-class_file.super_class = u2_read(class_file_element);
-class_file.interfaces_count = u2_read(class_file_element);
-class_file.interfaces = load_interfaces(class_file_element, class_file.interfaces_count);
-class_file.fields_count = u2_read(class_file_element);
-class_file.fields = load_field_info(class_file_element, class_file.fields_count, class_file.constant_pool);
-class_file.methods_count = u2_read(class_file_element);
-class_file.methods = load_method_info(class_file_element, class_file.methods_count, class_file.constant_pool);
-class_file.attributes_count = u2_read(class_file_element);
-class_file.attributes =
-    load_attribute_info(class_file_element, class_file.attributes_count, class_file.constant_pool);
-*/
