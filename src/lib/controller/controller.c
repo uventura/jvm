@@ -281,7 +281,6 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     {
         printf("Undefined>\n");
     }
-    
 }
 
 // Function for displaying code attribute.
@@ -364,12 +363,14 @@ void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
     printf("Number of Exceptions: %d\n", attribute->info.exceptions.number_of_exceptions);
 
-    if (attribute->info.exceptions.number_of_exceptions > 0) {
+    if (attribute->info.exceptions.number_of_exceptions > 0)
+    {
         jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
         printf("Exception Index Table:\n");
 
         u2 *exception_index_table = attribute->info.exceptions.exception_index_table;
-        for (int i = 0; i < attribute->info.exceptions.number_of_exceptions; i++) {
+        for (int i = 0; i < attribute->info.exceptions.number_of_exceptions; i++)
+        {
             jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
             printf("[%d] Exception Index: %d\n", i, exception_index_table[i]);
         }
@@ -397,12 +398,14 @@ void jvm_display_attrib_inner_classes(attribute_info *attribute, cp_info *consta
     jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
     printf("Number of Inner Classes: %d\n", inner_classes.number_of_classes);
 
-    if (inner_classes.number_of_classes > 0) {
+    if (inner_classes.number_of_classes > 0)
+    {
         jvm_print_spaces(spaces_count + 2 * DEFAULT_SPACES);
         printf("Inner Classes Information:\n");
 
         Classes *classes = inner_classes.classes;
-        for (int i = 0; i < inner_classes.number_of_classes; i++) {
+        for (int i = 0; i < inner_classes.number_of_classes; i++)
+        {
             jvm_print_spaces(spaces_count + 3 * DEFAULT_SPACES);
             printf("[%d] Inner Class Info Index: %d\n", i, classes[i].inner_class_info_index);
 

@@ -371,13 +371,17 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
         Bootstrap_methods *bootstrap_methods =
             (Bootstrap_methods *)malloc(sizeof(Bootstrap_methods) * attribute.bootstrap_methods.num_bootstrap_methods);
         Bootstrap_methods *bootstrap_method;
-        for(bootstrap_method = bootstrap_methods; bootstrap_method < bootstrap_methods + attribute.bootstrap_methods.num_bootstrap_methods; bootstrap_method++)
+        for (bootstrap_method = bootstrap_methods;
+             bootstrap_method < bootstrap_methods + attribute.bootstrap_methods.num_bootstrap_methods;
+             bootstrap_method++)
         {
             bootstrap_method->bootstrap_method_ref = u2_read(file);
             bootstrap_method->num_bootstrap_arguments = u2_read(file);
-            u2* bootstrap_arguments = (u2 *)malloc(sizeof(u2) * bootstrap_method->num_bootstrap_arguments);
-            u2* bootstrap_argument;
-            for(bootstrap_argument = bootstrap_arguments; bootstrap_argument < bootstrap_arguments + bootstrap_method->num_bootstrap_arguments; bootstrap_argument++)
+            u2 *bootstrap_arguments = (u2 *)malloc(sizeof(u2) * bootstrap_method->num_bootstrap_arguments);
+            u2 *bootstrap_argument;
+            for (bootstrap_argument = bootstrap_arguments;
+                 bootstrap_argument < bootstrap_arguments + bootstrap_method->num_bootstrap_arguments;
+                 bootstrap_argument++)
             {
                 *bootstrap_argument = u2_read(file);
             }
@@ -388,7 +392,7 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
     else
     {
         u4 count = 0;
-        for(count = 0; count < attributes_length; count++)
+        for (count = 0; count < attributes_length; count++)
         {
             u1_read(file);
         }
@@ -436,11 +440,13 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
         }
         else if (!strcmp(type, "BootstrapMethods"))
         {
-            if(attribute->info.bootstrap_methods.num_bootstrap_methods != 0)
+            if (attribute->info.bootstrap_methods.num_bootstrap_methods != 0)
             {
-                Bootstrap_methods* bootstrap_methods = attribute->info.bootstrap_methods.bootstrap_methods;
-                Bootstrap_methods* bootstrap_method;
-                for(bootstrap_method = bootstrap_methods; bootstrap_method < bootstrap_methods + attribute->info.bootstrap_methods.num_bootstrap_methods; bootstrap_method++)
+                Bootstrap_methods *bootstrap_methods = attribute->info.bootstrap_methods.bootstrap_methods;
+                Bootstrap_methods *bootstrap_method;
+                for (bootstrap_method = bootstrap_methods;
+                     bootstrap_method < bootstrap_methods + attribute->info.bootstrap_methods.num_bootstrap_methods;
+                     bootstrap_method++)
                 {
                     free(bootstrap_method->bootstrap_arguments);
                 }
