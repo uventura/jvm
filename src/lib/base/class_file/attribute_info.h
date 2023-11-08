@@ -181,6 +181,7 @@ typedef union {
     LineNumberTable_attribute line_number_table;
     LocalVariableTable_attribute local_variable_table;
     Synthetic_attribute synthetic;
+    BootstrapMethods_attribute bootstrap_methods;
 } attributes_type_info;
 
 struct Attribute_info

@@ -66,6 +66,10 @@ const char *get_cp_info_name(u2 id)
     case CONSTANT_Utf8:
         return "Utf8";
         break;
+    case CONSTANT_MethodHandle:
+        return "MethodHandle";
+    case CONSTANT_InvokeDynamic:
+        return "InvokeDynamic";
     }
 
     return "None";
