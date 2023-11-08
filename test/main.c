@@ -19,7 +19,7 @@ int main()
     RUN_TEST(testing_u2_read_babe);
     RUN_TEST(testing_u4_read_cafe_babe);
     RUN_TEST(test_bootstrap_get_cafe_babe);
-    //TESTING GENERAL INFORMATIONS OF .CLASS SOMA (interface)
+    // TESTING GENERAL INFORMATIONS OF .CLASS SOMA (interface)
     RUN_TEST(test_bootstrap_get_cafe_babe_soma); // TODOS ABAIXO DÃO MEMORY LEAK
     RUN_TEST(test_bootstrap_constant_pool_count_soma);
     RUN_TEST(test_bootstrap_access_flags_soma);
@@ -40,8 +40,8 @@ int main()
     RUN_TEST(test_bootstrap_attributes_count_matematico);*/
 
     // TESTING GENERAL INFORMATIONS OF .CLASS CARRO
-    
-    RUN_TEST(test_bootstrap_get_cafe_babe_carro);   // aqui não parece dar memory leak nem SEGV ERROR.
+
+    RUN_TEST(test_bootstrap_get_cafe_babe_carro); // aqui não parece dar memory leak nem SEGV ERROR.
     RUN_TEST(test_bootstrap_constant_pool_count_carro);
     RUN_TEST(test_bootstrap_access_flags_carro);
     RUN_TEST(test_bootstrap_interfaces_count_carro);

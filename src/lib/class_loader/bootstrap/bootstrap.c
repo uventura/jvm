@@ -127,7 +127,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
             break;
         }
         case CONSTANT_MethodHandle:
-            constant_pool_element->info.MethodHandle.reference_kind = u2_read(file);
+            constant_pool_element->info.MethodHandle.reference_kind = u1_read(file);
             constant_pool_element->info.MethodHandle.reference_index = u2_read(file);
             break;
         case CONSTANT_InvokeDynamic:
@@ -364,6 +364,25 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
     {
         // Does Nothing
     }
+    else if (!strcmp(type, "BootstrapMethods"))
+    {
+        attribute.bootstrap_methods.num_bootstrap_methods = u2_read(file);
+        Bootstrap_methods *bootstrap_methods =
+            (Bootstrap_methods *)malloc(sizeof(Bootstrap_methods) * attribute.bootstrap_methods.num_bootstrap_methods);
+        Bootstrap_methods *bootstrap_method;
+        for(bootstrap_method = bootstrap_methods; bootstrap_method < bootstrap_methods + attribute.bootstrap_methods.num_bootstrap_methods; bootstrap_method++)
+        {
+            bootstrap_method->bootstrap_method_ref = u2_read(file);
+            bootstrap_method->num_bootstrap_arguments = u2_read(file);
+            u2* bootstrap_arguments = (u2 *)malloc(sizeof(u2) * bootstrap_method->num_bootstrap_arguments);
+            u2* bootstrap_argument;
+            for(bootstrap_argument = bootstrap_arguments; bootstrap_argument < bootstrap_arguments + bootstrap_method->num_bootstrap_arguments; bootstrap_argument++)
+            {
+                *bootstrap_argument = u2_read(file);
+            }
+            bootstrap_method->bootstrap_arguments = bootstrap_arguments;
+        }
+    }
     return attribute;
 }
 
@@ -400,6 +419,10 @@ void free_attributes(u2 attributes_count, attribute_info *attributes, cp_info *c
         else if (!strcmp(type, "LineNumberTable"))
         {
             free(attribute->info.local_variable_table.local_variable_table);
+        }
+        else if (!strcmp(type, "BootstrapMethods"))
+        {
+            // free(attribute->info.bootstrap_methods.bootstrap_methods);
         }
     }
     free(attributes);
