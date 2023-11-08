@@ -387,7 +387,6 @@ attributes_type_info load_attribute_type(FILE *file, const char *type, cp_info *
     }
     else
     {
-        printf("Length: %d\n", attributes_length);
         u4 count = 0;
         for(count = 0; count < attributes_length; count++)
         {
