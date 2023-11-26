@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "lib/base/defines.h"
-#include "lib/base/stack/stack.h"
+#include "lib/base/structures/stack.h"
 
 int stack_is_empty(Stack *stack)
 {
