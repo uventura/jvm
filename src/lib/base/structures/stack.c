@@ -4,6 +4,10 @@
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
 
+void stack_initialize(Stack* stack) {
+    stack->top = NULL;
+}
+
 int stack_is_empty(Stack *stack)
 {
     if (stack->top == NULL)
