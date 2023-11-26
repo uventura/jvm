@@ -10,7 +10,7 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list)
 {
     char this_class_name[MAX_CLASS_NAME_SIZE];
     get_class_name(class_file->this_class, class_file->constant_pool, this_class_name);
-    if(strcmp(this_class_name, "java/lang/Object") == 0)
+    if (strcmp(this_class_name, "java/lang/Object") == 0)
     {
         return;
     }
@@ -18,7 +18,7 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list)
 
     char super_class_name[MAX_CLASS_NAME_SIZE];
     get_class_name(class_file->super_class, class_file->constant_pool, super_class_name);
-    if(strcmp(super_class_name, "java/lang/Object") == 0)
+    if (strcmp(super_class_name, "java/lang/Object") == 0)
     {
         return;
     }

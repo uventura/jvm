@@ -14,4 +14,6 @@ typedef uint64_t u8;
 #define TRUE 1
 #define FALSE 0
 
+#define MAX_CLASS_NAME_SIZE 65535
+
 #endif
