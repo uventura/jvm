@@ -2,9 +2,9 @@
 #include <string.h>
 
 #include "lib/base/class_file/class_file.h"
+#include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/controller/jvm_controller.h"
 #include "lib/controller/jvm_reader.h"
-#include "lib/class_loader/bootstrap/bootstrap.h"
 
 // Function that parses the command line arguments.
 // The program requires the user to pass two arguments:

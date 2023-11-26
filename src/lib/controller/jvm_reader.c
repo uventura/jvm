@@ -142,7 +142,7 @@ void jvm_display_fields(u2 fields_count, field_info *fields, cp_info *constant_p
 void jvm_display_methods(u2 methods_count, method_info *methods, cp_info *constant_pool)
 {
     printf("<Methods>\n");
-    if(methods_count == 0)
+    if (methods_count == 0)
     {
         printf("   No Methods\n\n");
         return;
