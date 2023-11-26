@@ -12,11 +12,11 @@ typedef struct
     Node *top;
 } Stack;
 
-int is_empty(Stack *stack);
-struct Node *create_node(void *data);
-void push(Stack *stack, void *data);
-struct Node *pop(Stack *stack);
-struct Node *top(Stack *stack);
+int stack_is_empty(Stack *stack);
+struct Node *stack_create_node(void *data);
+void stack_push(Stack *stack, void *data);
+struct Node *stack_pop(Stack *stack);
+struct Node *stack_top(Stack *stack);
 void free_stack(Stack *stack)
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "lib/base/stack/stack.h"
 
-int is_empty(Stack *stack)
+int stack_is_empty(Stack *stack)
 {
     if (stack->top == NULL)
     {
@@ -15,7 +15,7 @@ int is_empty(Stack *stack)
     }
 }
 
-struct Node *create_node(void *data)
+struct Node *stack_create_node(void *data)
 {
     Node *new_node = (struct Node *)malloc(sizeof(struct Node));
     new_node->data = data;
@@ -23,14 +23,14 @@ struct Node *create_node(void *data)
     return new_node;
 }
 
-void push(Stack *stack, void *data)
+void stack_push(Stack *stack, void *data)
 {
     Node *new_top = create_node(data);
     new_top->next = stack->top;
     stack->top = new_top;
 }
 
-struct Node *pop(Stack *stack)
+struct Node *stack_pop(Stack *stack)
 {
     if (is_empty(stack))
     {
@@ -45,7 +45,7 @@ struct Node *pop(Stack *stack)
     }
 }
 
-struct Node *top(Stack *stack)
+struct Node *stack_top(Stack *stack)
 {
     if (is_empty(stack))
     {
