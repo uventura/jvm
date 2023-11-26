@@ -217,7 +217,7 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
 
     if (!strcmp(type, "ConstantValue"))
     {
-        jvm_display_attrib_constant_value(attribute, constant_pool, spaces_count);
+        jvm_display_attrib_constant_value(attribute, spaces_count);
     }
     else if (!strcmp(type, "Code"))
     {
@@ -225,7 +225,7 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     }
     else if (!strcmp(type, "Exceptions"))
     {
-        jvm_display_attrib_exceptions(attribute, constant_pool, spaces_count);
+        jvm_display_attrib_exceptions(attribute, spaces_count);
     }
     else if (!strcmp(type, "SourceFile"))
     {
@@ -233,11 +233,11 @@ void jvm_display_specific_attributes_info(const char *type, attribute_info *attr
     }
     else if (!strcmp(type, "Synthetic"))
     {
-        jvm_display_attrib_synthetic(attribute, constant_pool, spaces_count);
+        jvm_display_attrib_synthetic(attribute, spaces_count);
     }
     else if (!strcmp(type, "InnerClasses")) // Adicione esta parte para InnerClasses
     {
-        jvm_display_attrib_inner_classes(attribute, constant_pool, spaces_count);
+        jvm_display_attrib_inner_classes(attribute, spaces_count);
     }
     else
     {
@@ -308,7 +308,7 @@ void jvm_display_attrib_source_file(attribute_info *attribute, cp_info *constant
     printf("Source File Name Index: %d (%s)\n", attribute->info.source_file.sourcefile_index, source_string);
 }
 
-void jvm_display_attrib_constant_value(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+void jvm_display_attrib_constant_value(attribute_info *attribute, u4 spaces_count)
 {
     jvm_print_spaces(spaces_count + DEFAULT_SPACES);
     printf("ConstantValue>\n");
@@ -317,7 +317,7 @@ void jvm_display_attrib_constant_value(attribute_info *attribute, cp_info *const
     printf("ConstantValue Index: %d\n", attribute->info.constant_value.constantvalue_index);
 }
 
-void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+void jvm_display_attrib_exceptions(attribute_info *attribute, u4 spaces_count)
 {
     printf("Exceptions>\n");
 
@@ -338,7 +338,7 @@ void jvm_display_attrib_exceptions(attribute_info *attribute, cp_info *constant_
     }
 }
 
-void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+void jvm_display_attrib_synthetic(attribute_info *attribute, u4 spaces_count)
 {
     printf("Synthetic>\n");
 
@@ -348,7 +348,7 @@ void jvm_display_attrib_synthetic(attribute_info *attribute, cp_info *constant_p
     printf("Attribute length: %d\n", attribute->attribute_length);
 }
 
-void jvm_display_attrib_inner_classes(attribute_info *attribute, cp_info *constant_pool, u4 spaces_count)
+void jvm_display_attrib_inner_classes(attribute_info *attribute, u4 spaces_count)
 {
     printf("InnerClasses>\n");
 
