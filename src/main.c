@@ -1,4 +1,4 @@
-#include "lib/controller/controller.h"
+#include "lib/controller/jvm_controller.h"
 
 int main(int argc, char **argv)
 {

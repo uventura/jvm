@@ -1,17 +1,11 @@
-#ifndef JVM_CONTROLLER
-#define JVM_CONTROLLER
+#ifndef JVM_READER
+#define JVM_READER
 
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/defines.h"
 
 // Header with the prototypes for the main JVM functions and to display the bytecode.
-
-int jvm_run(int argc, char **argv);
-
-void jvm_read_class(char *class_file_path);
-void jvm_run_class(char *class_file_path); // Not implemented yet
-
 void jvm_display_general_information(ClassFile class_file);
 void jvm_display_constant_pool(cp_info *constant_pool, u2 constant_pool_count);
 void jvm_display_interfaces(u2 interfaces_count, u2 *interfaces, cp_info *constant_pool);
