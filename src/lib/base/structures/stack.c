@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "lib/base/defines.h"
 #include "lib/base/stack/stack.h"
 
 int stack_is_empty(Stack *stack)
 {
     if (stack->top == NULL)
     {
-        return 1;
+        return TRUE;
     }
     else
     {
-        return 0;
+        return FALSE;
     }
 }
 
