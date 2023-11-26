@@ -30,7 +30,7 @@ void stack_push(Stack *stack, void *data)
     stack->top = new_top;
 }
 
-struct Node *stack_pop(Stack *stack)
+void stack_pop(Stack *stack)
 {
     if (stack_is_empty(stack))
     {
@@ -41,7 +41,7 @@ struct Node *stack_pop(Stack *stack)
     {
         Node *temp = (stack->top);
         stack->top = (stack->top)->next;
-        return temp;
+        free(temp);
     }
 }
 
