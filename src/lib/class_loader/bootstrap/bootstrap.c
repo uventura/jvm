@@ -159,7 +159,7 @@ void free_constant_pool(u2 constant_pool_count, cp_info *constant_pool)
 // Reads the bytecode relative to the interfaces of the ".class" file.
 u2 *load_interfaces(FILE *file, u2 interfaces_count)
 {
-    if(interfaces_count == 0)
+    if (interfaces_count == 0)
     {
         return NULL;
     }
@@ -189,7 +189,7 @@ void free_interfaces(u2 interfaces_count, u2 *interfaces)
 // Reads the bytecode corresponding to the fields, saving the data in a "field_info" struct that is returned.
 field_info *load_field_info(FILE *file, u2 fields_count, cp_info *constant_pool)
 {
-    if(fields_count == 0)
+    if (fields_count == 0)
     {
         return NULL;
     }
@@ -228,7 +228,7 @@ void free_fields(u2 field_count, field_info *fields, cp_info *constant_pool)
 // Reads the bytecode of the methods, stores the data in a "method_info" struct that is returned.
 method_info *load_method_info(FILE *file, u2 method_count, cp_info *constant_pool)
 {
-    if(method_count == 0)
+    if (method_count == 0)
     {
         return NULL;
     }
