@@ -12,6 +12,7 @@ typedef struct
     Node *top;
 } Stack;
 
+void stack_initialize(Stack *stack);
 int stack_is_empty(Stack *stack);
 struct Node *stack_create_node(void *data);
 void stack_push(Stack *stack, void *data);
