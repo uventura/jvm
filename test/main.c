@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "test_bootstrap.h"
+#include "test_class_file_list.h"
 #include "test_read_bytes.h"
 #include "test_stack.h"
 
@@ -49,7 +50,6 @@ int main()
     RUN_TEST(test_bootstrap_methods_count_carro);
     RUN_TEST(test_bootstrap_attributes_count_carro);
 
-
     // TESTING STACK STRUCTURE
 
     RUN_TEST(test_stack_is_empty_1);
@@ -57,6 +57,12 @@ int main()
     RUN_TEST(test_stack_top_1);
     RUN_TEST(test_stack_top_2);
     RUN_TEST(test_stack_push_pop_1);
+
+    // TESTING CLASS FILE LIST
+    RUN_TEST(test_class_file_list_initialization);
+    RUN_TEST(test_class_file_list_loading_single_class);
+    RUN_TEST(test_class_file_list_double_insert);
+    RUN_TEST(test_class_file_list_two_classes);
 
     return UNITY_END();
 }

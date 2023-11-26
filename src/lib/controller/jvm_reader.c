@@ -3,6 +3,7 @@
 
 #include "lib/base/class_file/class_defines.h"
 #include "lib/base/class_file/class_file.h"
+#include "lib/base/class_file/cp_info.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/controller/jvm_reader.h"
 
@@ -15,10 +16,13 @@ void jvm_display_general_information(ClassFile class_file)
     printf("   Constant Pool Count: %d\n", class_file.constant_pool_count);
     printf("   Access Flags: 0x%x\n", class_file.access_flags);
 
-    u2 this_class_index = class_file.constant_pool[class_file.this_class - 1].info.Class.name_index;
     char this_class[200];
-    get_utf8_value(this_class_index - 1, class_file.constant_pool, this_class);
-    printf("   This Class: %d (%s)\n", this_class_index, this_class);
+    get_class_name(class_file.this_class, class_file.constant_pool, this_class);
+    printf("   This Class: %d (%s)\n", class_file.this_class, this_class);
+
+    char super_class[200];
+    get_class_name(class_file.super_class, class_file.constant_pool, super_class);
+    printf("   Super Class: %d (%s)\n", class_file.super_class, super_class);
 
     printf("   Interfaces Count: %d\n", class_file.interfaces_count);
     printf("   Fields Count: %d\n", class_file.fields_count);

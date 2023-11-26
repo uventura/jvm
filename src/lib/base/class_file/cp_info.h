@@ -103,5 +103,6 @@ typedef struct
 } cp_info;
 
 void get_utf8_value(u2 index, cp_info *constant_pool, char *buffer);
+void get_class_name(u2 class_index, cp_info *constant_pool, char *buffer);
 
 #endif
