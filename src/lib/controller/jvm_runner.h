@@ -3,6 +3,6 @@
 
 #include "lib/base/class_file/class_file.h"
 
-void jvm_runner();
+void jvm_runner(ClassFile *class_file, char *class_path);
 
 #endif

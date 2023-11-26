@@ -5,6 +5,7 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/controller/jvm_controller.h"
 #include "lib/controller/jvm_reader.h"
+#include "lib/controller/jvm_runner.h"
 
 // Function that parses the command line arguments.
 // The program requires the user to pass two arguments:
@@ -55,4 +56,7 @@ void jvm_run_class(char *class_file_path)
 {
     printf("[JVM ERROR] - Not Implemented yet\n");
     printf("Path: %s\n", class_file_path);
+
+    ClassFile class_file = load_class_file(class_file_path);
+    jvm_runner(&class_file, class_file_path);
 }
