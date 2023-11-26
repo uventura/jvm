@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "test_bootstrap.h"
+#include "test_class_file_list.h"
 #include "test_read_bytes.h"
 
 void setUp(void)
@@ -47,6 +48,12 @@ int main()
     RUN_TEST(test_bootstrap_fields_count_carro);
     RUN_TEST(test_bootstrap_methods_count_carro);
     RUN_TEST(test_bootstrap_attributes_count_carro);
+
+    // TESTING CLASS FILE LIST
+    RUN_TEST(test_class_file_list_initialization);
+    RUN_TEST(test_class_file_list_loading_single_class);
+    RUN_TEST(test_class_file_list_double_insert);
+    RUN_TEST(test_class_file_list_two_classes);
 
     return UNITY_END();
 }
