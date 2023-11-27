@@ -3,6 +3,7 @@
 
 #include "test_bootstrap.h"
 #include "test_class_file_list.h"
+#include "test_class_loader.h"
 #include "test_read_bytes.h"
 #include "test_stack.h"
 
@@ -63,6 +64,10 @@ int main()
     RUN_TEST(test_class_file_list_loading_single_class);
     RUN_TEST(test_class_file_list_double_insert);
     RUN_TEST(test_class_file_list_two_classes);
+
+    // TESTING CLASS LOADER FUNCTIONALITY
+    RUN_TEST(test_class_loader_recursive_single_class);
+    RUN_TEST(test_class_loader_recursive_two_classes);
 
     return UNITY_END();
 }

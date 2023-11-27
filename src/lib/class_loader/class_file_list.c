@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,8 +20,11 @@ void class_file_list_free(ClassFileList *list)
     for (u4 index = 0; index < list->num_elements; ++index)
     {
         current_cfe = (list->head)->next;
+
         ClassFile *element = list->head->class;
         free_class_file(*element);
+        free(element);
+
         free(list->head);
         list->head = current_cfe;
     }

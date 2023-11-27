@@ -4,6 +4,7 @@
 #include "lib/base/class_file/class_file.h"
 #include "lib/class_loader/class_file_list.h"
 
-void class_loader_recursive(ClassFile *class_file, ClassFileList *list);
+void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *class_path);
+void class_loader_initialize(ClassFileList *classes);
 
 #endif
