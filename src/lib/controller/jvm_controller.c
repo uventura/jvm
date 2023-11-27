@@ -1,3 +1,4 @@
+#include <malloc.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -54,9 +55,7 @@ void jvm_read_class(char *class_file_path)
 
 void jvm_run_class(char *class_file_path)
 {
-    printf("[JVM ERROR] - Not Implemented yet\n");
-    printf("Path: %s\n", class_file_path);
-
-    ClassFile class_file = load_class_file(class_file_path);
-    jvm_runner(&class_file, class_file_path);
+    ClassFile *class_file = (ClassFile *)malloc(sizeof(ClassFile));
+    *class_file = load_class_file(class_file_path);
+    jvm_runner(class_file, class_file_path);
 }

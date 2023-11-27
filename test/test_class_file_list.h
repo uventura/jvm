@@ -1,11 +1,12 @@
 // Test library
 #include "lib/controller/jvm_reader.h"
 #include "unity/unity.h"
-#include <stdio.h>
+#include <malloc.h>
 #include <string.h>
 
 // Header from `src` directory
 #include "lib/base/class_file/class_defines.h"
+#include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
@@ -19,8 +20,11 @@ void test_class_file_list_initialization(void)
 void test_class_file_list_loading_single_class(void)
 {
     ClassFileList cfl = class_file_list_init();
-    ClassFile class_file = load_class_file("data/examples/HelloWorld.class");
-    class_file_list_insert(&cfl, &class_file, "HelloWorld");
+
+    ClassFile *class_file = (ClassFile *)malloc(sizeof(ClassFile));
+    *class_file = load_class_file("data/examples/HelloWorld.class");
+
+    class_file_list_insert(&cfl, class_file, "HelloWorld");
 
     TEST_ASSERT_EQUAL(cfl.num_elements, 1);
     TEST_ASSERT_EQUAL(strcmp(cfl.head->class_name, "HelloWorld"), 0);
@@ -37,9 +41,12 @@ void test_class_file_list_loading_single_class(void)
 void test_class_file_list_double_insert(void)
 {
     ClassFileList cfl = class_file_list_init();
-    ClassFile class_file = load_class_file("data/examples/HelloWorld.class");
-    class_file_list_insert(&cfl, &class_file, "HelloWorld");
-    class_file_list_insert(&cfl, &class_file, "HelloWorld");
+
+    ClassFile *class_file = (ClassFile *)malloc(sizeof(ClassFile));
+    *class_file = load_class_file("data/examples/HelloWorld.class");
+
+    class_file_list_insert(&cfl, class_file, "HelloWorld");
+    class_file_list_insert(&cfl, class_file, "HelloWorld");
 
     TEST_ASSERT_EQUAL(1, cfl.num_elements);
 
@@ -49,10 +56,14 @@ void test_class_file_list_double_insert(void)
 void test_class_file_list_two_classes(void)
 {
     ClassFileList cfl = class_file_list_init();
-    ClassFile class_file_one = load_class_file("data/examples/HelloWorld.class");
-    ClassFile class_file_two = load_class_file("data/examples/Carro.class");
-    class_file_list_insert(&cfl, &class_file_one, "HelloWorld");
-    class_file_list_insert(&cfl, &class_file_two, "Carro");
+    ClassFile *class_file_one = (ClassFile *)malloc(sizeof(ClassFile));
+    ClassFile *class_file_two = (ClassFile *)malloc(sizeof(ClassFile));
+
+    *class_file_one = load_class_file("data/examples/HelloWorld.class");
+    *class_file_two = load_class_file("data/examples/Carro.class");
+
+    class_file_list_insert(&cfl, class_file_one, "HelloWorld");
+    class_file_list_insert(&cfl, class_file_two, "Carro");
 
     TEST_ASSERT_EQUAL(2, cfl.num_elements);
     TEST_ASSERT_EQUAL(strcmp(cfl.head->class_name, "HelloWorld"), 0);
