@@ -19,7 +19,7 @@ void jvm_runner(ClassFile *class_file, char *class_path)
     class_loader_recursive(class_file, &loaded_classes, base_path);
 
     // Initialize
-    jvm_runner_innitialize(&loaded_classes);
+    class_loader_initialize(&loaded_classes);
 
     // Free Classes
     class_file_list_free(&loaded_classes);
@@ -44,10 +44,4 @@ void jvm_runner_get_file_path(char *dest, char *class_path)
     }
 
     dest[end_pos + 1] = '\0';
-}
-
-void jvm_runner_innitialize(ClassFileList *classes)
-{
-    printf("Number of Elements: %d\n", classes->num_elements);
-    class_loader_initialize(classes);
 }
