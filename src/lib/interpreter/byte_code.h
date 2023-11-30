@@ -377,7 +377,7 @@ void invokestatic();
 // 0xB9
 void invokeinterface();
 // 0xBB (skipped 0xBA (186) - invokedynamic)
-void new();
+void new ();
 // 0xBC
 void newarray();
 // 0xBD
@@ -389,7 +389,7 @@ void athrow();
 // 0xC0 (optional implementation?)
 void checkcast();
 // 0xC1 (optional implementation?)
-void instanceof();
+void instanceof ();
 // 0xC2 (optional implementation?)
 void monitorenter();
 // 0xC3 (optional implementation?)

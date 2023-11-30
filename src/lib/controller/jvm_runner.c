@@ -4,8 +4,8 @@
 
 #include "lib/base/defines.h"
 #include "lib/class_loader/class_file_list.h"
-#include "lib/controller/jvm_runner.h"
 #include "lib/class_loader/class_loader.h"
+#include "lib/controller/jvm_runner.h"
 
 void jvm_runner(ClassFile *class_file, char *class_path)
 {
