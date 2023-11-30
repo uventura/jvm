@@ -6,7 +6,6 @@
 
 void jvm_runner(ClassFile *class_file, char *class_path);
 
-void jvm_runner_innitialize(ClassFileList *classes);
 void jvm_runner_get_file_path(char *dest, char *class_path);
 
 #endif
