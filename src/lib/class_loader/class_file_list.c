@@ -67,6 +67,7 @@ ClassFile *class_file_list_get(ClassFileList *list, const char *name)
         {
             return current_element->class;
         }
+        current_element = current_element->next;
     }
 
     return NULL;
