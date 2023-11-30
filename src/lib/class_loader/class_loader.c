@@ -6,8 +6,8 @@
 #include "lib/class_loader/class_file_list.h"
 
 #include <malloc.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *class_path)
 {
