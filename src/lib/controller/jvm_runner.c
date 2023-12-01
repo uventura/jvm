@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "lib/base/defines.h"
+#include "lib/base/structures/stack.h"
 #include "lib/class_loader/class_file_list.h"
 #include "lib/class_loader/class_loader.h"
 #include "lib/controller/jvm_runner.h"
@@ -14,15 +15,24 @@ void jvm_runner(ClassFile *class_file, char *class_path)
     char base_path[path_size];
     jvm_runner_get_file_path(base_path, class_path);
 
+    // Stack Frame
+    Stack stack_frame;
+    stack_initialize(&stack_frame);
+
     // Recursive Load
     ClassFileList loaded_classes = class_file_list_init();
     class_loader_recursive(class_file, &loaded_classes, base_path);
 
     // Initialize
-    class_loader_initialize(&loaded_classes);
+    class_loader_initialize(&loaded_classes, &stack_frame);
+
+    // Run Main
 
     // Free Classes
     class_file_list_free(&loaded_classes);
+
+    // Free Stack Frame
+    free_stack(&stack_frame);
 }
 
 void jvm_runner_get_file_path(char *dest, char *class_path)
