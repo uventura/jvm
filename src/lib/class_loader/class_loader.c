@@ -5,6 +5,7 @@
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
+#include "lib/runtime_data_area/method_area.h"
 
 #include <malloc.h>
 #include <stdio.h>
@@ -41,9 +42,16 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
 
 // Class Loader Initialize
 //  Here we call all <clinit> from classes
-void class_loader_initialize(ClassFileList *classes)
+void class_loader_initialize(ClassFileList *classes, Stack *stack_frame)
 {
     Stack cinit_classes = class_loader_stack_cinit_classes(classes);
+
+    while (!stack_is_empty(&cinit_classes))
+    {
+        ClassFile *class = (ClassFile *)stack_top(&cinit_classes)->data;
+        stack_pop(&cinit_classes);
+    }
+
     free_stack(&cinit_classes);
 }
 
