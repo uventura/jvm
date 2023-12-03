@@ -4,6 +4,7 @@
 #include "test_bootstrap.h"
 #include "test_class_file_list.h"
 #include "test_class_loader.h"
+#include "test_method_area.h"
 #include "test_read_bytes.h"
 #include "test_stack.h"
 
@@ -68,6 +69,10 @@ int main()
     // TESTING CLASS LOADER FUNCTIONALITY
     RUN_TEST(test_class_loader_recursive_single_class);
     RUN_TEST(test_class_loader_recursive_two_classes);
+
+    // TEST METHOD AREA
+    RUN_TEST(test_get_method_by_name_existent);
+    RUN_TEST(test_get_method_non_existent);
 
     return UNITY_END();
 }
