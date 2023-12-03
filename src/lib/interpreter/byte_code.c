@@ -3,811 +3,827 @@
 // Functions for the opcode.
 
 // 0x00
-void nop() {
-  // Nao faz nada.
+void nop()
+{
+    // Nao faz nada.
 }
 // 0x01
-void aconst_null() {
-  // Colocar a referencia de objeto "NULL" na pilha de operandos.
-  // Observacao: a JVM nao obriga um valor concreto para "NULL".
+void aconst_null()
+{
+    // Colocar a referencia de objeto "NULL" na pilha de operandos.
+    // Observacao: a JVM nao obriga um valor concreto para "NULL".
 }
 // 0x02
-void iconst_m1() {
-  // Colocar a constante inteira -1 na pilha de operandos.
+void iconst_m1()
+{
+    // Colocar a constante inteira -1 na pilha de operandos.
 }
 // 0x03
-void iconst_0() {
-  // Colocar a constante inteira 0 na pilha de operandos.
+void iconst_0()
+{
+    // Colocar a constante inteira 0 na pilha de operandos.
 }
 // 0x04
-void iconst_1() {
-  // Colocar a constante inteira 1 na pilha de operandos.
+void iconst_1()
+{
+    // Colocar a constante inteira 1 na pilha de operandos.
 }
 // 0x05
-void iconst_2() {
-  // Colocar a constante inteira 2 na pilha de operandos.
+void iconst_2()
+{
+    // Colocar a constante inteira 2 na pilha de operandos.
 }
 // 0x06
-void iconst_3() {
-  // Colocar a constante interia 3 na pilha de operandos.
+void iconst_3()
+{
+    // Colocar a constante interia 3 na pilha de operandos.
 }
 // 0x07
-void iconst_4() {
-  // Colocar a constante inteira 4 na pilha de operandos.
+void iconst_4()
+{
+    // Colocar a constante inteira 4 na pilha de operandos.
 }
 // 0x08
-void iconst_5() {
-  // Colocar a constante inteira 5 na pilha de operandos.
+void iconst_5()
+{
+    // Colocar a constante inteira 5 na pilha de operandos.
 }
 // 0x09
-void lconst_0() {
-  // Colocar a constante long 0 na pilha de operandos.
-  // Usa 2 espacos na pilha.
+void lconst_0()
+{
+    // Colocar a constante long 0 na pilha de operandos.
+    // Usa 2 espacos na pilha.
 }
 // 0x0A
-void lconst_1() {
-  // Colocar a constante long 1 na pilha de operandos.
-  // Usa 2 espacos na pilha.
+void lconst_1()
+{
+    // Colocar a constante long 1 na pilha de operandos.
+    // Usa 2 espacos na pilha.
 }
 // 0x0B
-void fconst_0() {
-  // Colocar a constante float 0.0 na pilha de operandos.
+void fconst_0()
+{
+    // Colocar a constante float 0.0 na pilha de operandos.
 }
 // 0x0C
-void fconst_1() {
-  // Colocar a constante float 1.0 na pilha de operandos.
+void fconst_1()
+{
+    // Colocar a constante float 1.0 na pilha de operandos.
 }
 // 0x0D
-void fconst_2() {
-  // Colocar a constante float 2.0 na pilha de operandos.
+void fconst_2()
+{
+    // Colocar a constante float 2.0 na pilha de operandos.
 }
 // 0x0E
-void dconst_0() {
-  // Colocar a constante double 0.0 na pilha de operandos.
-  // Usa 2 espacos na pilha.
+void dconst_0()
+{
+    // Colocar a constante double 0.0 na pilha de operandos.
+    // Usa 2 espacos na pilha.
 }
 // 0x0F
-void dconst_1() {
- // Colocar a constante double 1.0 na pilha de operandos.
- // Usa 2 espacos na pilha.
+void dconst_1()
+{
+    // Colocar a constante double 1.0 na pilha de operandos.
+    // Usa 2 espacos na pilha.
 }
 // 0x10
-void bipush() {
-  
+void bipush()
+{
 }
 // 0x11
-void sipush() {
-  
+void sipush()
+{
 }
 // 0x12
-void ldc() {
-  
+void ldc()
+{
 }
 // 0x13
-void ldc_w() {
-  
+void ldc_w()
+{
 }
 // 0x14
-void ldc2_w() {
-  
+void ldc2_w()
+{
 }
 // 0x15
-void iload() {
-  
+void iload()
+{
 }
 // 0x16
-void lload() {
-  
+void lload()
+{
 }
 // 0x17
-void fload() {
-  
+void fload()
+{
 }
 // 0x18
-void dload() {
-  
+void dload()
+{
 }
 // 0x19
-void aload() {
-  
+void aload()
+{
 }
 // 0x1A
-void iload_0() {
-  
+void iload_0()
+{
 }
 // 0x1B
-void iload_1() {
-  
+void iload_1()
+{
 }
 // 0x1C
-void iload_2() {
-  
+void iload_2()
+{
 }
 // 0x1D
-void iload_3() {
-  
+void iload_3()
+{
 }
 // 0x1E
-void lload_0() {
-  
+void lload_0()
+{
 }
 // 0x1F
-void lload_1() {
-  
+void lload_1()
+{
 }
 // 0x20
-void lload_2() {
-  
+void lload_2()
+{
 }
 // 0x21
-void lload_3() {
-  
+void lload_3()
+{
 }
 // 0x22
-void fload_0() {
-  
+void fload_0()
+{
 }
 // 0x23
-void fload_1() {
-  
+void fload_1()
+{
 }
 // 0x24
-void fload_2() {
-  
+void fload_2()
+{
 }
 // 0x25
-void fload_3() {
-  
+void fload_3()
+{
 }
 // 0x26
-void dload_0() {
-  
+void dload_0()
+{
 }
 // 0x27
-void dload_1() {
-  
+void dload_1()
+{
 }
 // 0x28
-void dload_2() {
-  
+void dload_2()
+{
 }
 // 0x29
-void dload_3() {
-  
+void dload_3()
+{
 }
 // 0x2A
-void aload_0() {
-  
+void aload_0()
+{
 }
 // 0x2B
-void aload_1() {
-  
+void aload_1()
+{
 }
 // 0x2C
-void aload_2() {
-  
+void aload_2()
+{
 }
 // 0x2D
-void aload_3() {
-  
+void aload_3()
+{
 }
 // 0x2E
-void iaload() {
-  
+void iaload()
+{
 }
 // 0x2F
-void laload() {
-  
+void laload()
+{
 }
 // 0x30
-void faload() {
-  
+void faload()
+{
 }
 // 0x31
-void daload() {
-  
+void daload()
+{
 }
 // 0x32
-void aaload() {
-  
+void aaload()
+{
 }
 // 0x33
-void baload() {
-  
+void baload()
+{
 }
 // 0x34
-void caload() {
-  
+void caload()
+{
 }
 // 0x35
-void saload() {
-  
+void saload()
+{
 }
 // 0x36
-void istore() {
-  
+void istore()
+{
 }
 // 0x37
-void lstore() {
-  
+void lstore()
+{
 }
 // 0x38
-void fstore() {
-  
+void fstore()
+{
 }
 // 0x39
-void dstore() {
-  
+void dstore()
+{
 }
 // 0x3A
-void astore() {
-  
+void astore()
+{
 }
 // 0x3B
-void istore_0() {
-  
+void istore_0()
+{
 }
 // 0x3C
-void istore_1() {
-  
+void istore_1()
+{
 }
 // 0x3D
-void istore_2() {
-  
+void istore_2()
+{
 }
 // 0x3E
-void istore_3() {
-  
+void istore_3()
+{
 }
 // 0x3F
-void lstore_0() {
-  
+void lstore_0()
+{
 }
 // 0x40
-void lstore_1() {
-  
+void lstore_1()
+{
 }
 // 0x41
-void lstore_2() {
-  
+void lstore_2()
+{
 }
 // 0x42
-void lstore_3() {
-  
+void lstore_3()
+{
 }
 // 0x43
-void fstore_0() {
-  
+void fstore_0()
+{
 }
 // 0x44
-void fstore_1() {
-  
+void fstore_1()
+{
 }
 // 0x45
-void fstore_2() {
-  
+void fstore_2()
+{
 }
 // 0x46
-void fstore_3() {
-  
+void fstore_3()
+{
 }
 // 0x47
-void dstore_0() {
-  
+void dstore_0()
+{
 }
 // 0x48
-void dstore_1() {
-  
+void dstore_1()
+{
 }
 // 0x49
-void dstore_2() {
-  
+void dstore_2()
+{
 }
 // 0x4A
-void dstore_3() {
-  
+void dstore_3()
+{
 }
 // 0x4B
-void astore_0() {
-  
+void astore_0()
+{
 }
 // 0x4C
-void astore_1() {
-  
+void astore_1()
+{
 }
 // 0x4D
-void astore_2() {
-  
+void astore_2()
+{
 }
 // 0x4E
-void astore_3() {
-  
+void astore_3()
+{
 }
 // 0x4F
-void iastore() {
-  
+void iastore()
+{
 }
 // 0x50
-void lastore() {
-  
+void lastore()
+{
 }
 // 0x51
-void fastore() {
-  
+void fastore()
+{
 }
 // 0x52
-void dastore() {
-  
+void dastore()
+{
 }
 // 0x53
-void aastore() {
-  
+void aastore()
+{
 }
 // 0x54
-void bastore() {
-  
+void bastore()
+{
 }
 // 0x55
-void castore() {
-  
+void castore()
+{
 }
 // 0x56
-void sastore() {
-  
+void sastore()
+{
 }
 // 0x57 (optional implementation?)
-void pop() {
-  
+void pop()
+{
 }
 // 0x58 (optional implementation?)
-void pop2() {
-  
+void pop2()
+{
 }
 // 0x59 (optional implementation?)
-void dup() {
-  
+void dup()
+{
 }
 // 0x5A (optional implementation?)
-void dup_x1() {
-  
+void dup_x1()
+{
 }
 // 0x5B (optional implementation?)
-void dup_x2() {
-  
+void dup_x2()
+{
 }
 // 0x5C (optional implementation?)
-void dup2() {
-  
+void dup2()
+{
 }
 // 0x5D (optional implementation?)
-void dup2_x1() {
-  
+void dup2_x1()
+{
 }
 // 0x5E (optional implementation?)
-void dup2_x2() {
-  
+void dup2_x2()
+{
 }
 // 0x5F (optional implementation?)
-void swap() {
-  
+void swap()
+{
 }
 // 0x60
-void iadd() {
-  
+void iadd()
+{
 }
 // 0x61
-void ladd() {
-  
+void ladd()
+{
 }
 // 0x62
-void fadd() {
-  
+void fadd()
+{
 }
 // 0x63
-void dadd() {
-  
+void dadd()
+{
 }
 // 0x64
-void isub() {
-  
+void isub()
+{
 }
 // 0x65
-void lsub() {
-  
+void lsub()
+{
 }
 // 0x66
-void fsub() {
-  
+void fsub()
+{
 }
 // 0x67
-void dsub() {
-  
+void dsub()
+{
 }
 // 0x68
-void imul() {
-  
+void imul()
+{
 }
 // 0x69
-void lmul() {
-  
+void lmul()
+{
 }
 // 0x6A
-void fmul() {
-  
+void fmul()
+{
 }
 // 0x6B
-void dmul() {
-  
+void dmul()
+{
 }
 // 0x6C
-void idiv() {
-  
+void idiv()
+{
 }
 // 0x6D
-void ldiv() {
-  
+void ldiv()
+{
 }
 // 0x6E
-void fdiv() {
-  
+void fdiv()
+{
 }
 // 0x6F
-void ddiv() {
-  
+void ddiv()
+{
 }
 // 0x70
-void irem() {
-  
+void irem()
+{
 }
 // 0x71
-void lrem() {
-  
+void lrem()
+{
 }
 // 0x72
-void frem() {
-  
+void frem()
+{
 }
 // 0x73
-void drem() {
-  
+void drem()
+{
 }
 // 0x74
-void ineg() {
-  
+void ineg()
+{
 }
 // 0x75
-void lneg() {
-  
+void lneg()
+{
 }
 // 0x76
-void fneg() {
-  
+void fneg()
+{
 }
 // 0x77
-void dneg() {
-  
+void dneg()
+{
 }
 // 0x78
-void ishl() {
-  
+void ishl()
+{
 }
 // 0x79
-void lshl() {
-  
+void lshl()
+{
 }
 // 0x7A
-void ishr() {
-  
+void ishr()
+{
 }
 // 0x7B
-void lshr() {
-  
+void lshr()
+{
 }
 // 0x7C
-void iushr() {
-  
+void iushr()
+{
 }
 // 0x7D
-void lushr() {
-  
+void lushr()
+{
 }
 // 0x7E
-void iand() {
-  
+void iand()
+{
 }
 // 0x7F
-void land() {
-  
+void land()
+{
 }
 // 0x80
-void ior() {
-  
+void ior()
+{
 }
 // 0x81
-void lor() {
-  
+void lor()
+{
 }
 // 0x82
-void ixor() {
-  
+void ixor()
+{
 }
 // 0x83
-void lxor() {
-  
+void lxor()
+{
 }
 // 0x84
-void iinc() {
-  
+void iinc()
+{
 }
 // 0x85
-void i2l() {
-  
+void i2l()
+{
 }
 // 0x86
-void i2f() {
-  
+void i2f()
+{
 }
 // 0x87
-void i2d() {
-  
+void i2d()
+{
 }
 // 0x88
-void l2i() {
-  
+void l2i()
+{
 }
 // 0x89
-void l2f() {
-  
+void l2f()
+{
 }
 // 0x8A
-void l2d() {
-  
+void l2d()
+{
 }
 // 0x8B
-void f2i() {
-  
+void f2i()
+{
 }
 // 0x8C
-void f2l() {
-  
+void f2l()
+{
 }
 // 0x8D
-void f2d() {
-  
+void f2d()
+{
 }
 // 0x8E
-void d2i() {
-  
+void d2i()
+{
 }
 // 0x8F
-void d2l() {
-  
+void d2l()
+{
 }
 // 0x90
-void d2f() {
-  
+void d2f()
+{
 }
 // 0x91
-void i2b() {
-  
+void i2b()
+{
 }
 // 0x92
-void i2c() {
-  
+void i2c()
+{
 }
 // 0x93
-void i2s() {
-  
+void i2s()
+{
 }
 // 0x94
-void lcmp() {
-  
+void lcmp()
+{
 }
 // 0x95
-void fcmpl() {
-  
+void fcmpl()
+{
 }
 // 0x96
-void fcmpg() {
-  
+void fcmpg()
+{
 }
 // 0x97
-void dcmpl() {
-  
+void dcmpl()
+{
 }
 // 0x98
-void dcmpg() {
-  
+void dcmpg()
+{
 }
 // 0x99
-void ifeq() {
-  
+void ifeq()
+{
 }
 // 0x9A
-void ifne() {
-  
+void ifne()
+{
 }
 // 0x9B
-void iflt() {
-  
+void iflt()
+{
 }
 // 0x9C
-void ifge() {
-  
+void ifge()
+{
 }
 // 0x9D
-void ifgt() {
-  
+void ifgt()
+{
 }
 // 0x9E
-void ifle() {
-  
+void ifle()
+{
 }
 // 0x9F
-void if_icmpeq() {
-  
+void if_icmpeq()
+{
 }
 // 0xA0
-void if_icmpne() {
-  
+void if_icmpne()
+{
 }
 // 0xA1
-void if_icmplt() {
-  
+void if_icmplt()
+{
 }
 // 0xA2
-void if_icmpge() {
-  
+void if_icmpge()
+{
 }
 // 0xA3
-void if_icmpgt() {
-  
+void if_icmpgt()
+{
 }
 // 0xA4
-void if_icmple() {
-  
+void if_icmple()
+{
 }
 // 0xA5
-void if_acmpeg() {
-  
+void if_acmpeg()
+{
 }
 // 0xA6
-void if_acmpne() {
-  
+void if_acmpne()
+{
 }
 // 0xA7 ("goto" is a C keyword, hence the name)
-void jvm_goto() {
-  
+void jvm_goto()
+{
 }
 // 0xA8
-void jsr() {
-  
+void jsr()
+{
 }
 // 0xA9
-void ret() {
-  
+void ret()
+{
 }
 // 0xAA
-void tableswitch() {
-  
+void tableswitch()
+{
 }
 // 0xAB
-void lookupswitch() {
-  
+void lookupswitch()
+{
 }
 // 0xAC
-void ireturn() {
-  
+void ireturn()
+{
 }
 // 0xAD
-void lreturn() {
-  
+void lreturn()
+{
 }
 // 0xAE
-void freturn() {
-  
+void freturn()
+{
 }
 // 0xAF
-void dreturn() {
-  
+void dreturn()
+{
 }
 // 0xB0
-void areturn() {
-  
+void areturn()
+{
 }
 // 0xB1 ("return" is a C keyword, hence the name)
-void jvm_return() {
-  
+void jvm_return()
+{
 }
 // 0xB2
-void getstatic() {
-  
+void getstatic()
+{
 }
 // 0xB3
-void putstatic() {
-  
+void putstatic()
+{
 }
 // 0xB4
-void getfield() {
-  
+void getfield()
+{
 }
 // 0xB5
-void putfield() {
-  
+void putfield()
+{
 }
 // 0xB6
-void invokevirtual() {
-  
+void invokevirtual()
+{
 }
 // 0xB7
-void invokespecial() {
-  
+void invokespecial()
+{
 }
 // 0xB8
-void invokestatic() {
-  
+void invokestatic()
+{
 }
 // 0xB9
-void invokeinterface() {
-  
+void invokeinterface()
+{
 }
 // 0xBB (skipped 0xBA (186) - invokedynamic)
-void new () {
-  
+void new ()
+{
 }
 // 0xBC
-void newarray() {
-  
+void newarray()
+{
 }
 // 0xBD
-void anewarray() {
-  
+void anewarray()
+{
 }
 // 0xBE
-void arraylength() {
-  
+void arraylength()
+{
 }
 // 0xBF (optional implementation?)
-void athrow() {
-  
+void athrow()
+{
 }
 // 0xC0 (optional implementation?)
-void checkcast() {
-  
+void checkcast()
+{
 }
 // 0xC1 (optional implementation?)
-void instanceof () {
-  
+void instanceof ()
+{
 }
 // 0xC2 (optional implementation?)
-void monitorenter() {
-  
+void monitorenter()
+{
 }
 // 0xC3 (optional implementation?)
-void monitorexit() {
-  
+void monitorexit()
+{
 }
 // 0xC4
-void wide() {
-  
+void wide()
+{
 }
 // 0xC5
-void multianewarray() {
-  
+void multianewarray()
+{
 }
 // 0xC6
-void ifnull() {
-  
+void ifnull()
+{
 }
 // 0xC7
-void ifnonnull() {
-  
+void ifnonnull()
+{
 }
 // 0xC8
-void goto_w() {
-  
+void goto_w()
+{
 }
 // 0xC9
-void jsr_w() {
-  
+void jsr_w()
+{
 }
