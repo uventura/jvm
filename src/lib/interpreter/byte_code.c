@@ -11,54 +11,86 @@
 // 0x00
 void nop(MethodData *method_data)
 {
-    // Nao faz nada.
+    // Não realiza nenhuma operação.
 }
+
 // 0x01
 void aconst_null(MethodData *method_data)
 {
-    // Colocar a referencia de objeto "NULL" na pilha de operandos.
-    // Observacao: a JVM nao obriga um valor concreto para "NULL".
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, NULL);
 }
+
 // 0x02
 void iconst_m1(MethodData *method_data)
 {
-    // Colocar a constante inteira -1 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = -1;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x03
 void iconst_0(MethodData *method_data)
 {
-    // Colocar a constante inteira 0 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 0;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x04
 void iconst_1(MethodData *method_data)
 {
-    // Colocar a constante inteira 1 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 1;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x05
 void iconst_2(MethodData *method_data)
 {
-    // Colocar a constante inteira 2 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 2;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x06
 void iconst_3(MethodData *method_data)
 {
-    // Colocar a constante interia 3 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 3;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x07
 void iconst_4(MethodData *method_data)
 {
-    // Colocar a constante inteira 4 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 4;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x08
 void iconst_5(MethodData *method_data)
 {
-    // Colocar a constante inteira 5 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = 5;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x09
 void lconst_0(MethodData *method_data)
 {
-    // Colocar a constante long 0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long *value = (long *)malloc(sizeof(long));
+    *value = 0;
+    stack_push(current_frame->operand_stack, value);
 }
 // 0x0A
 void lconst_1(MethodData *method_data)
