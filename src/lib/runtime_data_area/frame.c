@@ -36,9 +36,9 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
 void frame_free(Frame *frame)
 {
     free(frame->local_variables);
-    while (!stack_is_empty(frame->operand_stack))
-    {
-        free(stack_top(frame->operand_stack));
-        stack_pop(frame->operand_stack);
-    }
+    // while (!stack_is_empty(frame->operand_stack))
+    // {
+    //     free(stack_top(frame->operand_stack));
+    //     stack_pop(frame->operand_stack);
+    // }
 }
