@@ -5,6 +5,7 @@
 #include "lib/runtime_data_area/method_area.h"
 
 #include <string.h>
+#include <stdio.h>
 
 // Functions for the opcode.
 
@@ -748,7 +749,7 @@ void getstatic(MethodData *method_data)
     u2 index_byte2 = method_data->code.code[method_data->pc + 2];
     u2 index = (index_byte1 << 8) | index_byte2;
 
-    Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame*)stack_top(method_data->frame_stack);
 
     u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
     char class_name[300];
@@ -763,7 +764,7 @@ void getstatic(MethodData *method_data)
     // // For debugging purposes
     printf("\t\tDescription Content: %s\n", descriptor_content);
 
-    method_data->pc += 2;
+    // method_data->pc += 2;
 }
 // 0xB3
 void putstatic(MethodData *method_data)

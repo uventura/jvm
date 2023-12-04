@@ -12,6 +12,7 @@ CFLAGS+=-Wall
 CFLAGS+=-ansi
 CFLAGS+=-pedantic
 CFLAGS+=-std=c99
+CFLAGS+=-Wno-unused-parameter
 
 SRC_DIR=src
 OBJ_DIR=obj
