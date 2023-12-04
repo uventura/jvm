@@ -95,43 +95,77 @@ void lconst_0(MethodData *method_data)
 // 0x0A
 void lconst_1(MethodData *method_data)
 {
-    // Colocar a constante long 1 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long *value = (long *)malloc(sizeof(long));
+    *value = 1;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x0B
 void fconst_0(MethodData *method_data)
 {
-    // Colocar a constante float 0.0 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)malloc(sizeof(float));
+    *value = 0.0f;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x0C
 void fconst_1(MethodData *method_data)
 {
-    // Colocar a constante float 1.0 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)malloc(sizeof(float));
+    *value = 1.0f;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x0D
 void fconst_2(MethodData *method_data)
 {
-    // Colocar a constante float 2.0 na pilha de operandos.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)malloc(sizeof(float));
+    *value = 2.0f;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x0E
 void dconst_0(MethodData *method_data)
 {
-    // Colocar a constante double 0.0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)malloc(sizeof(double));
+    *value = 0.0;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x0F
 void dconst_1(MethodData *method_data)
 {
-    // Colocar a constante double 1.0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)malloc(sizeof(double));
+    *value = 1.0;
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x10
 void bipush(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    *value = (int)method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, value);
+    method_data->pc += 1;
 }
+
 // 0x11
 void sipush(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int *value = (int *)malloc(sizeof(int));
+    u2 byte1 = method_data->code.code[method_data->pc + 1];
+    u2 byte2 = method_data->code.code[method_data->pc + 2];
+    *value = (int)((byte1 << 8) | byte2);
+    stack_push(current_frame->operand_stack, value);
+    method_data->pc += 2;
 }
 // 0x12
 void ldc(MethodData *method_data)
