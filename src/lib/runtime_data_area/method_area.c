@@ -1,6 +1,7 @@
 #include "lib/runtime_data_area/method_area.h"
 #include "lib/base/class_file/method_info.h"
 #include "lib/base/structures/stack.h"
+#include "lib/interpreter/byte_code_array.h"
 #include "lib/runtime_data_area/frame.h"
 
 #include <malloc.h>
@@ -16,13 +17,24 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     method_data.method = method;
     method_data.loaded_classes = loaded_classes;
     method_data.pc = 0;
+    method_data.code = method->attributes->info.code;
 
     Frame new_frame;
     Stack operand_stack;
     frame_initialize(&new_frame, &operand_stack, constant_pool, method->attributes->info.code, stack_frame);
     stack_push(stack_frame, &new_frame);
 
-    printf("Frame initialized");
+    method_data.frame_stack = stack_frame;
+    // Executing Code
+    for (method_data.pc = 0; method_data.pc < method_data.code.code_length; method_data.pc++)
+    {
+        // for debugging purposes the code below was introduced.
+        printf("\tCode: \t%0x\n", method_data.code.code[method_data.pc]);
+        u2 current_opcode = method_data.code.code[method_data.pc];
+
+        jvm_opcodes[current_opcode](&method_data);
+    }
+    printf("\n");
 
     frame_free(&new_frame);
 }

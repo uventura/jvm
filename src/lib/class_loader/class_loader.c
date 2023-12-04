@@ -1,6 +1,7 @@
 #include "lib/class_loader/class_loader.h"
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
+#include "lib/base/class_file/method_info.h"
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
@@ -11,6 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// Exclude the include below
+#include "lib/controller/jvm_reader.h"
 
 void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *class_path)
 {
@@ -44,24 +48,34 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
 //  Here we call all <clinit> from classes
 void class_loader_initialize(ClassFileList *classes, Stack *stack_frame)
 {
-    Stack cinit_classes = class_loader_stack_cinit_classes(classes);
+    Stack clinit_classes;
+    class_loader_stack_cinit_classes(&clinit_classes, classes);
 
-    while (!stack_is_empty(&cinit_classes))
+    while (!stack_is_empty(&clinit_classes))
     {
-        ClassFile *class = (ClassFile *)stack_top(&cinit_classes)->data;
-        stack_pop(&cinit_classes);
+        ClassFile *class = (ClassFile *)stack_top(&clinit_classes);
+        method_info *init_method = method_area_search_method("<clinit>", class);
+
+        if (init_method == NULL)
+        {
+            stack_pop(&clinit_classes);
+            continue;
+        }
+
+        method_area_call_method(init_method, class->constant_pool, stack_frame, classes);
+
+        stack_pop(&clinit_classes);
     }
 
-    free_stack(&cinit_classes);
+    free_stack(&clinit_classes);
 }
 
-Stack class_loader_stack_cinit_classes(ClassFileList *classes)
+void class_loader_stack_cinit_classes(Stack *clinit_classes, ClassFileList *classes)
 {
-    Stack classes_to_cinit;
-    stack_initialize(&classes_to_cinit);
+    stack_initialize(clinit_classes);
 
     ClassFile *main_class = classes->head->class;
-    stack_push(&classes_to_cinit, main_class);
+    stack_push(clinit_classes, main_class);
 
     char super_class_name[MAX_CLASS_NAME_SIZE];
     get_class_name(main_class->super_class, main_class->constant_pool, super_class_name);
@@ -74,11 +88,8 @@ Stack class_loader_stack_cinit_classes(ClassFileList *classes)
             printf("[ERROR] Initialization Step: The Class '%s' wasn't loaded.\n", super_class_name);
             exit(EXIT_FAILURE);
         }
-
-        stack_push(&classes_to_cinit, super_class);
+        stack_push(clinit_classes, super_class);
 
         get_class_name(super_class->super_class, super_class->constant_pool, super_class_name);
     }
-
-    return classes_to_cinit;
 }
