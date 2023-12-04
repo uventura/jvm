@@ -222,63 +222,123 @@ void lload_0(MethodData *method_data)
 // 0x1F
 void lload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long *value = (long *)(current_frame->local_variables[1]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x20
 void lload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long *value = (long *)(current_frame->local_variables[2]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x21
 void lload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long *value = (long *)(current_frame->local_variables[3]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x22
 void fload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)(current_frame->local_variables[0]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x23
 void fload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)(current_frame->local_variables[1]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x24
 void fload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)(current_frame->local_variables[2]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x25
 void fload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)(current_frame->local_variables[3]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x26
 void dload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)(current_frame->local_variables[0]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x27
 void dload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)(current_frame->local_variables[1]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x28
 void dload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)(current_frame->local_variables[2]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x29
 void dload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)(current_frame->local_variables[3]);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2A
 void aload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    void *value = current_frame->local_variables[0];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2B
 void aload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    void *value = current_frame->local_variables[1];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2C
 void aload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    void *value = current_frame->local_variables[2];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2D
 void aload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    void *value = current_frame->local_variables[3];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2E
 void iaload(MethodData *method_data)
 {
