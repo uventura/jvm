@@ -19,7 +19,6 @@ typedef struct
 
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes);
-
 method_info *method_area_search_method(const char *method, ClassFile *class);
 
 #endif

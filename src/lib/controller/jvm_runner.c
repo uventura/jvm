@@ -27,6 +27,7 @@ void jvm_runner(ClassFile *class_file, char *class_path)
     class_loader_initialize(&loaded_classes, &stack_frame);
 
     // Run Main
+    class_loader_call_main(&loaded_classes, &stack_frame);
 
     // Free Classes
     class_file_list_free(&loaded_classes);
