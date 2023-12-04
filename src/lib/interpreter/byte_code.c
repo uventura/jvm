@@ -819,6 +819,8 @@ void invokevirtual(MethodData *method_data)
         char *string = (char *)stack_top(current_frame->operand_stack);
         printf("%s\n", string);
     }
+
+    method_data->pc += 2;
 }
 // 0xB7
 void invokespecial(MethodData *method_data)
