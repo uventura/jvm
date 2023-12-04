@@ -10,6 +10,7 @@ typedef struct
     cp_info *constant_pool;
     Stack *operand_stack;
     void **local_variables;
+    u2 max_locals;
 } Frame;
 
 void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool, Code_attribute code,
