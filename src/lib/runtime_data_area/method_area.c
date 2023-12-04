@@ -25,6 +25,7 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     stack_push(stack_frame, &new_frame);
 
     method_data.frame_stack = stack_frame;
+
     // Executing Code
     for (method_data.pc = 0; method_data.pc < method_data.code.code_length; method_data.pc++)
     {
