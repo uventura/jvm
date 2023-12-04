@@ -1,6 +1,7 @@
 #ifndef JVM_METHOD_AREA
 #define JVM_METHOD_AREA
 
+#include "lib/base/class_file/attribute_info.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/class_file/method_info.h"
 #include "lib/base/defines.h"
@@ -13,6 +14,7 @@ typedef struct
     method_info *method;
     ClassFileList *loaded_classes;
     u8 pc;
+    Code_attribute code; // Just to improve the usability, but you can access in "*method"
 } MethodData;
 
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
