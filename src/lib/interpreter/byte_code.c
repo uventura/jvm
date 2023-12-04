@@ -780,11 +780,10 @@ void getstatic(MethodData *method_data)
     u2 name_type_index = current_frame->constant_pool[index - 1].info.Fieldref.name_and_type_index;
     u2 descriptor_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.descriptor_index;
     char descriptor_content[300];
-    get_utf8_value(descriptor_index, current_frame->constant_pool, descriptor_content);
+    get_utf8_value(descriptor_index - 1, current_frame->constant_pool, descriptor_content);
 
     if (!strcmp(class_name, "java/lang/System"))
     {
-        // Call the static field.
     }
 
     method_data->pc += 2;
