@@ -1,11 +1,13 @@
 #include "lib/interpreter/byte_code.h"
 #include "lib/base/class_file/cp_info.h"
+#include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
 #include "lib/runtime_data_area/frame.h"
 #include "lib/runtime_data_area/method_area.h"
 
-#include <string.h>
+#include <malloc.h>
 #include <stdio.h>
+#include <string.h>
 
 // Functions for the opcode.
 
@@ -105,6 +107,26 @@ void sipush(MethodData *method_data)
 // 0x12
 void ldc(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 index = method_data->code.code[method_data->pc + 1];
+    cp_info element = current_frame->constant_pool[index - 1];
+
+    if (element.tag == CONSTANT_String)
+    {
+        u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
+        CONSTANT_Utf8_info utf8_element = current_frame->constant_pool[utf8_index - 1].info.Utf8;
+        // The function below must be transformed in a method.
+        char *string = (char *)malloc(utf8_element.length + 1);
+        for (u2 string_index = 0; string_index < utf8_element.length; ++string_index)
+        {
+            string[string_index] = utf8_element.bytes[string_index];
+        }
+        string[utf8_element.length] = '\0';
+        stack_push(current_frame->operand_stack, string);
+    }
+
+    method_data->pc += 1;
 }
 // 0x13
 void ldc_w(MethodData *method_data)
@@ -749,22 +771,23 @@ void getstatic(MethodData *method_data)
     u2 index_byte2 = method_data->code.code[method_data->pc + 2];
     u2 index = (index_byte1 << 8) | index_byte2;
 
-    Frame *current_frame = (Frame*)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
     u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
     char class_name[300];
     get_class_name(class_index, current_frame->constant_pool, class_name);
-    // // For debugging purposes
-    printf("\t\tClass Name: %s\n", class_name);
 
     u2 name_type_index = current_frame->constant_pool[index - 1].info.Fieldref.name_and_type_index;
     u2 descriptor_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.descriptor_index;
     char descriptor_content[300];
     get_utf8_value(descriptor_index, current_frame->constant_pool, descriptor_content);
-    // // For debugging purposes
-    printf("\t\tDescription Content: %s\n", descriptor_content);
 
-    // method_data->pc += 2;
+    if (!strcmp(class_name, "java/lang/System"))
+    {
+        // Call the static field.
+    }
+
+    method_data->pc += 2;
 }
 // 0xB3
 void putstatic(MethodData *method_data)
@@ -781,6 +804,21 @@ void putfield(MethodData *method_data)
 // 0xB6
 void invokevirtual(MethodData *method_data)
 {
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
+    char class_name[300];
+    get_class_name(class_index, current_frame->constant_pool, class_name);
+
+    if (!strcmp(class_name, "java/io/PrintStream"))
+    {
+        char *string = (char *)stack_top(current_frame->operand_stack);
+        printf("%s\n", string);
+    }
 }
 // 0xB7
 void invokespecial(MethodData *method_data)
