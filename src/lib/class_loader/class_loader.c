@@ -93,3 +93,17 @@ void class_loader_stack_cinit_classes(Stack *clinit_classes, ClassFileList *clas
         get_class_name(super_class->super_class, super_class->constant_pool, super_class_name);
     }
 }
+
+void class_loader_call_main(ClassFileList *classes, Stack *stack_frame)
+{
+    ClassFile *main_class = classes->head->class;
+    method_info *main_method = method_area_search_method("main", main_class);
+
+    // For debugging purposes
+    printf("Executing main...\n");
+
+    if (main_method != NULL)
+    {
+        method_area_call_method(main_method, main_class->constant_pool, stack_frame, classes);
+    }
+}

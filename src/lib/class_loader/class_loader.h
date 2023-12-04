@@ -9,4 +9,6 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
 void class_loader_initialize(ClassFileList *classes, Stack *stack_frame);
 void class_loader_stack_cinit_classes(Stack *clinit_classes, ClassFileList *classes);
 
+void class_loader_call_main(ClassFileList *classes, Stack *stack_frame);
+
 #endif
