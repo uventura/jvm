@@ -11,6 +11,7 @@
 typedef struct
 {
     u2 name_index;
+    char* path;
 } CONSTANT_Class_info;
 
 typedef struct
