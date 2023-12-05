@@ -46,12 +46,12 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
     class_loader_recursive(super_class_file, list, class_path);
 }
 
-void class_loader_resolve(ClassFile* class_file, char *class_path)
+void class_loader_resolve(ClassFile *class_file, char *class_path)
 {
-    cp_info* cp;
-    for(cp = class_file->constant_pool; cp < class_file->constant_pool + class_file->constant_pool_count; cp++)
+    cp_info *cp;
+    for (cp = class_file->constant_pool; cp < class_file->constant_pool + class_file->constant_pool_count; cp++)
     {
-        if(cp->tag == CONSTANT_Class)
+        if (cp->tag == CONSTANT_Class)
         {
             u2 index = cp->info.Class.name_index - 1;
             u2 size = class_file->constant_pool[index].info.Utf8.length;
@@ -60,17 +60,17 @@ void class_loader_resolve(ClassFile* class_file, char *class_path)
             get_utf8_value(index, class_file->constant_pool, class_name);
 
             // Check if is Java Class
-            if(size > 5)
+            if (size > 5)
             {
-                char* cnp = class_name;
+                char *cnp = class_name;
                 char prefix[6] = {cnp[0], cnp[1], cnp[2], cnp[3], cnp[4], '\0'};
-                if(!strcmp(prefix, "java/")) continue;
+                if (!strcmp(prefix, "java/"))
+                    continue;
             }
 
             cp->info.Class.path = class_path;
         }
     }
-
 }
 
 // Class Loader Initialize

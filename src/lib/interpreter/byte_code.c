@@ -1,7 +1,10 @@
 #include "lib/interpreter/byte_code.h"
+#include "lib/base/class_file/class_file.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
+#include "lib/class_loader/bootstrap/bootstrap.h"
+#include "lib/class_loader/class_file_list.h"
 #include "lib/runtime_data_area/frame.h"
 #include "lib/runtime_data_area/method_area.h"
 
@@ -99,6 +102,12 @@ void dconst_1(MethodData *method_data)
 // 0x10
 void bipush(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    // Reimplement
+    int16_t *byte = (int16_t *)malloc(sizeof(int16_t));
+    *byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, byte);
+    method_data->pc += 1;
 }
 // 0x11
 void sipush(MethodData *method_data)
@@ -411,6 +420,9 @@ void pop2(MethodData *method_data)
 // 0x59 (optional implementation?MethodData* method_data)
 void dup(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Node *top = stack_top(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, top);
 }
 // 0x5A (optional implementation?MethodData* method_data)
 void dup_x1(MethodData *method_data)
@@ -824,6 +836,34 @@ void invokevirtual(MethodData *method_data)
 // 0xB7
 void invokespecial(MethodData *method_data)
 {
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
+    char class_name[300];
+    get_class_name(class_index, current_frame->constant_pool, class_name);
+    printf("\t\tInvoke Special: %s\n", class_name);
+
+    if (!strcmp(class_name, "java/io/PrintStream"))
+    {
+        char *string = (char *)stack_top(current_frame->operand_stack);
+        printf("%s\n", string);
+    }
+    else
+    {
+        int16_t *value_ptr = stack_top(current_frame->operand_stack);
+        int16_t value = *value_ptr;
+        printf("\t\tValue: %d\n", value);
+        free(value_ptr);
+        stack_pop(current_frame->operand_stack);
+        // method_area_call_method(object->method, constant_pool, stack_frame,
+        //                     loaded_classes, object);
+    }
+
+    method_data->pc += 2;
 }
 // 0xB8
 void invokestatic(MethodData *method_data)
@@ -836,6 +876,30 @@ void invokeinterface(MethodData *method_data)
 // 0xBB (skipped 0xBA (186MethodData* method_data) - invokedynamicMethodData* method_data)
 void new_func(MethodData *method_data)
 {
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    char class_name[400];
+    get_class_name(index, current_frame->constant_pool, class_name);
+
+    u2 class_path_size =
+        strlen(current_frame->constant_pool[index - 1].info.Class.path) + strlen(class_name) + strlen(".class");
+    char path[class_path_size];
+    strcpy(path, current_frame->constant_pool[index - 1].info.Class.path);
+    strcat(path, class_name);
+    strcat(path, ".class");
+
+    ClassFile *new_class = (ClassFile *)malloc(sizeof(ClassFile));
+    *new_class = load_class_file(path);
+    class_file_list_insert(method_data->loaded_classes, new_class, class_name);
+
+    JVMObject *new_object = object_init_dynamic(new_class);
+    stack_push(current_frame->operand_stack, new_object);
+
+    method_data->pc += 2;
 }
 // 0xBC
 void newarray(MethodData *method_data)

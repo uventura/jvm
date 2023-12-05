@@ -81,6 +81,7 @@ cp_info *load_constant_pool(FILE *file, u2 constant_pool_count)
         {
         case CONSTANT_Class:
             constant_pool_element->info.Class.name_index = u2_read(file);
+            constant_pool_element->info.Class.path = NULL;
             break;
         case CONSTANT_Fieldref:
             constant_pool_element->info.Fieldref.class_index = u2_read(file);
