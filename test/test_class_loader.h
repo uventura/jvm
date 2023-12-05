@@ -10,6 +10,10 @@
 #include "lib/base/class_file/cp_info.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_loader.h"
+#include "lib/base/defines.h"
+
+// Exclude Later
+#include "lib/controller/jvm_reader.h"
 
 // Testing functionalities
 void test_class_loader_recursive_single_class()

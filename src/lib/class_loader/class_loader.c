@@ -25,6 +25,8 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
     {
         return;
     }
+
+    class_loader_resolve(class_file, class_path);
     class_file_list_insert(list, class_file, this_class_name);
 
     char super_class_name[MAX_CLASS_NAME_SIZE];
@@ -42,6 +44,33 @@ void class_loader_recursive(ClassFile *class_file, ClassFileList *list, char *cl
     ClassFile *super_class_file = (ClassFile *)malloc(sizeof(ClassFile));
     *super_class_file = load_class_file(super_class_path);
     class_loader_recursive(super_class_file, list, class_path);
+}
+
+void class_loader_resolve(ClassFile* class_file, char *class_path)
+{
+    cp_info* cp;
+    for(cp = class_file->constant_pool; cp < class_file->constant_pool + class_file->constant_pool_count; cp++)
+    {
+        if(cp->tag == CONSTANT_Class)
+        {
+            u2 index = cp->info.Class.name_index - 1;
+            u2 size = class_file->constant_pool[index].info.Utf8.length;
+
+            char class_name[size + 1];
+            get_utf8_value(index, class_file->constant_pool, class_name);
+
+            // Check if is Java Class
+            if(size > 5)
+            {
+                char* cnp = class_name;
+                char prefix[6] = {cnp[0], cnp[1], cnp[2], cnp[3], cnp[4], '\0'};
+                if(!strcmp(prefix, "java/")) continue;
+            }
+
+            cp->info.Class.path = class_path;
+        }
+    }
+
 }
 
 // Class Loader Initialize
@@ -62,7 +91,7 @@ void class_loader_initialize(ClassFileList *classes, Stack *stack_frame)
             continue;
         }
 
-        method_area_call_method(init_method, class->constant_pool, stack_frame, classes);
+        method_area_call_method(init_method, class->constant_pool, stack_frame, classes, NULL);
 
         stack_pop(&clinit_classes);
     }
@@ -104,6 +133,6 @@ void class_loader_call_main(ClassFileList *classes, Stack *stack_frame)
 
     if (main_method != NULL)
     {
-        method_area_call_method(main_method, main_class->constant_pool, stack_frame, classes);
+        method_area_call_method(main_method, main_class->constant_pool, stack_frame, classes, NULL);
     }
 }
