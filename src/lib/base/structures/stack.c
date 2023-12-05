@@ -51,7 +51,7 @@ void stack_pop(Stack *stack)
     }
 }
 
-struct Node *stack_top(Stack *stack)
+void *stack_top(Stack *stack)
 {
     if (stack_is_empty(stack))
     {
