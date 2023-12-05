@@ -11,13 +11,14 @@
 #include <stdio.h>
 
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
-                             ClassFileList *loaded_classes)
+                             ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
     MethodData method_data;
     method_data.method = method;
     method_data.loaded_classes = loaded_classes;
     method_data.pc = 0;
     method_data.code = method->attributes->info.code;
+    method_data.object = object;
 
     Frame new_frame;
     Stack operand_stack;

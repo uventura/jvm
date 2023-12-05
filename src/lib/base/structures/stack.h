@@ -17,7 +17,7 @@ int stack_is_empty(Stack *stack);
 struct Node *stack_create_node(void *data);
 void stack_push(Stack *stack, void *data);
 void stack_pop(Stack *stack);
-struct Node *stack_top(Stack *stack);
+void *stack_top(Stack *stack);
 void free_stack(Stack *stack);
 
 #endif

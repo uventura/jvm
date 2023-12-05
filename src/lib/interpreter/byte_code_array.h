@@ -191,6 +191,7 @@ opcode_function jvm_opcodes[202] = {
     &invokespecial,
     &invokestatic,
     &invokeinterface,
+    &nop, // invoke_dynamic
     &new_func,
     &newarray,
     &anewarray,

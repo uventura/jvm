@@ -7,6 +7,7 @@
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/class_file_list.h"
+#include "lib/runtime_data_area/object.h"
 
 typedef struct
 {
@@ -15,10 +16,12 @@ typedef struct
     ClassFileList *loaded_classes;
     u8 pc;
     Code_attribute code; // Just to improve the usability, but you can access in "*method"
+    JVMObject *object;
 } MethodData;
 
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
-                             ClassFileList *loaded_classes);
+                             ClassFileList *loaded_classes, JVMObject *object /*NULL*/);
+
 method_info *method_area_search_method(const char *method, ClassFile *class);
 
 #endif
