@@ -170,15 +170,61 @@ void sipush(MethodData *method_data)
 // 0x12
 void ldc(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u2 index = method_data->code.code[method_data->pc + 1];
+    cp_info element = current_frame->constant_pool[index - 1];
+
+    if (element.tag == CONSTANT_String)
+    {
+        u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
+        char *string = get_utf8_string(utf8_index, current_frame->constant_pool);
+        stack_push(current_frame->operand_stack, string);
+    }
+
+    method_data->pc += 2;
 }
+
 // 0x13
 void ldc_w(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u2 index = read_u2(&method_data->code.code[method_data->pc + 1]);
+    cp_info element = current_frame->constant_pool[index - 1];
+
+    if (element.tag == CONSTANT_String)
+    {
+        u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
+        char *string = get_utf8_string(utf8_index, current_frame->constant_pool);
+        stack_push(current_frame->operand_stack, string);
+    }
+
+    method_data->pc += 3;
 }
+
 // 0x14
 void ldc2_w(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u2 index = read_u2(&method_data->code.code[method_data->pc + 1]);
+    cp_info element = current_frame->constant_pool[index - 1];
+
+    if (element.tag == CONSTANT_Long)
+    {
+        CONSTANT_Long_info long_element = element.info.Long;
+        long long_value = ((long)long_element.high_bytes << 32) | long_element.low_bytes;
+        // Empilhar long_value na pilha de operandos
+    }
+    else if (element.tag == CONSTANT_Double)
+    {
+        CONSTANT_Double_info double_element = element.info.Double;
+        double double_value;
+        // Converte os bytes para um valor double e empilha na pilha de operandos
+    }
+
+    method_data->pc += 3;
 }
+
+
 // 0x15
 void iload(MethodData *method_data)
 {
