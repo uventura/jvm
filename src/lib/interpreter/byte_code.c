@@ -119,21 +119,23 @@ void ldc(MethodData *method_data)
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
     u2 index = method_data->code.code[method_data->pc + 1];
-    cp_info element = current_frame->constant_pool[index - 1];
-
-    if (element.tag == CONSTANT_String)
-    {
-        u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
-        CONSTANT_Utf8_info utf8_element = current_frame->constant_pool[utf8_index - 1].info.Utf8;
-        // The function below must be transformed in a method.
-        char *string = (char *)malloc(utf8_element.length + 1);
-        for (u2 string_index = 0; string_index < utf8_element.length; ++string_index)
-        {
-            string[string_index] = utf8_element.bytes[string_index];
-        }
-        string[utf8_element.length] = '\0';
-        stack_push(current_frame->operand_stack, string);
-    }
+    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+    // cp_info* element = stack_top(current_frame->operand_stack);
+    // u2 ind = element->info.String.string_index;
+    // printf(">>> %d\n", ind);
+    // if (element.tag == CONSTANT_String)
+    // {
+    //     u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
+    //     CONSTANT_Utf8_info utf8_element = current_frame->constant_pool[utf8_index - 1].info.Utf8;
+    //     // The function below must be transformed in a method.
+    //     char *string = (char *)malloc(utf8_element.length + 1);
+    //     for (u2 string_index = 0; string_index < utf8_element.length; ++string_index)
+    //     {
+    //         string[string_index] = utf8_element.bytes[string_index];
+    //     }
+    //     string[utf8_element.length] = '\0';
+    //     stack_push(current_frame->operand_stack, string);
+    // }
 
     method_data->pc += 1;
 }
@@ -827,8 +829,36 @@ void invokevirtual(MethodData *method_data)
 
     if (!strcmp(class_name, "java/io/PrintStream"))
     {
-        char *string = (char *)stack_top(current_frame->operand_stack);
-        printf("%s\n", string);
+        cp_info* element = (cp_info*)stack_top(current_frame->operand_stack);
+        stack_pop(current_frame->operand_stack);
+
+        switch(element->tag)
+        {
+            case CONSTANT_String:
+                u2 index = element->info.String.string_index - 1;
+                element = (cp_info*)(&current_frame->constant_pool[index]);
+            case CONSTANT_Utf8:
+            {
+                u2 size = element->info.Utf8.length;
+                char string[size + 1];
+                for (u2 string_index = 0; string_index < size; ++string_index)
+                {
+                    string[string_index] = element->info.Utf8.bytes[string_index];
+                }
+                string[size] = '\0';
+                printf("%s\n", string);
+            }
+            break;
+            case CONSTANT_Integer:
+            {
+                printf("%d\n", element->info.Integer.bytes);
+            }
+            break;
+            case CONSTANT_Double:
+            {
+                printf("Double not implemented\n");
+            }
+        }
     }
 
     method_data->pc += 2;
