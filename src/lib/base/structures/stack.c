@@ -24,7 +24,7 @@ int stack_is_empty(Stack *stack)
 
 struct Node *stack_create_node(void *data)
 {
-    Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+    Node *new_node = (struct Node *)malloc(sizeof(Node));
     new_node->data = data;
     new_node->next = NULL;
     return new_node;
