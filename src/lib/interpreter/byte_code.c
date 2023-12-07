@@ -1437,7 +1437,12 @@ void ifeq(MethodData *method_data) {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int value = *((int *)stack_pop(current_frame->operand_stack));
     if (value == 0) {
-        // Implementar lógica para pular para o endereço do branch.
+        u2 branchbyte1 = method_data->code.code[method_data->pc + 1];
+        u2 branchbyte2 = method_data->code.code[method_data->pc + 2];
+        short branch_offset = (short)((branchbyte1 << 8) | branchbyte2);
+        method_data->pc += branch_offset;
+    } else {
+        method_data->pc += 3;  // Avança o PC além do opcode e dos dois bytes do deslocamento
     }
 }
 
@@ -1447,9 +1452,15 @@ void ifne(MethodData *method_data) {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int value = *((int *)stack_pop(current_frame->operand_stack));
     if (value != 0) {
-        // Implementar lógica para pular para o endereço do branch.
+        u2 branchbyte1 = method_data->code.code[method_data->pc + 1];
+        u2 branchbyte2 = method_data->code.code[method_data->pc + 2];
+        short branch_offset = (short)((branchbyte1 << 8) | branchbyte2);
+        method_data->pc += branch_offset;
+    } else {
+        method_data->pc += 3;  // Avança o PC além do opcode e dos dois bytes do deslocamento
     }
 }
+
 
 // 0x9B
 void iflt(MethodData *method_data)
