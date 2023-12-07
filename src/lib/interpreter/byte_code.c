@@ -436,170 +436,335 @@ void aload_3(MethodData *method_data)
     stack_push(current_frame->operand_stack, value);
 }
 
-// 0x2E
-void iaload(MethodData *method_data)
-{
+// Carrega um inteiro de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void iaload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    int *array_ref = (int *)stack_pop(current_frame->operand_stack);
+    int value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x2F
-void laload(MethodData *method_data)
-{
+// Carrega um long de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void laload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    long *array_ref = (long *)stack_pop(current_frame->operand_stack);
+    long value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x30
-void faload(MethodData *method_data)
-{
+// Carrega um float de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void faload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    float *array_ref = (float *)stack_pop(current_frame->operand_stack);
+    float value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x31
-void daload(MethodData *method_data)
-{
+// Carrega um double de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void daload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    double *array_ref = (double *)stack_pop(current_frame->operand_stack);
+    double value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x32
-void aaload(MethodData *method_data)
-{
+// Carrega uma referência de um array de referências especificado pelo índice e pela referência do array na pilha de operandos.
+void aaload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    void **array_ref = (void **)stack_pop(current_frame->operand_stack);
+    void *value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x33
-void baload(MethodData *method_data)
-{
+// Carrega um byte ou boolean de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void baload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    char *array_ref = (char *)stack_pop(current_frame->operand_stack);
+    char value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x34
-void caload(MethodData *method_data)
-{
+// Carrega um char de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void caload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    char *array_ref = (char *)stack_pop(current_frame->operand_stack);
+    char value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x35
-void saload(MethodData *method_data)
-{
+// Carrega um short de um array especificado pelo índice e pela referência do array na pilha de operandos.
+void saload(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int index = *((int *)stack_pop(current_frame->operand_stack));
+    short *array_ref = (short *)stack_pop(current_frame->operand_stack);
+    short value = array_ref[index];
+    stack_push(current_frame->operand_stack, &value);
 }
+
 // 0x36
-void istore(MethodData *method_data)
-{
+// Armazena um int de uma variável local ou da stack de operandos em um array.
+void istore(MethodData *method_data) {
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[index] = value;
 }
+
 // 0x37
-void lstore(MethodData *method_data)
-{
+// Armazena um long de uma variável local ou da stack de operandos em um array.
+void lstore(MethodData *method_data) {
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[index] = value;
 }
+
 // 0x38
-void fstore(MethodData *method_data)
-{
+// Armazena um float de uma variável local ou da stack de operandos em um array.
+void fstore(MethodData *method_data) {
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[index] = value;
 }
+
 // 0x39
-void dstore(MethodData *method_data)
-{
+// Armazena um double de uma variável local ou da stack de operandos em um array.
+void dstore(MethodData *method_data) {
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[index] = value;
 }
+
 // 0x3A
-void astore(MethodData *method_data)
-{
+// Armazena uma referência de uma variável local ou da stack de operandos em um array.
+void astore(MethodData *method_data) {
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    void *value = stack_pop(method_data->frame_stack);
+    method_data->local_variables[index] = value;
 }
+
 // 0x3B
-void istore_0(MethodData *method_data)
-{
+// Armazena um int na primeira posição das variáveis locais.
+void istore_0(MethodData *method_data) {
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[0] = value;
 }
+
 // 0x3C
-void istore_1(MethodData *method_data)
-{
+// Armazena um int na segunda posição das variáveis locais.
+void istore_1(MethodData *method_data) {
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[1] = value;
 }
+
 // 0x3D
-void istore_2(MethodData *method_data)
-{
+// Armazena um int na terceira posição das variáveis locais.
+void istore_2(MethodData *method_data) {
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[2] = value;
 }
+
 // 0x3E
-void istore_3(MethodData *method_data)
-{
+// Armazena um int na quarta posição das variáveis locais.
+void istore_3(MethodData *method_data) {
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[3] = value;
 }
+
 // 0x3F
-void lstore_0(MethodData *method_data)
-{
+// Armazena um long na primeira posição das variáveis locais.
+void lstore_0(MethodData *method_data) {
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[0] = value;
 }
+
 // 0x40
-void lstore_1(MethodData *method_data)
-{
+// Armazena um long na segunda posição das variáveis locais.
+void lstore_1(MethodData *method_data) {
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[1] = value;
 }
+
 // 0x41
-void lstore_2(MethodData *method_data)
-{
+// Armazena um long na terceira posição das variáveis locais.
+void lstore_2(MethodData *method_data) {
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[2] = value;
 }
+
 // 0x42
-void lstore_3(MethodData *method_data)
-{
+// Armazena um long na quarta posição das variáveis locais.
+void lstore_3(MethodData *method_data) {
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[3] = value;
 }
+
 // 0x43
-void fstore_0(MethodData *method_data)
-{
+// Armazena um float na primeira posição das variáveis locais.
+void fstore_0(MethodData *method_data) {
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[0] = value;
 }
+
 // 0x44
-void fstore_1(MethodData *method_data)
-{
+// Armazena um float na segunda posição das variáveis locais.
+void fstore_1(MethodData *method_data) {
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[1] = value;
 }
+
 // 0x45
-void fstore_2(MethodData *method_data)
-{
+// Armazena um float na terceira posição das variáveis locais.
+void fstore_2(MethodData *method_data) {
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[2] = value;
 }
+
 // 0x46
-void fstore_3(MethodData *method_data)
-{
+// Armazena um float na quarta posição das variáveis locais.
+void fstore_3(MethodData *method_data) {
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[3] = value;
 }
+
 // 0x47
-void dstore_0(MethodData *method_data)
-{
+// Armazena um double na primeira posição das variáveis locais.
+void dstore_0(MethodData *method_data) {
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[0] = value;
 }
+
 // 0x48
-void dstore_1(MethodData *method_data)
-{
+// Armazena um double na segunda posição das variáveis locais.
+void dstore_1(MethodData *method_data) {
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[1] = value;
 }
+
 // 0x49
-void dstore_2(MethodData *method_data)
-{
+// Armazena um double na terceira posição das variáveis locais.
+void dstore_2(MethodData *method_data) {
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    method_data->local_variables[2] = value;
 }
+
 // 0x4A
-void dstore_3(MethodData *method_data)
-{
-}
+// Armazena um double na quarta posição das variáveis locais.
+void dstore_3(MethodData *method_data) {
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    method_data->
+
 // 0x4B
-void astore_0(MethodData *method_data)
-{
-}
+// Armazena uma referência na primeira posição das variáveis locais.
+void astore_0(MethodData *method_data) {
+    void *value = stack_pop(method_data->frame_stack);
+    method_data->local_variables[0] =
+
 // 0x4C
-void astore_1(MethodData *method_data)
-{
+// Armazena uma referência na segunda posição das variáveis locais.
+void astore_1(MethodData *method_data) {
+    void *value = stack_pop(method_data->frame_stack);
+    method_data->local_variables[1] = value;
 }
+
 // 0x4D
-void astore_2(MethodData *method_data)
-{
+// Armazena uma referência na terceira posição das variáveis locais.
+void astore_2(MethodData *method_data) {
+    void *value = stack_pop(method_data->frame_stack);
+    method_data->local_variables[2] = value;
 }
+
 // 0x4E
-void astore_3(MethodData *method_data)
-{
+// Armazena uma referência na quarta posição das variáveis locais.
+void astore_3(MethodData *method_data) {
+    void *value = stack_pop(method_data->frame_stack);
+    method_data->local_variables[3] = value;
 }
+
 // 0x4F
-void iastore(MethodData *method_data)
-{
+// Armazena um int em um array.
+void iastore(MethodData *method_data) {
+    int *array_ref = (int *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    int value = *((int *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x50
-void lastore(MethodData *method_data)
-{
+// Armazena um long em um array.
+void lastore(MethodData *method_data) {
+    long *array_ref = (long *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    long value = *((long *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x51
-void fastore(MethodData *method_data)
-{
+// Armazena um float em um array.
+void fastore(MethodData *method_data) {
+    float *array_ref = (float *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    float value = *((float *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x52
-void dastore(MethodData *method_data)
-{
+// Armazena um double em um array.
+void dastore(MethodData *method_data) {
+    double *array_ref = (double *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    double value = *((double *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x53
-void aastore(MethodData *method_data)
-{
+// Armazena uma referência em um array de referências.
+void aastore(MethodData *method_data) {
+    void **array_ref = (void **)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    void *value = stack_pop(method_data->frame_stack);
+    array_ref[index] = value;
 }
+
 // 0x54
-void bastore(MethodData *method_data)
-{
+// Armazena um byte ou boolean em um array.
+void bastore(MethodData *method_data) {
+    char *array_ref = (char *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    char value = *((char *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x55
-void castore(MethodData *method_data)
-{
+// Armazena um char em um array.
+void castore(MethodData *method_data) {
+    char *array_ref = (char *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    char value = *((char *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x56
-void sastore(MethodData *method_data)
-{
+// Armazena um short em um array.
+void sastore(MethodData *method_data) {
+    short *array_ref = (short *)stack_pop(method_data->frame_stack);
+    int index = *((int *)stack_pop(method_data->frame_stack));
+    short value = *((short *)stack_pop(method_data->frame_stack));
+    array_ref[index] = value;
 }
+
 // 0x57 (optional implementation?MethodData* method_data)
 void pop(MethodData *method_data)
 {
