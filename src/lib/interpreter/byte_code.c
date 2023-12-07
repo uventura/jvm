@@ -123,23 +123,6 @@ void ldc(MethodData *method_data)
 
     u2 index = method_data->code.code[method_data->pc + 1];
     stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
-    // cp_info* element = stack_top(current_frame->operand_stack);
-    // u2 ind = element->info.String.string_index;
-    // printf(">>> %d\n", ind);
-    // if (element.tag == CONSTANT_String)
-    // {
-    //     u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
-    //     CONSTANT_Utf8_info utf8_element = current_frame->constant_pool[utf8_index - 1].info.Utf8;
-    //     // The function below must be transformed in a method.
-    //     char *string = (char *)malloc(utf8_element.length + 1);
-    //     for (u2 string_index = 0; string_index < utf8_element.length; ++string_index)
-    //     {
-    //         string[string_index] = utf8_element.bytes[string_index];
-    //     }
-    //     string[utf8_element.length] = '\0';
-    //     stack_push(current_frame->operand_stack, string);
-    // }
-
     method_data->pc += 1;
 }
 // 0x13
