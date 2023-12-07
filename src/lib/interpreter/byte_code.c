@@ -212,13 +212,11 @@ void ldc2_w(MethodData *method_data)
     {
         CONSTANT_Long_info long_element = element.info.Long;
         long long_value = ((long)long_element.high_bytes << 32) | long_element.low_bytes;
-        // Empilhar long_value na pilha de operandos
     }
     else if (element.tag == CONSTANT_Double)
     {
         CONSTANT_Double_info double_element = element.info.Double;
         double double_value;
-        // Converte os bytes para um valor double e empilha na pilha de operandos
     }
 
     method_data->pc += 3;
@@ -766,41 +764,104 @@ void sastore(MethodData *method_data) {
 }
 
 // 0x57 (optional implementation?MethodData* method_data)
-void pop(MethodData *method_data)
-{
+// Remove o valor do topo da pilha de operandos.
+void pop(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    stack_pop(current_frame->operand_stack);
 }
+
 // 0x58 (optional implementation?MethodData* method_data)
-void pop2(MethodData *method_data)
-{
+// Remove os dois valores do topo da pilha de operandos.
+void pop2(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    stack_pop(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
 }
+
 // 0x59 (optional implementation?MethodData* method_data)
-void dup(MethodData *method_data)
-{
+// Duplica o valor do topo da pilha de operandos.
+void dup(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value = stack_top(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x5A (optional implementation?MethodData* method_data)
-void dup_x1(MethodData *method_data)
-{
+// Duplica o valor do topo da pilha de operandos e insere duas posições abaixo.
+void dup_x1(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
 }
+
 // 0x5B (optional implementation?MethodData* method_data)
-void dup_x2(MethodData *method_data)
-{
+// Duplica o valor do topo da pilha de operandos e insere três ou duas posições abaixo.
+void dup_x2(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_fram->operand_stack);
+    void *value3 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value3);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
 }
+
 // 0x5C (optional implementation?MethodData* method_data)
-void dup2(MethodData *method_data)
-{
+// Duplica os dois valores do topo da pilha de operandos.
+void dup2(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
 }
+
 // 0x5D (optional implementation?MethodData* method_data)
-void dup2_x1(MethodData *method_data)
-{
+// Duplica os dois valores do topo da pilha de operandos e insere três posições abaixo.
+void dup2_x1(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_frame->operand_stack);
+    void *value3 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value3);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
 }
+
 // 0x5E (optional implementation?MethodData* method_data)
-void dup2_x2(MethodData *method_data)
-{
+// Duplica os dois valores do topo da pilha de operandos e insere quatro ou três posições abaixo.
+void dup2_x2(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_frame->operand_stack);
+    void *value3 = stack_pop(current_frame->operand_stack);
+    void *value4 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value4);
+    stack_push(current_frame->operand_stack, value3);
+    stack_push(current_frame->operand_stack, value2);
+    stack_push(current_frame->operand_stack, value1);
 }
+
 // 0x5F (optional implementation?MethodData* method_data)
-void swap(MethodData *method_data)
-{
+// Troca os dois valores do topo da pilha de operandos.
+void swap(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    void *value1 = stack_pop(current_frame->operand_stack);
+    void *value2 = stack_pop(current_frame->operand_stack);
+    stack_push(current_frame->operand_stack, value1);
+    stack_push(current_frame->operand_stack, value2);
 }
+
 // 0x60
 // Realiza a operação de adição de dois inteiros da pilha de operandos.
 void iadd(MethodData *method_data) {
@@ -1022,10 +1083,10 @@ void lneg(MethodData *method_data) {
 // 0x76
 // Realiza a operação de negação de um float da pilha de operandos.
 void fneg(MethodData *method_data) {
-    Frame *current_frame = (Frame *)stack_top(method_data's frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     float value = *((float *)stack_pop(current_frame->operand_stack));
     float result = -value;
-    stack_push(current_frame's operand_stack, &result);
+    stack_push(current_frame->operand_stack, &result);
 }
 
 // 0x77
@@ -1072,9 +1133,9 @@ void ishr(MethodData *method_data) {
 void lshr(MethodData *method_data) {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int shift = *((int *)stack_pop(current_frame->operand_stack));
-    long value = *((long *)stack_pop(current_frame's operand_stack));
+    long value = *((long *)stack_pop(current_frame->operand_stack));
     long result = value >> shift;
-    stack_push(current_frame's operand_stack, &result);
+    stack_push(current_frame->operand_stack, &result);
 }
 
 // 0x7C
@@ -1301,33 +1362,95 @@ void i2s(MethodData *method_data) {
 }
 
 // 0x94
-void lcmp(MethodData *method_data)
-{
+// Compara dois longs da pilha de operandos e empurra o resultado da comparação de volta para a pilha.
+void lcmp(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    int result = (value1 > value2) ? 1 : ((value1 == value2) ? 0 : -1);
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x95
-void fcmpl(MethodData *method_data)
-{
+// Compara dois floats da pilha de operandos e empurra o resultado da comparação de volta para a pilha, tratando NaN como menor.
+void fcmpl(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value2 = *((float *)stack_pop(current_frame->operand_stack));
+    float value1 = *((float *)stack_pop(current_frame->operand_stack));
+    int result;
+    if (isnan(value1) || isnan(value2)) {
+        result = -1;
+    } else {
+        result = (value1 > value2) ? 1 : ((value1 == value2) ? 0 : -1);
+    }
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x96
-void fcmpg(MethodData *method_data)
-{
+// Compara dois floats da pilha de operandos e empurra o resultado da comparação de volta para a pilha, tratando NaN como maior.
+void fcmpg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value2 = *((float *)stack_pop(current_frame->operand_stack));
+    float value1 = *((float *)stack_pop(current_frame->operand_stack));
+    int result;
+    if (isnan(value1) || isnan(value2)) {
+        result = 1;
+    } else {
+        result = (value1 > value2) ? 1 : ((value1 == value2) ? 0 : -1);
+    }
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x97
-void dcmpl(MethodData *method_data)
-{
+// Compara dois doubles da pilha de operandos e empurra o resultado da comparação de volta para a pilha, tratando NaN como menor.
+void dcmpl(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value2 = *((double *)stack_pop(current_frame->operand_stack));
+    double value1 = *((double *)stack_pop(current_frame->operand_stack));
+    int result;
+    if (isnan(value1) || isnan(value2)) {
+        result = -1;
+    } else {
+        result = (value1 > value2) ? 1 : ((value1 == value2) ? 0 : -1);
+    }
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x98
-void dcmpg(MethodData *method_data)
-{
+// Compara dois doubles da pilha de operandos e empurra o resultado da comparação de volta para a pilha, tratando NaN como maior.
+void dcmpg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value2 = *((double *)stack_pop(current_frame->operand_stack));
+    double value1 = *((double *)stack_pop(current_frame->operand_stack));
+    int result;
+    if (isnan(value1) || isnan(value2)) {
+        result = 1;
+    } else {
+        result = (value1 > value2) ? 1 : ((value1 == value2) ? 0 : -1);
+    }
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x99
-void ifeq(MethodData *method_data)
-{
+// Pula para o endereço do branch se o valor no topo da pilha de operandos é igual a zero.
+void ifeq(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    if (value == 0) {
+        // Implementar lógica para pular para o endereço do branch.
+    }
 }
+
 // 0x9A
-void ifne(MethodData *method_data)
-{
+// Pula para o endereço do branch se o valor no topo da pilha de operandos não é igual a zero.
+void ifne(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    if (value != 0) {
+        // Implementar lógica para pular para o endereço do branch.
+    }
 }
+
 // 0x9B
 void iflt(MethodData *method_data)
 {
