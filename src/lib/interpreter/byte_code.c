@@ -1166,65 +1166,140 @@ void iinc(MethodData *method_data, int index, int constant) {
 }
 
 // 0x85
-void i2l(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um long e empurra o resultado de volta para a pilha.
+void i2l(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    long result = (long)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x86
-void i2f(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um float e empurra o resultado de volta para a pilha.
+void i2f(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    float result = (float)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x87
-void i2d(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um double e empurra o resultado de volta para a pilha.
+void i2d(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    double result = (double)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x88
-void l2i(MethodData *method_data)
-{
+// Converte um long da pilha de operandos em um int e empurra o resultado de volta para a pilha.
+void l2i(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    int result = (int)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x89
-void l2f(MethodData *method_data)
-{
+// Converte um long da pilha de operandos em um float e empurra o resultado de volta para a pilha.
+void l2f(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    float result = (float)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8A
-void l2d(MethodData *method_data)
-{
+// Converte um long da pilha de operandos em um double e empurra o resultado de volta para a pilha.
+void l2d(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    double result = (double)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8B
-void f2i(MethodData *method_data)
-{
+// Converte um float da pilha de operandos em um int e empurra o resultado de volta para a pilha.
+void f2i(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value = *((float *)stack_pop(current_frame->operand_stack));
+    int result = (int)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8C
-void f2l(MethodData *method_data)
-{
+// Converte um float da pilha de operandos em um long e empurra o resultado de volta para a pilha.
+void f2l(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value = *((float *)stack_pop(current_frame->operand_stack));
+    long result = (long)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8D
-void f2d(MethodData *method_data)
-{
+// Converte um float da pilha de operandos em um double e empurra o resultado de volta para a pilha.
+void f2d(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value = *((float *)stack_pop(current_frame->operand_stack));
+    double result = (double)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8E
-void d2i(MethodData *method_data)
-{
+// Converte um double da pilha de operandos em um int e empurra o resultado de volta para a pilha.
+void d2i(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value = *((double *)stack_pop(current_frame->operand_stack));
+    int result = (int)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x8F
-void d2l(MethodData *method_data)
-{
+// Converte um double da pilha de operandos em um long e empurra o resultado de volta para a pilha.
+void d2l(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value = *((double *)stack_pop(current_frame->operand_stack));
+    long result = (long)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x90
-void d2f(MethodData *method_data)
-{
+// Converte um double da pilha de operandos em um float e empurra o resultado de volta para a pilha.
+void d2f(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value = *((double *)stack_pop(current_frame->operand_stack));
+    float result = (float)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x91
-void i2b(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um byte e empurra o resultado de volta para a pilha.
+void i2b(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    char result = (char)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x92
-void i2c(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um char e empurra o resultado de volta para a pilha.
+void i2c(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    char result = (char)value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x93
-void i2s(MethodData *method_data)
-{
+// Converte um int da pilha de operandos em um short e empurra o resultado de volta para a pilha.
+void i2s(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    short result = (short)value;
+    stack_push(current_frame-> operand_stack, &result);
 }
+
 // 0x94
 void lcmp(MethodData *method_data)
 {
