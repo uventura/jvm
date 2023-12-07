@@ -7,6 +7,7 @@
 void stack_initialize(Stack *stack)
 {
     stack->top = NULL;
+    stack->size = 0;
 }
 
 int stack_is_empty(Stack *stack)
@@ -33,6 +34,7 @@ void stack_push(Stack *stack, void *data)
 {
     Node *new_top = stack_create_node(data);
     new_top->next = stack->top;
+    stack->size += 1;
     stack->top = new_top;
 }
 
@@ -47,6 +49,7 @@ void stack_pop(Stack *stack)
     {
         Node *temp = (stack->top);
         stack->top = (stack->top)->next;
+        stack->size -= 1;
         free(temp);
     }
 }

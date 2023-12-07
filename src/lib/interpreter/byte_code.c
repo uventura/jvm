@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// Exclude later
+#include "lib/controller/jvm_reader.h"
+
 // Functions for the opcode.
 
 // 0x00
@@ -788,6 +791,7 @@ void getstatic(MethodData *method_data)
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
     u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
+
     char class_name[300];
     get_class_name(class_index, current_frame->constant_pool, class_name);
 
@@ -798,6 +802,7 @@ void getstatic(MethodData *method_data)
 
     if (!strcmp(class_name, "java/lang/System"))
     {
+        // Need to be implemented
     }
 
     method_data->pc += 2;
@@ -813,6 +818,37 @@ void getfield(MethodData *method_data)
 // 0xB5
 void putfield(MethodData *method_data)
 {
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    ClassFile *object_class = method_data->object->class;
+    u2 field_name_type_index = object_class->constant_pool[index - 1].info.Fieldref.name_and_type_index;
+    u2 field_name_index = object_class->constant_pool[field_name_type_index - 1].info.NameAndType.name_index;
+
+    CONSTANT_Utf8_info field_name = object_class->constant_pool[field_name_index - 1].info.Utf8;
+    u2 field_name_size = field_name.length;
+    char field_put[field_name_size + 1];
+    get_utf8_value(field_name_index - 1, object_class->constant_pool, field_put);
+
+    for (u2 element = 0; element < object_class->fields_count; element++)
+    {
+        field_name_index = method_data->object->data[element].field->name_index;
+        field_name = object_class->constant_pool[field_name_index - 1].info.Utf8;
+        field_name_size = field_name.length;
+        char current_field[field_name_size];
+        get_utf8_value(field_name_index - 1, object_class->constant_pool, current_field);
+
+        if (!strcmp(current_field, field_put))
+        {
+            void *top = stack_top(current_frame->operand_stack);
+            method_data->object[element].data->value = top;
+            stack_pop(current_frame->operand_stack);
+            break;
+        }
+    }
 }
 // 0xB6
 void invokevirtual(MethodData *method_data)
@@ -829,35 +865,33 @@ void invokevirtual(MethodData *method_data)
 
     if (!strcmp(class_name, "java/io/PrintStream"))
     {
-        cp_info* element = (cp_info*)stack_top(current_frame->operand_stack);
+        cp_info *element = (cp_info *)stack_top(current_frame->operand_stack);
         stack_pop(current_frame->operand_stack);
 
-        switch(element->tag)
+        switch (element->tag)
         {
-            case CONSTANT_String:
-                u2 index = element->info.String.string_index - 1;
-                element = (cp_info*)(&current_frame->constant_pool[index]);
-            case CONSTANT_Utf8:
+        case CONSTANT_String: {
+            u2 index = element->info.String.string_index - 1;
+            element = (cp_info *)(&current_frame->constant_pool[index]);
+        }
+        case CONSTANT_Utf8: {
+            u2 size = element->info.Utf8.length;
+            char string[size + 1];
+            for (u2 string_index = 0; string_index < size; ++string_index)
             {
-                u2 size = element->info.Utf8.length;
-                char string[size + 1];
-                for (u2 string_index = 0; string_index < size; ++string_index)
-                {
-                    string[string_index] = element->info.Utf8.bytes[string_index];
-                }
-                string[size] = '\0';
-                printf("%s\n", string);
+                string[string_index] = element->info.Utf8.bytes[string_index];
             }
-            break;
-            case CONSTANT_Integer:
-            {
-                printf("%d\n", element->info.Integer.bytes);
-            }
-            break;
-            case CONSTANT_Double:
-            {
-                printf("Double not implemented\n");
-            }
+            string[size] = '\0';
+            printf("%s\n", string);
+        }
+        break;
+        case CONSTANT_Integer: {
+            printf("%d\n", element->info.Integer.bytes);
+        }
+        break;
+        case CONSTANT_Double: {
+            printf("Double not implemented yet.\n");
+        }
         }
     }
 
@@ -872,25 +906,43 @@ void invokespecial(MethodData *method_data)
 
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
-    char class_name[300];
+    CONSTANT_Methodref_info method = current_frame->constant_pool[index - 1].info.Methodref;
+    u2 class_index = method.class_index;
+    char class_name[400];
     get_class_name(class_index, current_frame->constant_pool, class_name);
     printf("\t\tInvoke Special: %s\n", class_name);
 
-    if (!strcmp(class_name, "java/io/PrintStream"))
+    if (!strcmp(class_name, "java/lang/Object"))
     {
-        char *string = (char *)stack_top(current_frame->operand_stack);
-        printf("%s\n", string);
     }
     else
     {
-        int16_t *value_ptr = stack_top(current_frame->operand_stack);
-        int16_t value = *value_ptr;
-        printf("\t\tValue: %d\n", value);
-        free(value_ptr);
-        stack_pop(current_frame->operand_stack);
-        // method_area_call_method(object->method, constant_pool, stack_frame,
-        //                     loaded_classes, object);
+        u2 name_type_index = method.name_and_type_index;
+        u2 method_name_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.name_index;
+        u2 method_name_desc_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.descriptor_index;
+
+        u2 method_name_size = current_frame->constant_pool[method_name_index - 1].info.Utf8.length;
+        char name[method_name_size + 1];
+        get_utf8_value(method_name_index - 1, current_frame->constant_pool, name);
+
+        u2 method_desc_size = current_frame->constant_pool[method_name_desc_index - 1].info.Utf8.length;
+        char descriptor[method_desc_size + 1];
+        get_utf8_value(method_name_desc_index - 1, current_frame->constant_pool, descriptor);
+
+        ClassFile *current_class = class_file_list_get(method_data->loaded_classes, class_name);
+        method_info *current_method = method_area_search_method(name, current_class);
+        u2 object_stack_position = current_method->attributes->info.code.max_locals;
+
+        Node *node_pos = current_frame->operand_stack->top;
+        for (u2 pop = 0; pop < object_stack_position - 1; ++pop)
+        {
+            node_pos = node_pos->next;
+        }
+
+        JVMObject *object = node_pos->data;
+        method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
+                                method_data->loaded_classes, object);
+        printf("\nSize: %d\n", current_frame->operand_stack->size);
     }
 
     method_data->pc += 2;

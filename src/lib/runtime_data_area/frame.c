@@ -24,11 +24,12 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
 
     if (!stack_is_empty(stack_frame))
     {
-        Node *current_node = stack_frame->top;
+        Frame *current_frame = (Frame *)stack_top(stack_frame);
+        Stack *operands = current_frame->operand_stack;
         for (u2 local_index; local_index < code.max_locals; ++local_index)
         {
-            frame->local_variables[local_index] = (void *)current_node->data;
-            current_node = current_node->next;
+            frame->local_variables[local_index] = stack_top(operands);
+            stack_pop(operands);
         }
     }
 }
