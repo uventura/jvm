@@ -901,76 +901,158 @@ void astore_3(MethodData *method_data) {
 }
 
 // 0x4F
-// Armazena um int em um array.
+// iastore
 void iastore(MethodData *method_data) {
-    int *array_ref = (int *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    int value = *((int *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    int value = *((int *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    int *array_ref = *((int **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x50
-// Armazena um long em um array.
+// lastore
 void lastore(MethodData *method_data) {
-    long *array_ref = (long *)stak_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    long value = *((long *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    long value = *((long *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    long *array_ref = *((long **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x51
-// Armazena um float em um array.
+// fastore
 void fastore(MethodData *method_data) {
-    float *array_ref = (float *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    float value = *((float *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    float value = *((float *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    float *array_ref = *((float **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x52
-// Armazena um double em um array.
+// dastore
 void dastore(MethodData *method_data) {
-    double *array_ref = (double *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    double value = *((double *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    double value = *((double *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    double *array_ref = *((double **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x53
-// Armazena uma referência em um array de referências.
+// aastore
 void aastore(MethodData *method_data) {
-    void **array_ref = (void **)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    void *value = stack_pop(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value = value_node->data;
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    void **array_ref = *((void ***)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x54
-// Armazena um byte ou boolean em um array.
+// bastore
 void bastore(MethodData *method_data) {
-    char *array_ref = (char *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    char value = *((char *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    char value = *((char *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    char *array_ref = *((char **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x55
-// Armazena um char em um array.
+// castore
 void castore(MethodData *method_data) {
-    char *array_ref = (char *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    char value = *((char *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    char value = *((char *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    char *array_ref = *((char **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
 
-// 0x56
-// Armazena um short em um array.
+// sastore
 void sastore(MethodData *method_data) {
-    short *array_ref = (short *)stack_pop(method_data->frame_stack);
-    int index = *((int *)stack_pop(method_data->frame_stack));
-    short value = *((short *)stack_pop(method_data->frame_stack));
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
+    short value = *((short *)(value_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *index_node = (Node *)stack_top(current_frame->operand_stack);
+    int index = *((int *)(index_node->data));
+    stack_pop(current_frame->operand_stack);
+
+    Node *array_ref_node = (Node *)stack_top(current_frame->operand_stack);
+    short *array_ref = *((short **)(array_ref_node->data));
+    stack_pop(current_frame->operand_stack);
+
     array_ref[index] = value;
 }
+
 
 // 0x57 (optional implementation?MethodData* method_data)
 // Remove o valor do topo da pilha de operandos.
