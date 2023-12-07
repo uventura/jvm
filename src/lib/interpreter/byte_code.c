@@ -107,7 +107,7 @@ void bipush(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     // Reimplement
-    int16_t *byte = (int16_t *)malloc(sizeof(int16_t));
+    int *byte = (int *)malloc(sizeof(int));
     *byte = method_data->code.code[method_data->pc + 1];
     stack_push(current_frame->operand_stack, byte);
     method_data->pc += 1;
@@ -160,6 +160,11 @@ void iload_0(MethodData *method_data)
 // 0x1B
 void iload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    // int32_t *value = (int32_t *)();
+    // printf("\t\tIload value: %d\n", *value);
+    printf("Pointer: %p\n", current_frame->local_variables[1]);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x1C
 void iload_2(MethodData *method_data)
@@ -220,10 +225,15 @@ void dload_3(MethodData *method_data)
 // 0x2A
 void aload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    void *value = current_frame->local_variables[0];
+    stack_push(current_frame->operand_stack, value);
 }
 // 0x2B
 void aload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x2C
 void aload_2(MethodData *method_data)
@@ -269,7 +279,7 @@ void saload(MethodData *method_data)
 void istore(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     u1 index_byte = method_data->code.code[method_data->pc + 1];
     int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
 
@@ -286,7 +296,7 @@ void lstore(MethodData *method_data)
 void fstore(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     u1 index_byte = method_data->code.code[method_data->pc + 1];
     float value = *(float *)stack_top(current_frame->operand_stack);
 
@@ -307,40 +317,40 @@ void astore(MethodData *method_data)
 void istore_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((int32_t *)current_frame->local_variables[0]) = value;
 }
 // 0x3C
 void istore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((int32_t *)current_frame->local_variables[1]) = value;
 }
 // 0x3D
 void istore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((int32_t *)current_frame->local_variables[2]) = value;
 }
 // 0x3E
 void istore_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((int32_t *)current_frame->local_variables[3]) = value;
 }
 // 0x3F
@@ -363,40 +373,40 @@ void lstore_3(MethodData *method_data)
 void fstore_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((float *)current_frame->local_variables[0]) = value;
 }
 // 0x44
 void fstore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((float *)current_frame->local_variables[1]) = value;
 }
 // 0x45
 void fstore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((float *)current_frame->local_variables[2]) = value;
 }
 // 0x46
 void fstore_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    
+
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     *((float *)current_frame->local_variables[3]) = value;
 }
 // 0x47
@@ -422,6 +432,13 @@ void astore_0(MethodData *method_data)
 // 0x4C
 void astore_1(MethodData *method_data)
 {
+    // Armazena uma referência na segunda posição das variáveis locais.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *value = (void *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    current_frame->local_variables[1] = value;
 }
 // 0x4D
 void astore_2(MethodData *method_data)
@@ -863,6 +880,78 @@ void putstatic(MethodData *method_data)
 // 0xB4
 void getfield(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    JVMObject *object = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    u2 field_name_type_index = object->class->constant_pool[index - 1].info.Fieldref.name_and_type_index;
+    u2 field_name_index = object->class->constant_pool[field_name_type_index - 1].info.NameAndType.name_index;
+    u2 field_type_index = object->class->constant_pool[field_name_type_index - 1].info.NameAndType.descriptor_index;
+
+    CONSTANT_Utf8_info field_name = object->class->constant_pool[field_name_index - 1].info.Utf8;
+    u2 field_name_size = field_name.length;
+    char field_get[field_name_size + 1];
+    get_utf8_value(field_name_index - 1, object->class->constant_pool, field_get);
+
+    char descriptor_get = object->class->constant_pool[field_type_index - 1].info.Utf8.bytes[0];
+
+    for (u2 element = 0; element < object->class->fields_count; element++)
+    {
+        field_name_index = object->data[element].field->name_index;
+        field_name = object->class->constant_pool[field_name_index - 1].info.Utf8;
+        field_name_size = field_name.length;
+        char current_field[field_name_size];
+        get_utf8_value(field_name_index - 1, object->class->constant_pool, current_field);
+
+        if (!strcmp(current_field, field_get))
+        {
+            void *value = object->data[element].value;
+            cp_info *dynamic_info = (cp_info *)malloc(sizeof(cp_info));
+
+            switch (descriptor_get)
+            {
+            case VOID_TYPE: {
+            }
+            break;
+            case CHAR_TYPE:
+            case SHORT_TYPE:
+            case BYTE_TYPE:
+            case BOOLEAD_TYPE:
+            case INT_TYPE: {
+                int *val = value;
+                dynamic_info->tag = CONSTANT_Integer;
+                dynamic_info->info.Integer.bytes = *val;
+            }
+            break;
+            case LONG_TYPE: {
+            }
+            break;
+            case FLOAT_TYPE: {
+                float *val = value;
+                dynamic_info->tag = CONSTANT_Float;
+                dynamic_info->info.Integer.bytes = *val;
+            }
+            break;
+            case DOUBLE_TYPE: {
+            }
+            break;
+            default: {
+                dynamic_info->tag = CONSTANT_Class;
+                // dynamic_info->info.Class.name_index = ?
+            }
+            break;
+            }
+
+            stack_push(current_frame->operand_stack, dynamic_info);
+            break;
+        }
+    }
+
+    method_data->pc += 2;
 }
 // 0xB5
 void putfield(MethodData *method_data)
@@ -892,12 +981,13 @@ void putfield(MethodData *method_data)
 
         if (!strcmp(current_field, field_put))
         {
-            void *top = stack_top(current_frame->operand_stack);
-            method_data->object[element].data->value = top;
+            method_data->object[element].data->value = stack_top(current_frame->operand_stack);
             stack_pop(current_frame->operand_stack);
             break;
         }
     }
+
+    method_data->pc += 2;
 }
 // 0xB6
 void invokevirtual(MethodData *method_data)

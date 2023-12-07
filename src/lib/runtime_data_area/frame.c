@@ -7,6 +7,9 @@
 
 #include <stdlib.h>
 
+// Exclude
+#include <stdio.h>
+
 void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool, Code_attribute code,
                       Stack *stack_frame)
 {
@@ -26,9 +29,10 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
     {
         Frame *current_frame = (Frame *)stack_top(stack_frame);
         Stack *operands = current_frame->operand_stack;
-        for (u2 local_index; local_index < code.max_locals; ++local_index)
+        for (u2 local_index = 0; local_index < code.max_locals; ++local_index)
         {
-            frame->local_variables[local_index] = stack_top(operands);
+            void *value = stack_top(operands);
+            frame->local_variables[code.max_locals - local_index - 1] = stack_top(operands);
             stack_pop(operands);
         }
     }
