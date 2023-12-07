@@ -802,153 +802,369 @@ void swap(MethodData *method_data)
 {
 }
 // 0x60
-void iadd(MethodData *method_data)
-{
+// Realiza a operação de adição de dois inteiros da pilha de operandos.
+void iadd(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 + value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x61
-void ladd(MethodData *method_data)
-{
+// Realiza a operação de adição de dois longs da pilha de operandos.
+void ladd(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 + value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x62
-void fadd(MethodData *method_data)
-{
+// Realiza a operação de adição de dois floats da pilha de operandos.
+void fadd(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value1 = *((float *)stack_pop(current_frame->operand_stack));
+    float value2 = *((float *)stack_pop(current_frame->operand_stack));
+    float result = value1 + value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x63
-void dadd(MethodData *method_data)
-{
+// Realiza a operação de adição de dois doubles da pilha de operandos.
+void dadd(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value1 = *((double *)stack_pop(current_frame->operand_stack));
+    double value2 = *((double *)stack_pop(current_frame->operand_stack));
+    double result = value1 + value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x64
-void isub(MethodData *method_data)
-{
+// Realiza a operação de subtração de dois inteiros da pilha de operandos.
+void isub(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 - value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x65
-void lsub(MethodData *method_data)
-{
+// Realiza a operação de subtração de dois longs da pilha de operandos.
+void lsub(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 - value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x66
-void fsub(MethodData *method_data)
-{
+// Realiza a operação de subtração de dois floats da pilha de operandos.
+void fsub(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value1 = *((float *)stack_pop(current_frame->operand_stack));
+    float value2 = *((float *)stack_pop(current_frame->operand_stack));
+    float result = value1 - value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x67
-void dsub(MethodData *method_data)
-{
+// Realiza a operação de subtração de dois doubles da pilha de operandos.
+void dsub(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value1 = *((double *)stack_pop(current_frame->operand_stack));
+    double value2 = *((double *)stack_pop(current_frame->operand_stack));
+    double result = value1 - value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x68
-void imul(MethodData *method_data)
-{
+// Realiza a operação de multiplicação de dois inteiros da pilha de operandos.
+void imul(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 * value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x69
-void lmul(MethodData *method_data)
-{
+// Realiza a operação de multiplicação de dois longs da pilha de operandos.
+void lmul(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 * value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6A
-void fmul(MethodData *method_data)
-{
+// Realiza a operação de multiplicação de dois floats da pilha de operandos.
+void fmul(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float value1 = *((float *)stack_pop(current_frame->operand_stack));
+    float value2 = *((float *)stack_pop(current_frame->operand_stack));
+    float result = value1 * value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6B
-void dmul(MethodData *method_data)
-{
+// Realiza a operação de multiplicação de dois doubles da pilha de operandos.
+void dmul(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value1 = *((double *)stack_pop(current_frame->operand_stack));
+    double value2 = *((double *)stack_pop(current_frame->operand_stack));
+    double result = value1 * value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6C
-void idiv(MethodData *method_data)
-{
+// Realiza a divisão de dois inteiros da pilha de operandos.
+void idiv(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int divisor = *((int *)stack_pop(current_frame->operand_stack));
+    int dividend = *((int *)stack_pop(current_frame->operand_stack));
+    int result = dividend / divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6D
-void ldiv(MethodData *method_data)
-{
+// Realiza a divisão de dois longs da pilha de operandos.
+void ldiv(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long divisor = *((long *)stack_pop(current_frame->operand_stack));
+    long dividend = *((long *)stack_pop(current_frame->operand_stack));
+    long result = dividend / divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6E
-void fdiv(MethodData *method_data)
-{
+// Realiza a divisão de dois floats da pilha de operandos.
+void fdiv(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float divisor = *((float *)stack_pop(current_frame->operand_stack));
+    float dividend = *((float *)stack_pop(current_frame->operand_stack));
+    float result = dividend / divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x6F
-void ddiv(MethodData *method_data)
-{
+// Realiza a divisão de dois doubles da pilha de operandos.
+void ddiv(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double divisor = *((double *)stack_pop(current_frame->operand_stack));
+    double dividend = *((double *)stack_pop(current_frame->operand_stack));
+    double result = dividend / divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x70
-void irem(MethodData *method_data)
-{
+// Realiza a operação de resto de divisão de dois inteiros da pilha de operandos.
+void irem(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int divisor = *((int *)stack_pop(current_frame->operand_stack));
+    int dividend = *((int *)stack_pop(current_frame->operand_stack));
+    int result = dividend % divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x71
-void lrem(MethodData *method_data)
-{
+// Realiza a operação de resto de divisão de dois longs da pilha de operandos.
+void lrem(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long divisor = *((long *)stack_pop(current_frame->operand_stack));
+    long dividend = *((long *)stack_pop(current_frame->operand_stack));
+    long result = dividend % divisor;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x72
-void frem(MethodData *method_data)
-{
+// Realiza a operação de resto de divisão de dois floats da pilha de operandos.
+void frem(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float divisor = *((float *)stack_pop(current_frame->operand_stack));
+    float dividend = *((float *)stack_pop(current_frame->operand_stack));
+    float result = fmodf(dividend, divisor);
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x73
-void drem(MethodData *method_data)
-{
+// Realiza a operação de resto de divisão de dois doubles da pilha de operandos.
+void drem(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double divisor = *((double *)stack_pop(current_frame->operand_stack));
+    double dividend = *((double *)stack_pop(current_frame->operand_stack));
+    double result = fmod(dividend, divisor);
+    stack_push(current_frame-> operand_stack, &result);
 }
+
 // 0x74
-void ineg(MethodData *method_data)
-{
+// Realiza a operação de negação de um inteiro da pilha de operandos.
+void ineg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    int result = -value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x75
-void lneg(MethodData *method_data)
-{
+// Realiza a operação de negação de um long da pilha de operandos.
+void lneg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    long result = -value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x76
-void fneg(MethodData *method_data)
-{
+// Realiza a operação de negação de um float da pilha de operandos.
+void fneg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data's frame_stack);
+    float value = *((float *)stack_pop(current_frame->operand_stack));
+    float result = -value;
+    stack_push(current_frame's operand_stack, &result);
 }
+
 // 0x77
-void dneg(MethodData *method_data)
-{
+// Realiza a operação de negação de um double da pilha de operandos.
+void dneg(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double value = *((double *)stack_pop(current_frame->operand_stack));
+    double result = -value;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x78
-void ishl(MethodData *method_data)
-{
+// Realiza a operação de shift à esquerda em um inteiro da pilha de operandos.
+void ishl(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int shift = *((int *)stack_pop(current_frame->operand_stack));
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value << shift;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x79
-void lshl(MethodData *method_data)
-{
+// Realiza a operação de shift à esquerda em um long da pilha de operandos.
+void lshl(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int shift = *((int *)stack_pop(current_frame->operand_stack));
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value << shift;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x7A
-void ishr(MethodData *method_data)
-{
+// Realiza a operação de shift à direita em um inteiro da pilha de operandos.
+void ishr(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int shift = *((int *)stack_pop(current_frame->operand_stack));
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value >> shift;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x7B
-void lshr(MethodData *method_data)
-{
+// Realiza a operação de shift à direita em um long da pilha de operandos.
+void lshr(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int shift = *((int *)stack_pop(current_frame->operand_stack));
+    long value = *((long *)stack_pop(current_frame's operand_stack));
+    long result = value >> shift;
+    stack_push(current_frame's operand_stack, &result);
 }
+
 // 0x7C
-void iushr(MethodData *method_data)
-{
+// Realiza a operação de deslocamento lógico à direita sem sinal (unsigned shift right) de um inteiro.
+void iushr(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value = *((int *)stack_pop(current_frame->operand_stack));
+    int shift = *((int *)stack_pop(current_frame->operand_stack)) & 0x1F;  // Use apenas os 5 bits inferiores
+    int result = value >> shift;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x7D
-void lushr(MethodData *method_data)
-{
+// Realiza a operação de deslocamento lógico à direita sem sinal (unsigned shift right) de um long.
+void lushr(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value = *((long *)stack_pop(current_frame->operand_stack));
+    int shift = *((int *)stack_pop(current_frame->operand_stack)) & 0x3F;  // Use apenas os 6 bits inferiores
+    long result = value >> shift;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x7E
-void iand(MethodData *method_data)
-{
+// Realiza a operação de AND bit a bit entre dois inteiros.
+void iand(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 & value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x7F
-void land(MethodData *method_data)
-{
+// Realiza a operação de AND bit a bit entre dois longs.
+void land(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 & value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x80
-void ior(MethodData *method_data)
-{
+// Realiza a operação de OR bit a bit entre dois inteiros.
+void ior(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 | value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x81
-void lor(MethodData *method_data)
-{
+// Realiza a operação de OR bit a bit entre dois longs.
+void lor(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 | value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x82
-void ixor(MethodData *method_data)
-{
+// Realiza a operação de XOR bit a bit entre dois inteiros.
+void ixor(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int value1 = *((int *)stack_pop(current_frame->operand_stack));
+    int value2 = *((int *)stack_pop(current_frame->operand_stack));
+    int result = value1 ^ value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x83
-void lxor(MethodData *method_data)
-{
+// Realiza a operação de XOR bit a bit entre dois longs.
+void lxor(MethodData *method_data) {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    long value1 = *((long *)stack_pop(current_frame->operand_stack));
+    long value2 = *((long *)stack_pop(current_frame->operand_stack));
+    long result = value1 ^ value2;
+    stack_push(current_frame->operand_stack, &result);
 }
+
 // 0x84
-void iinc(MethodData *method_data)
-{
+// Incrementa uma variável local (int) por uma quantidade constante.
+void iinc(MethodData *method_data, int index, int constant) {
+    int value = *((int *)method_data->local_variables[index]);
+    value += constant;
+    method_data->local_variables[index] = value;
 }
+
 // 0x85
 void i2l(MethodData *method_data)
 {
