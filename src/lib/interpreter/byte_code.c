@@ -268,6 +268,17 @@ void saload(MethodData *method_data)
 // 0x36
 void istore(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+
+    int32_t *value = (int32_t *)malloc(sizeof(int32_t));
+    *value = *(int32_t *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[index_byte] = value;
+
+    method_data->pc += 1;
 }
 // 0x37
 void lstore(MethodData *method_data)
@@ -276,6 +287,17 @@ void lstore(MethodData *method_data)
 // 0x38
 void fstore(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+
+    float *value = (float *)malloc(sizeof(float));
+    *value = *(float *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[index_byte] = value;
+
+    method_data->pc += 1;
 }
 // 0x39
 void dstore(MethodData *method_data)
@@ -288,18 +310,46 @@ void astore(MethodData *method_data)
 // 0x3B
 void istore_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int32_t *value = (int32_t *)malloc(sizeof(int32_t));
+    *value = *(int32_t *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[0] = value;
 }
 // 0x3C
 void istore_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int32_t *value = (int32_t *)malloc(sizeof(int32_t));
+    *value = *(int32_t *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[1] = value;
 }
 // 0x3D
 void istore_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int32_t *value = (int32_t *)malloc(sizeof(int32_t));
+    *value = *(int32_t *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[2] = value;
 }
 // 0x3E
 void istore_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int32_t *value = (int32_t *)malloc(sizeof(int32_t));
+    *value = *(int32_t *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[3] = value;
 }
 // 0x3F
 void lstore_0(MethodData *method_data)
@@ -320,18 +370,46 @@ void lstore_3(MethodData *method_data)
 // 0x43
 void fstore_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float *value = (float *)malloc(sizeof(float));
+    *value = *(float *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[0] = value;
 }
 // 0x44
 void fstore_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float *value = (float *)malloc(sizeof(float));
+    *value = *(float *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[1] = value;
 }
 // 0x45
 void fstore_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float *value = (float *)malloc(sizeof(float));
+    *value = *(float *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[2] = value;
 }
 // 0x46
 void fstore_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float *value = (float *)malloc(sizeof(float));
+    *value = *(float *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[3] = value;
 }
 // 0x47
 void dstore_0(MethodData *method_data)
