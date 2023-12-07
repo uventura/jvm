@@ -13,6 +13,8 @@
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
+    printf("New Method.\n");
+
     MethodData method_data;
     method_data.method = method;
     method_data.loaded_classes = loaded_classes;
@@ -39,6 +41,7 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     printf("\n");
 
     frame_free(&new_frame);
+    stack_pop(stack_frame);
 }
 
 method_info *method_area_search_method(const char *method, ClassFile *class)

@@ -1,6 +1,8 @@
 #ifndef JVM_STACK_STRUCT
 #define JVM_STACK_STRUCT
 
+#include "lib/base/defines.h"
+
 typedef struct Node
 {
     void *data;
@@ -10,6 +12,7 @@ typedef struct Node
 typedef struct
 {
     Node *top;
+    u4 size;
 } Stack;
 
 void stack_initialize(Stack *stack);
