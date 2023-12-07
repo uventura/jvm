@@ -161,9 +161,6 @@ void iload_0(MethodData *method_data)
 void iload_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    // int32_t *value = (int32_t *)();
-    // printf("\t\tIload value: %d\n", *value);
-    printf("Pointer: %p\n", current_frame->local_variables[1]);
     stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x1C
@@ -201,6 +198,8 @@ void fload_1(MethodData *method_data)
 // 0x24
 void fload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x25
 void fload_3(MethodData *method_data)
@@ -394,10 +393,8 @@ void fstore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
 
-    float value = *(float *)stack_top(current_frame->operand_stack);
+    current_frame->local_variables[2] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-
-    *((float *)current_frame->local_variables[2]) = value;
 }
 // 0x46
 void fstore_3(MethodData *method_data)
@@ -978,11 +975,9 @@ void putfield(MethodData *method_data)
         field_name_size = field_name.length;
         char current_field[field_name_size];
         get_utf8_value(field_name_index - 1, object_class->constant_pool, current_field);
-
         if (!strcmp(current_field, field_put))
         {
-            method_data->object[element].data->value = stack_top(current_frame->operand_stack);
-            stack_pop(current_frame->operand_stack);
+            method_data->object->data[element].value = stack_top(current_frame->operand_stack);
             break;
         }
     }
@@ -1049,7 +1044,6 @@ void invokespecial(MethodData *method_data)
     u2 class_index = method.class_index;
     char class_name[400];
     get_class_name(class_index, current_frame->constant_pool, class_name);
-    printf("\t\tInvoke Special: %s\n", class_name);
 
     if (!strcmp(class_name, "java/lang/Object"))
     {
@@ -1081,7 +1075,6 @@ void invokespecial(MethodData *method_data)
         JVMObject *object = node_pos->data;
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
                                 method_data->loaded_classes, object);
-        printf("\nSize: %d\n", current_frame->operand_stack->size);
     }
 
     method_data->pc += 2;

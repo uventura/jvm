@@ -13,7 +13,10 @@
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
-    printf("New Method.\n");
+    // For debugging purposes
+    printf("\n================================\n");
+    printf("         New Method\n");
+    printf("================================\n");
 
     MethodData method_data;
     method_data.method = method;
