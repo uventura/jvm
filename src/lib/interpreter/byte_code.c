@@ -521,18 +521,54 @@ void dadd(MethodData *method_data)
 // 0x64
 void isub(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    int32_t value2 = *(int32_t *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int32_t value1 = *(int32_t *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int32_t sub = value2-value1;
+    stack_push(current_frame->operand_stack, &sub);
 }
 // 0x65
 void lsub(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    long value2 = *(long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long value1 = *(long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long sub = value2-value1;
+    stack_push(current_frame->operand_stack, &sub);
 }
 // 0x66
 void fsub(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float sub = value2-value1;
+    stack_push(current_frame->operand_stack, &sub);
 }
 // 0x67
 void dsub(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double sub = value2-value1;
+    stack_push(current_frame->operand_stack, &sub);
 }
 // 0x68
 void imul(MethodData *method_data)
