@@ -1,23 +1,16 @@
 #include "lib/runtime_data_area/method_area.h"
 #include "lib/base/class_file/method_info.h"
 #include "lib/base/structures/stack.h"
+#include "lib/environment/jvm_debug.h"
 #include "lib/interpreter/byte_code_array.h"
 #include "lib/runtime_data_area/frame.h"
 
 #include <malloc.h>
 #include <string.h>
 
-// Delete includes below
-#include <stdio.h>
-
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
-    // For debugging purposes
-    printf("\n================================\n");
-    printf("         New Method\n");
-    printf("================================\n");
-
     MethodData method_data;
     method_data.method = method;
     method_data.loaded_classes = loaded_classes;
@@ -35,13 +28,11 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     // Executing Code
     for (method_data.pc = 0; method_data.pc < method_data.code.code_length; method_data.pc++)
     {
-        // for debugging purposes the code below was introduced.
-        printf("\tCode: \t%0x\n", method_data.code.code[method_data.pc]);
+        jvm_debug_print("\tCode: \t%0x\n", method_data.code.code[method_data.pc]);
         u2 current_opcode = method_data.code.code[method_data.pc];
 
         jvm_opcodes[current_opcode](&method_data);
     }
-    printf("\n");
 
     frame_free(&new_frame);
     stack_pop(stack_frame);

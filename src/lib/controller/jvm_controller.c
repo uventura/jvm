@@ -7,6 +7,7 @@
 #include "lib/controller/jvm_controller.h"
 #include "lib/controller/jvm_reader.h"
 #include "lib/controller/jvm_runner.h"
+#include "lib/environment/jvm_debug.h"
 
 // Function that parses the command line arguments.
 // The program requires the user to pass two arguments:
@@ -14,13 +15,26 @@
 //     - the qualified name for the ".class" file.
 int jvm_run(int argc, char **argv)
 {
-    if (argc != 3)
+    if (argc != 3 && argc != 4)
     {
-        printf("[JVM - ERROR] Missing Arguments\n");
+        printf("[JVM - ERROR] Wrong Argument Usage\n");
         return -1;
     }
 
-    if (!strcmp(argv[1], "-read"))
+    if (!strcmp(argv[1], "-d"))
+    {
+        JVM_DEBUG_MODE_ACTIVE = TRUE;
+
+        if (!strcmp(argv[2], "-run"))
+        {
+            jvm_run_class(argv[3]);
+        }
+        else
+        {
+            printf("[JVM - ERROR] Wrong Option");
+        }
+    }
+    else if (!strcmp(argv[1], "-read"))
     {
         jvm_read_class(argv[2]);
     }

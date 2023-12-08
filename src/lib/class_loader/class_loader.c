@@ -6,6 +6,7 @@
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
+#include "lib/environment/jvm_debug.h"
 #include "lib/runtime_data_area/method_area.h"
 
 #include <malloc.h>
@@ -129,7 +130,7 @@ void class_loader_call_main(ClassFileList *classes, Stack *stack_frame)
     method_info *main_method = method_area_search_method("main", main_class);
 
     // For debugging purposes
-    printf("Executing main...\n");
+    jvm_debug_print("Executing main...\n");
 
     if (main_method != NULL)
     {
