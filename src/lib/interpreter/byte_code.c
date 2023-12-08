@@ -1,7 +1,5 @@
 #include "lib/interpreter/byte_code.h"
-#include "lib/base/class_file/class_file.h"
-#include "lib/base/class_file/cp_info.h"
-#include "lib/base/defines.h"
+#include "lib/base/math/iee754.h"
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
@@ -199,7 +197,10 @@ void fload_1(MethodData *method_data)
 void fload_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
+    cp_info *value = current_frame->local_variables[2];
+    u4 *float_value = (u4 *)malloc(sizeof(u4));
+    *float_value = value->info.Float.bytes;
+    stack_push(current_frame->operand_stack, float_value);
 }
 // 0x25
 void fload_3(MethodData *method_data)
@@ -928,9 +929,9 @@ void getfield(MethodData *method_data)
             }
             break;
             case FLOAT_TYPE: {
-                float *val = value;
+                u4 *fvalue = value;
                 dynamic_info->tag = CONSTANT_Float;
-                dynamic_info->info.Integer.bytes = *val;
+                dynamic_info->info.Integer.bytes = *fvalue;
             }
             break;
             case DOUBLE_TYPE: {
@@ -938,7 +939,7 @@ void getfield(MethodData *method_data)
             break;
             default: {
                 dynamic_info->tag = CONSTANT_Class;
-                // dynamic_info->info.Class.name_index = ?
+                // Must be implemented
             }
             break;
             }
@@ -978,6 +979,7 @@ void putfield(MethodData *method_data)
         if (!strcmp(current_field, field_put))
         {
             method_data->object->data[element].value = stack_top(current_frame->operand_stack);
+            stack_pop(current_frame->operand_stack);
             break;
         }
     }
@@ -1021,6 +1023,10 @@ void invokevirtual(MethodData *method_data)
         break;
         case CONSTANT_Integer: {
             printf("%d\n", element->info.Integer.bytes);
+        }
+        break;
+        case CONSTANT_Float: {
+            printf("%f\n", ieee754_single(element->info.Float.bytes));
         }
         break;
         case CONSTANT_Double: {
