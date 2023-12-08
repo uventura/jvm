@@ -83,7 +83,14 @@ void class_loader_initialize(ClassFileList *classes, Stack *stack_frame)
 
     while (!stack_is_empty(&clinit_classes))
     {
+        char class_name[400];
         ClassFile *class = (ClassFile *)stack_top(&clinit_classes);
+        if (JVM_DEBUG_MODE_ACTIVE)
+        {
+            get_class_name(class->this_class, class->constant_pool, class_name);
+            jvm_debug_print("[Changing to '%s']\n", class_name);
+        }
+
         method_info *init_method = method_area_search_method("<clinit>", class);
 
         if (init_method == NULL)
@@ -95,6 +102,11 @@ void class_loader_initialize(ClassFileList *classes, Stack *stack_frame)
         method_area_call_method(init_method, class->constant_pool, stack_frame, classes, NULL);
 
         stack_pop(&clinit_classes);
+
+        if (JVM_DEBUG_MODE_ACTIVE)
+        {
+            jvm_debug_print("[Exiting from '%s']\n\n", class_name);
+        }
     }
 
     free_stack(&clinit_classes);
@@ -128,9 +140,6 @@ void class_loader_call_main(ClassFileList *classes, Stack *stack_frame)
 {
     ClassFile *main_class = classes->head->class;
     method_info *main_method = method_area_search_method("main", main_class);
-
-    // For debugging purposes
-    jvm_debug_print("Executing main...\n");
 
     if (main_method != NULL)
     {

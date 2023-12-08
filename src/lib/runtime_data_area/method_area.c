@@ -11,6 +11,14 @@
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
+    char method_name[400];
+    if (JVM_DEBUG_MODE_ACTIVE)
+    {
+        u2 method_name_index = method->name_index;
+        get_utf8_value(method_name_index - 1, constant_pool, method_name);
+        jvm_debug_print("\t[Calling %s]\n", method_name);
+    }
+
     MethodData method_data;
     method_data.method = method;
     method_data.loaded_classes = loaded_classes;
@@ -36,6 +44,11 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
 
     frame_free(&new_frame);
     stack_pop(stack_frame);
+
+    if (JVM_DEBUG_MODE_ACTIVE)
+    {
+        jvm_debug_print("\t[Exiting from %s]\n", method_name);
+    }
 }
 
 method_info *method_area_search_method(const char *method, ClassFile *class)

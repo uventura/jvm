@@ -1079,13 +1079,12 @@ void invokespecial(MethodData *method_data)
             node_pos = node_pos->next;
         }
 
-        jvm_debug_print("\t\t[Calling Method from '%s']\n\n", class_name);
+        jvm_debug_print("[Changing to class %s]\n", class_name);
 
         JVMObject *object = node_pos->data;
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
                                 method_data->loaded_classes, object);
-
-        jvm_debug_print("\t\t[Exiting from '%s' Method]\n\n", class_name);
+        jvm_debug_print("[Exiting from class %s]\n\n", class_name);
     }
 
     method_data->pc += 2;
@@ -1125,12 +1124,9 @@ void invokestatic(MethodData *method_data)
         method_info *current_method = method_area_search_method(name, current_class);
         u2 object_stack_position = current_method->attributes->info.code.max_locals;
 
-        jvm_debug_print("\t\t[Calling Method from '%s']\n\n", class_name);
-
+        jvm_debug_print("[Changing to class %s]", class_name);
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
                                 method_data->loaded_classes, NULL);
-
-        jvm_debug_print("\t\t[Exiting from '%s' Method]\n\n", class_name);
     }
 
     method_data->pc += 2;
