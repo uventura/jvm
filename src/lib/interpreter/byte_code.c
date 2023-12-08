@@ -5,6 +5,7 @@
 #include "lib/runtime_data_area/method_area.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 // Functions for the opcode.
 
@@ -228,7 +229,8 @@ void iload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    int *value = (int *)(current_frame->local_variables[index]);
+    int *value  = (int *)malloc(sizeof(int));
+    *(int *)    int *value  = (int *)(current_frame->local_variables[index]);
     stack_push(current_frame->operand_stack, value);
     method_data->pc += 2;
 }
@@ -238,7 +240,8 @@ void lload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    long *value = (long *)(current_frame->local_variables[index]);
+    long *value  = (long *)malloc(sizeof(long));
+    *(long *)    long *value  = (long *)(current_frame->local_variables[index]);
     stack_push(current_frame->operand_stack, value);
     method_data->pc += 2;
 }
@@ -248,7 +251,8 @@ void fload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    float *value = (float *)(current_frame->local_variables[index]);
+    float *value  = (float *)malloc(sizeof(float));
+    *(float *)    float *value  = (float *)(current_frame->local_variables[index]);
     stack_push(current_frame->operand_stack, value);
     method_data->pc += 2;
 }
@@ -258,7 +262,8 @@ void dload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    double *value = (double *)(current_frame->local_variables[index]);
+    double *value  = (double *)malloc(sizeof(double));
+    *(double *)    double *value  = (double *)(current_frame->local_variables[index]);
     stack_push(current_frame->operand_stack, value);
     method_data->pc += 2;
 }
@@ -268,7 +273,8 @@ void aload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    void *ref = current_frame->local_variables[index];
+    void *ref  = (double *)malloc(sizeof(double));
+    *(double *)    void *ref  = current_frame->local_variables[index];
     stack_push(current_frame->operand_stack, ref);
     method_data->pc += 2;
 }
@@ -277,7 +283,8 @@ void aload(MethodData *method_data)
 void iload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value = (int *)(current_frame->local_variables[0]);
+    int *value  = (int *)malloc(sizeof(int));
+    *(int *)    int *value  = (int *)(current_frame->local_variables[0]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -285,7 +292,8 @@ void iload_0(MethodData *method_data)
 void iload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value = (int *)(current_frame->local_variables[1]);
+    int *value  = (int *)malloc(sizeof(int));
+    *(int *)    int *value  = (int *)(current_frame->local_variables[1]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -294,7 +302,8 @@ void iload_1(MethodData *method_data)
 void iload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value = (int *)(current_frame->local_variables[2]);
+    int *value  = (int *)malloc(sizeof(int));
+    *(int *)    int *value  = (int *)(current_frame->local_variables[2]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -302,7 +311,8 @@ void iload_2(MethodData *method_data)
 void iload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value = (int *)(current_frame->local_variables[3]);
+    int *value  = (int *)malloc(sizeof(int));
+    *(int *)    int *value  = (int *)(current_frame->local_variables[3]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -310,7 +320,8 @@ void iload_3(MethodData *method_data)
 void lload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value = (long *)(current_frame->local_variables[0]);
+    long *value  = (long *)malloc(sizeof(long));
+    *(long *)    long *value  = (long *)(current_frame->local_variables[0]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -318,7 +329,8 @@ void lload_0(MethodData *method_data)
 void lload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value = (long *)(current_frame->local_variables[1]);
+    long *value  = (long *)malloc(sizeof(long));
+    *(long *)    long *value  = (long *)(current_frame->local_variables[1]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -326,7 +338,8 @@ void lload_1(MethodData *method_data)
 void lload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value = (long *)(current_frame->local_variables[2]);
+    long *value  = (long *)malloc(sizeof(long));
+    *(long *)    long *value  = (long *)(current_frame->local_variables[2]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -334,7 +347,8 @@ void lload_2(MethodData *method_data)
 void lload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value = (long *)(current_frame->local_variables[3]);
+    long *value  = (long *)malloc(sizeof(long));
+    *(long *)    long *value  = (long *)(current_frame->local_variables[3]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -342,7 +356,8 @@ void lload_3(MethodData *method_data)
 void fload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value = (float *)(current_frame->local_variables[0]);
+    float *value  = (float *)malloc(sizeof(float));
+    *(float *)    float *value  = (float *)(current_frame->local_variables[0]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -350,7 +365,8 @@ void fload_0(MethodData *method_data)
 void fload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value = (float *)(current_frame->local_variables[1]);
+    float *value  = (float *)malloc(sizeof(float));
+    *(float *)    float *value  = (float *)(current_frame->local_variables[1]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -358,7 +374,8 @@ void fload_1(MethodData *method_data)
 void fload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value = (float *)(current_frame->local_variables[2]);
+    float *value  = (float *)malloc(sizeof(float));
+    *(float *)    float *value  = (float *)(current_frame->local_variables[2]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -366,7 +383,8 @@ void fload_2(MethodData *method_data)
 void fload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value = (float *)(current_frame->local_variables[3]);
+    float *value  = (float *)malloc(sizeof(float));
+    *(float *)    float *value  = (float *)(current_frame->local_variables[3]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -374,7 +392,8 @@ void fload_3(MethodData *method_data)
 void dload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value = (double *)(current_frame->local_variables[0]);
+    double *value  = (double *)malloc(sizeof(double));
+    *(double *)    double *value  = (double *)(current_frame->local_variables[0]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -382,7 +401,8 @@ void dload_0(MethodData *method_data)
 void dload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value = (double *)(current_frame->local_variables[1]);
+    double *value  = (double *)malloc(sizeof(double));
+    *(double *)    double *value  = (double *)(current_frame->local_variables[1]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -390,7 +410,8 @@ void dload_1(MethodData *method_data)
 void dload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value = (double *)(current_frame->local_variables[2]);
+    double *value  = (double *)malloc(sizeof(double));
+    *(double *)    double *value  = (double *)(current_frame->local_variables[2]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -398,7 +419,8 @@ void dload_2(MethodData *method_data)
 void dload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value = (double *)(current_frame->local_variables[3]);
+    double *value  = (double *)malloc(sizeof(double));
+    *(double *)    double *value  = (double *)(current_frame->local_variables[3]);
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -406,7 +428,8 @@ void dload_3(MethodData *method_data)
 void aload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value = current_frame->local_variables[0];
+    void *value  = (double *)malloc(sizeof(double));
+    *(double *)    void *value  = current_frame->local_variables[0];
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -414,7 +437,8 @@ void aload_0(MethodData *method_data)
 void aload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value = current_frame->local_variables[1];
+    void *value  = (double *)malloc(sizeof(double));
+    *(double *)    void *value  = current_frame->local_variables[1];
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -422,7 +446,8 @@ void aload_1(MethodData *method_data)
 void aload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value = current_frame->local_variables[2];
+    void *value  = (double *)malloc(sizeof(double));
+    *(double *)    void *value  = current_frame->local_variables[2];
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -430,7 +455,8 @@ void aload_2(MethodData *method_data)
 void aload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value = current_frame->local_variables[3];
+    void *value  = (double *)malloc(sizeof(double));
+    *(double *)    void *value  = current_frame->local_variables[3];
     stack_push(current_frame->operand_stack, value);
 }
 
@@ -586,7 +612,8 @@ void istore(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     // Armazenando o valor na variável local
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 // 0x37
@@ -602,7 +629,8 @@ void lstore(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 // 0x38
@@ -618,7 +646,8 @@ void fstore(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 // 0x39
@@ -634,7 +663,8 @@ void dstore(MethodData *method_data) {
     double value = *((double *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 
@@ -651,7 +681,8 @@ void astore(MethodData *method_data) {
     void *value = value_node->data;
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 
@@ -664,7 +695,8 @@ void istore_0(MethodData *method_data) {
     int value = *((int *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 // 0x3C
 // Armazena um int na segunda posição das variáveis locais.
@@ -675,7 +707,8 @@ void istore_1(MethodData *method_data) {
     int value = *((int *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[1] = value;
+    current_frame->local_variables[1]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[1]  = value;
 }
 
 // 0x3D
@@ -687,7 +720,8 @@ void istore_2(MethodData *method_data) {
     int value = *((int *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[2]  = value;
 }void lstore_0(MethodData *method_data) {
     Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
 
@@ -695,7 +729,8 @@ void istore_2(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 
 // 0x3E
@@ -707,7 +742,8 @@ void istore_3(MethodData *method_data) {
     int value = *((int *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[3] = value;
+    current_frame->local_variables[3]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[3]  = value;
 }
 
 // 0x3F
@@ -719,7 +755,8 @@ void lstore_0(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 
 // 0x40
@@ -731,7 +768,8 @@ void lstore_1(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[1] = value;
+    current_frame->local_variables[1]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[1]  = value;
 }
 
 // 0x41
@@ -743,7 +781,8 @@ void lstore_2(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[2]  = value;
 }
 
 // 0x42
@@ -755,7 +794,8 @@ void lstore_3(MethodData *method_data) {
     long value = *((long *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[3] = value;
+    current_frame->local_variables[3]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[3]  = value;
 }
 
 // 0x43
@@ -767,7 +807,8 @@ void fstore_0(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 
 // 0x44
@@ -779,7 +820,8 @@ void fstore_1(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[1] = value;
+    current_frame->local_variables[1]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[1]  = value;
 }
 
 // 0x45
@@ -791,7 +833,8 @@ void fstore_2(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[2]  = value;
 }
 
 // 0x46
@@ -803,7 +846,8 @@ void fstore_3(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[3] = value;
+    current_frame->local_variables[3]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[3]  = value;
 }
 
 // 0x47
@@ -815,7 +859,8 @@ void dstore_0(MethodData *method_data) {
     double value = *((double *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 
 // 0x48
@@ -827,7 +872,8 @@ void dstore_1(MethodData *method_data) {
     double value = *((double *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[1] = value;
+    current_frame->local_variables[1]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[1]  = value;
 }
 
 // 0x49
@@ -839,7 +885,8 @@ void dstore_2(MethodData *method_data) {
     double value = *((double *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[2]  = value;
 }
 
 // 0x4A
@@ -851,7 +898,8 @@ void dstore_3(MethodData *method_data) {
     double value = *((double *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[3] = value;
+    current_frame->local_variables[3]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[3]  = value;
 }
 // 0x4B
 // Armazena uma referência na primeira posição das variáveis locais.
@@ -862,7 +910,8 @@ void astore_0(MethodData *method_data) {
     void *value = value_node->data;
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0] = value;
+    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[0]  = value;
 }
 // 0x4C
 // Armazena uma referência na segunda posição das variáveis locais.
@@ -873,7 +922,8 @@ void astore_1(MethodData *method_data) {
     void *value = value_node->data;
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[1] = value;
+    current_frame->local_variables[1]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[1]  = value;
 }
 
 // 0x4D
@@ -885,7 +935,8 @@ void astore_2(MethodData *method_data) {
     void *value = value_node->data;
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[2]  = value;
 }
 
 // 0x4E
@@ -897,7 +948,8 @@ void astore_3(MethodData *method_data) {
     void *value = value_node->data;
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[3] = value;
+    current_frame->local_variables[3]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[3]  = value;
 }
 
 // 0x4F
@@ -1512,9 +1564,11 @@ void lxor(MethodData *method_data) {
 // 0x84
 // Incrementa uma variável local (int) por uma quantidade constante.
 void iinc(MethodData *method_data, int index, int constant) {
-    int value = *((int *)current_frame->local_variables[index]);
+    int value  = (int *)malloc(sizeof(int));
+    *(int *)    int value  = *((int *)current_frame->local_variables[index]);
     value += constant;
-    current_frame->local_variables[index] = value;
+    current_frame->local_variables[index]  = (double *)malloc(sizeof(double));
+    *(double *)    current_frame->local_variables[index]  = value;
 }
 
 // 0x85
