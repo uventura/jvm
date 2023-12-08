@@ -1093,6 +1093,47 @@ void invokespecial(MethodData *method_data)
 // 0xB8
 void invokestatic(MethodData *method_data)
 {
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    CONSTANT_Methodref_info method = current_frame->constant_pool[index - 1].info.Methodref;
+    u2 class_index = method.class_index;
+    char class_name[400];
+    get_class_name(class_index, current_frame->constant_pool, class_name);
+
+    if (!strcmp(class_name, "java/lang/Object"))
+    {
+    }
+    else
+    {
+        u2 name_type_index = method.name_and_type_index;
+        u2 method_name_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.name_index;
+        u2 method_name_desc_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.descriptor_index;
+
+        u2 method_name_size = current_frame->constant_pool[method_name_index - 1].info.Utf8.length;
+        char name[method_name_size + 1];
+        get_utf8_value(method_name_index - 1, current_frame->constant_pool, name);
+
+        u2 method_desc_size = current_frame->constant_pool[method_name_desc_index - 1].info.Utf8.length;
+        char descriptor[method_desc_size + 1];
+        get_utf8_value(method_name_desc_index - 1, current_frame->constant_pool, descriptor);
+
+        ClassFile *current_class = class_file_list_get(method_data->loaded_classes, class_name);
+        method_info *current_method = method_area_search_method(name, current_class);
+        u2 object_stack_position = current_method->attributes->info.code.max_locals;
+
+        jvm_debug_print("\t\t[Calling Method from '%s']\n\n", class_name);
+
+        method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
+                                method_data->loaded_classes, NULL);
+
+        jvm_debug_print("\t\t[Exiting from '%s' Method]\n\n", class_name);
+    }
+
+    method_data->pc += 2;
 }
 // 0xB9
 void invokeinterface(MethodData *method_data)
