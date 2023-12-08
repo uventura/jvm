@@ -7,6 +7,7 @@
 #include "lib/class_loader/class_file_list.h"
 #include "lib/class_loader/class_loader.h"
 #include "lib/controller/jvm_runner.h"
+#include "lib/environment/jvm_debug.h"
 
 void jvm_runner(ClassFile *class_file, char *class_path)
 {
@@ -20,14 +21,19 @@ void jvm_runner(ClassFile *class_file, char *class_path)
     stack_initialize(&stack_frame);
 
     // Recursive Load
+    jvm_debug_print("[Loading Classes Recursively]\n");
     ClassFileList loaded_classes = class_file_list_init();
     class_loader_recursive(class_file, &loaded_classes, base_path);
 
     // Initialize
+    jvm_debug_print("\n[Initializing classes]\n");
     class_loader_initialize(&loaded_classes, &stack_frame);
+    jvm_debug_print("[End of initialization]\n\n");
 
     // Run Main
+    jvm_debug_print("\n[Starting Main]\n");
     class_loader_call_main(&loaded_classes, &stack_frame);
+    jvm_debug_print("\n[End of Main]\n");
 
     // Free Classes
     class_file_list_free(&loaded_classes);
