@@ -43,7 +43,7 @@ void jvm_runner_get_file_path(char *dest, char *class_path)
     int32_t end_pos;
     for (end_pos = path_size - 1; end_pos >= 0; end_pos--)
     {
-        if (class_path[end_pos] == '/')
+        if (class_path[end_pos] == '/' || class_path[end_pos] == '\\')
         {
             break;
         }
