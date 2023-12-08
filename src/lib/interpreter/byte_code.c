@@ -178,7 +178,7 @@ void ldc(MethodData *method_data)
     if (element.tag == CONSTANT_String)
     {
         u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
-        char *string = get_utf8_string(utf8_index, current_frame->constant_pool);
+        char *string = get_utf8_value(utf8_index, current_frame->constant_pool);
         stack_push(current_frame->operand_stack, string);
     }
 
@@ -195,7 +195,7 @@ void ldc_w(MethodData *method_data)
     if (element.tag == CONSTANT_String)
     {
         u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
-        char *string = get_utf8_string(utf8_index, current_frame->constant_pool);
+        char *string = get_utf8_value(utf8_index, current_frame->constant_pool);
         stack_push(current_frame->operand_stack, string);
     }
 
@@ -1389,7 +1389,7 @@ void idiv(MethodData *method_data) {
 
 // 0x6D
 // Realiza a divisão de dois longs da pilha de operandos.
-void ldiv(MethodData *method_data) {
+void ldiv_func(MethodData *method_data) {
     Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
     long divisor = void *temp = stack_top(current_frame->operand_stack);
     (long * value = *(((long * *)temp);

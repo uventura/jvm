@@ -225,7 +225,7 @@ void dmul(MethodData *method_data);
 // 0x6C
 void idiv(MethodData *method_data);
 // 0x6D
-void ldiv(MethodData *method_data);
+void ldiv_func(MethodData *method_data); // Esta será renomeada
 // 0x6E
 void fdiv(MethodData *method_data);
 // 0x6F

@@ -114,7 +114,7 @@ opcode_function jvm_opcodes[202] = {
     &fmul,
     &dmul,
     &idiv,
-    &ldiv,
+    &ldiv_func,
     &fdiv,
     &ddiv,
     &irem,
