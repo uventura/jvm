@@ -4,6 +4,7 @@
 #include "test_bootstrap.h"
 #include "test_class_file_list.h"
 #include "test_class_loader.h"
+#include "test_math.h"
 #include "test_method_area.h"
 #include "test_read_bytes.h"
 #include "test_stack.h"
@@ -73,6 +74,10 @@ int main()
     // TEST METHOD AREA
     RUN_TEST(test_get_method_by_name_existent);
     RUN_TEST(test_get_method_non_existent);
+
+    // TEST MATH
+    RUN_TEST(test_iee754_single_get);
+    RUN_TEST(test_iee754_double_get);
 
     return UNITY_END();
 }
