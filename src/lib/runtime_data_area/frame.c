@@ -4,17 +4,15 @@
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
+#include "lib/environment/jvm_debug.h"
 
 #include <stdlib.h>
-
-// Exclude
-#include <stdio.h>
 
 void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool, Code_attribute code,
                       Stack *stack_frame)
 {
     // For Debugging Purposes
-    printf("...Constructing frame...\n");
+    jvm_debug_print("...Constructing frame...\n");
 
     frame->constant_pool = constant_pool;
     frame->local_variables = NULL;
@@ -35,12 +33,12 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
         for (u2 local_index = 0; local_index < code.max_locals; ++local_index)
         {
             void *value = stack_top(operands);
-            printf("Ptr to local variable: %p\n", value);
+            jvm_debug_print("Ptr to local variable: %p\n", value);
             frame->local_variables[code.max_locals - local_index - 1] = stack_top(operands);
             stack_pop(operands);
         }
     }
-    printf("........................\n");
+    jvm_debug_print("........................\n");
 }
 
 void frame_free(Frame *frame)
@@ -51,4 +49,5 @@ void frame_free(Frame *frame)
         // free(stack_top(frame->operand_stack));
         stack_pop(frame->operand_stack);
     }
+    jvm_debug_print("........................\n");
 }

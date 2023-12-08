@@ -3,6 +3,7 @@
 #include "lib/base/structures/stack.h"
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
+#include "lib/environment/jvm_debug.h"
 #include "lib/runtime_data_area/frame.h"
 #include "lib/runtime_data_area/method_area.h"
 
@@ -1030,7 +1031,7 @@ void invokevirtual(MethodData *method_data)
         }
         break;
         case CONSTANT_Double: {
-            printf("Double not implemented yet.\n");
+            jvm_debug_print("Double not implemented yet.\n");
         }
         }
     }
@@ -1078,9 +1079,13 @@ void invokespecial(MethodData *method_data)
             node_pos = node_pos->next;
         }
 
+        jvm_debug_print("\t\t[Calling Method from '%s']\n\n", class_name);
+
         JVMObject *object = node_pos->data;
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
                                 method_data->loaded_classes, object);
+
+        jvm_debug_print("\t\t[Exiting from '%s' Method]\n\n", class_name);
     }
 
     method_data->pc += 2;
