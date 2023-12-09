@@ -1264,59 +1264,146 @@ void ineg(MethodData *method_data)
 // 0x75
 void lneg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long long *value = (long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long *negated = malloc(sizeof(long long));
+    *negated = -*value;
+    stack_push(current_frame->operand_stack, negated);
 }
+
 // 0x76
 void fneg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float *value = (float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float *negated = malloc(sizeof(float));
+    *negated = -*value;
+    stack_push(current_frame->operand_stack, negated);
 }
+
 // 0x77
 void dneg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double *value = (double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double *negated = malloc(sizeof(double));
+    *negated = -*value;
+    stack_push(current_frame->operand_stack, negated);
 }
+
 // 0x78
 void ishl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int shift = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *value = (int *)stack_top(current_frame->operand_stack);
+    *value <<= shift;
 }
+
 // 0x79
 void lshl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int shift = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long *value = (long long *)stack_top(current_frame->operand_stack);
+    *value <<= shift;
 }
+
 // 0x7A
 void ishr(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int shift = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *value = (int *)stack_top(current_frame->operand_stack);
+    *value >>= shift;
 }
+
 // 0x7B
 void lshr(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int shift = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long *value = (long long *)stack_top(current_frame->operand_stack);
+    *value >>= shift;
 }
+
 // 0x7C
 void iushr(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    unsigned int shift = *(unsigned int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    unsigned int *value = (unsigned int *)stack_top(current_frame->operand_stack);
+    *value >>= shift;
 }
+
 // 0x7D
 void lushr(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    unsigned int shift = *(unsigned int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    unsigned long long *value = (unsigned long long *)stack_top(current_frame->operand_stack);
+    *value >>= shift;
 }
+
 // 0x7E
 void iand(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *value1 = (int *)stack_top(current_frame->operand_stack);
+    *value1 &= value2;
 }
+
 // 0x7F
 void land(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long *value1 = (long long *)stack_top(current_frame->operand_stack);
+    *value1 &= value2;
 }
+
 // 0x80
 void ior(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *value1 = (int *)stack_top(current_frame->operand_stack);
+    *value1 |= value2;
 }
+
 // 0x81
 void lor(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long *value1 = (long long *)stack_top(current_frame->operand_stack);
+    *value1 |= value2;
 }
+
 // 0x82
 void ixor(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *value1 = (int *)stack_top(current_frame->operand_stack);
+    *value1 ^= value2;
 }
+
 // 0x83
 void lxor(MethodData *method_data)
 {
