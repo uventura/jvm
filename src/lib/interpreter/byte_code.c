@@ -180,7 +180,7 @@ void ldc(MethodData *method_data)
         u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
     char utf8_buffer[256];  // Alocando buffer. Tamanho pode ser ajustado conforme necessário.
         get_utf8_value(utf8_index, current_frame->constant_pool, utf8_buffer);
-        stack_push(current_frame->operand_stack, string);
+        stack_push(current_frame->operand_stack, utf8_buffer);
     }
 
     method_data->pc += 2;
@@ -198,7 +198,7 @@ void ldc_w(MethodData *method_data)
         u2 utf8_index = current_frame->constant_pool[index - 1].info.String.string_index;
     char utf8_buffer[256];  // Alocando buffer. Tamanho pode ser ajustado conforme necessário.
         get_utf8_value(utf8_index, current_frame->constant_pool, utf8_buffer);
-        stack_push(current_frame->operand_stack, string);
+        stack_push(current_frame->operand_stack, utf8_buffer);
     }
 
     method_data->pc += 3;
