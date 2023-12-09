@@ -559,11 +559,11 @@ void isub(MethodData *method_data)
 void lsub(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    long value2 = *(long *)stack_top(current_frame->operand_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    long value1 = *(long *)stack_top(current_frame->operand_stack);
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    long *sub = malloc(sizeof(long));
+    long long *sub = malloc(sizeof(long long));
     *sub = value1-value2;
     stack_push(current_frame->operand_stack, sub);
 }
@@ -607,11 +607,11 @@ void imul(MethodData *method_data)
 void lmul(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    long value2 = *(long *)stack_top(current_frame->operand_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    long value1 = *(long *)stack_top(current_frame->operand_stack);
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    long *mul = malloc(sizeof(long));
+    long long *mul = malloc(sizeof(long long));
     *mul = value1*value2;
     stack_push(current_frame->operand_stack, mul);
 }
