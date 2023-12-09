@@ -3,6 +3,7 @@
 
 #include "lib/base/defines.h"
 #include "lib/base/structures/stack.h"
+#include "lib/environment/jvm_debug.h"
 
 void stack_initialize(Stack *stack)
 {

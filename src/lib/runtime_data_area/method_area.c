@@ -43,7 +43,11 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     }
 
     frame_free(&new_frame);
-    stack_pop(stack_frame);
+    if (!stack_is_empty(stack_frame))
+    {
+        stack_frame->top = stack_frame->top->next;
+        // stack_pop(stack_frame); // TODO: Enable again
+    }
 
     if (JVM_DEBUG_MODE_ACTIVE)
     {

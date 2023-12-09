@@ -39,7 +39,10 @@ void jvm_runner(ClassFile *class_file, char *class_path)
     class_file_list_free(&loaded_classes);
 
     // Free Stack Frame
-    free_stack(&stack_frame);
+    if (!stack_is_empty(&stack_frame))
+    {
+        free_stack(&stack_frame);
+    }
 }
 
 void jvm_runner_get_file_path(char *dest, char *class_path)

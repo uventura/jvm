@@ -15,6 +15,7 @@ CFLAGS+=-std=c99
 CFLAGS+=-g
 CFLAGS+=-O3
 CFLAGS+=-Wno-unused-parameter
+CFLAG+=-Wimplicit-fallthrough
 
 SRC_DIR=src
 OBJ_DIR=obj
