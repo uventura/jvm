@@ -723,17 +723,9 @@ void istore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    double * = (current_frame->local_variables[2]  = value;
+    current_frame->local_variables[2]  = value;
 }
-    Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
-
-    Node *value_node = (Node *)stack_top(current_frame->operand_stack);
-    long value = *((long *)(value_node->data));
-    stack_pop(current_frame->operand_stack);
-
-    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
-    current_frame->local_variables[0]  = value;
-}
+   
 
 // 0x3E
 // Armazena um int na quarta posição das variáveis locais.
