@@ -551,27 +551,105 @@ void lastore(MethodData *method_data)
 // 0x51
 void fastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *array_ref = (float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x52
 void dastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *array_ref = (double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x53
 void aastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *value = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void **array_ref = (void **)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x54
 void bastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    char value = *(char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array_ref = (char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x55
 void castore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    char value = *(char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array_ref = (char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x56
 void sastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    short value = *(short *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    short *array_ref = (short *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x57 (optional implementation?MethodData* method_data)
 void pop(MethodData *method_data)
 {
