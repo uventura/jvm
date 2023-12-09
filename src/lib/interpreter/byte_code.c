@@ -592,7 +592,7 @@ void idiv(MethodData *method_data)
 {
 }
 // 0x6D
-void ldiv(MethodData *method_data)
+void ldiv_func(MethodData *method_data)
 {
 }
 // 0x6E
