@@ -1721,11 +1721,53 @@ void fcmpg(MethodData *method_data)
 // 0x97
 void dcmpl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *result = malloc(sizeof(int));
+    if (isnan(value1) || isnan(value2)) {
+        *result = -1;
+    } else if (value1 > value2) {
+        *result = 1;
+    } else if (value1 < value2) {
+        *result = -1;
+    } else {
+        *result = 0;
+    }
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x98
 void dcmpg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *result = malloc(sizeof(int));
+    if (isnan(value1) || isnan(value2)) {
+        *result = 1;
+    } else if (value1 > value2) {
+        *result = 1;
+    } else if (value1 < value2) {
+        *result = -1;
+    } else {
+        *result = 0;
+    }
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x99
 void ifeq(MethodData *method_data)
 {
