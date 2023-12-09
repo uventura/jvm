@@ -43,7 +43,7 @@ void iconst_m1(MethodData *method_data)
 void iconst_0(MethodData *method_data)
 {
     // Colocar a constante inteira 0 na pilha de operandos.
-Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
     *m1 = 0;
     stack_push(current_frame->operand_stack, m1);
@@ -52,7 +52,7 @@ Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 void iconst_1(MethodData *method_data)
 {
     // Colocar a constante inteira 1 na pilha de operandos.
-Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
     *m1 = 1;
     stack_push(current_frame->operand_stack, m1);
@@ -61,7 +61,7 @@ Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 void iconst_2(MethodData *method_data)
 {
     // Colocar a constante inteira 2 na pilha de operandos.
-Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
     *m1 = 2;
     stack_push(current_frame->operand_stack, m1);
@@ -69,7 +69,6 @@ Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 // 0x06
 void iconst_3(MethodData *method_data)
 {
-    jvm_debug_print("executing iconst...\n");
     // Colocar a constante interia 3 na pilha de operandos.
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
@@ -80,7 +79,7 @@ void iconst_3(MethodData *method_data)
 void iconst_4(MethodData *method_data)
 {
     // Colocar a constante inteira 4 na pilha de operandos.
-Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
     *m1 = 4;
     stack_push(current_frame->operand_stack, m1);
@@ -89,7 +88,7 @@ Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 void iconst_5(MethodData *method_data)
 {
     // Colocar a constante inteira 5 na pilha de operandos.
-Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *m1 = malloc(sizeof(int));
     *m1 = 5;
     stack_push(current_frame->operand_stack, m1);
@@ -302,7 +301,7 @@ void lload_3(MethodData *method_data)
 // 0x22
 void fload_0(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     cp_info *element = current_frame->local_variables[0];
     u4 fvalue = element->info.Float.bytes;
 
@@ -314,7 +313,7 @@ Frame *current_frame = stack_top(method_data->frame_stack);
 // 0x23
 void fload_1(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     cp_info *element = current_frame->local_variables[1];
     u4 fvalue = element->info.Float.bytes;
 
@@ -338,7 +337,7 @@ void fload_2(MethodData *method_data)
 // 0x25
 void fload_3(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     cp_info *element = current_frame->local_variables[3];
     u4 fvalue = element->info.Float.bytes;
 
@@ -357,19 +356,19 @@ void dload_0(MethodData *method_data)
 // 0x27
 void dload_1(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x28
 void dload_2(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x29
 void dload_3(MethodData *method_data)
 {
-Frame *current_frame = stack_top(method_data->frame_stack);
+    Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
 }
 // 0x2A
@@ -510,7 +509,6 @@ void istore_0(MethodData *method_data)
 // 0x3C
 void istore_1(MethodData *method_data)
 {
-    jvm_debug_print("executing istore_1...");
     Frame *current_frame = stack_top(method_data->frame_stack);
     current_frame->local_variables[1] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
@@ -518,7 +516,6 @@ void istore_1(MethodData *method_data)
 // 0x3D
 void istore_2(MethodData *method_data)
 {
-    jvm_debug_print("executing istore_2...");
     Frame *current_frame = stack_top(method_data->frame_stack);
     current_frame->local_variables[2] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
@@ -886,7 +883,7 @@ void isub(MethodData *method_data)
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     int *sub = malloc(sizeof(int));
-    *sub = value1-value2;
+    *sub = value1 - value2;
     stack_push(current_frame->operand_stack, sub);
 }
 // 0x65
@@ -898,7 +895,7 @@ void lsub(MethodData *method_data)
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     long long *sub = malloc(sizeof(long long));
-    *sub = value1-value2;
+    *sub = value1 - value2;
     stack_push(current_frame->operand_stack, sub);
 }
 // 0x66
@@ -910,7 +907,7 @@ void fsub(MethodData *method_data)
     float value1 = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     float *sub = malloc(sizeof(float));
-    *sub = value1-value2;
+    *sub = value1 - value2;
     stack_push(current_frame->operand_stack, sub);
 }
 // 0x67
@@ -922,7 +919,7 @@ void dsub(MethodData *method_data)
     double value1 = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     double *sub = malloc(sizeof(double));
-    *sub = value1-value2;
+    *sub = value1 - value2;
     stack_push(current_frame->operand_stack, sub);
 }
 // 0x68
@@ -934,7 +931,7 @@ void imul(MethodData *method_data)
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     int *mul = malloc(sizeof(int));
-    *mul = value1*value2;
+    *mul = value1 * value2;
     stack_push(current_frame->operand_stack, mul);
 }
 // 0x69
@@ -946,7 +943,7 @@ void lmul(MethodData *method_data)
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     long long *mul = malloc(sizeof(long long));
-    *mul = value1*value2;
+    *mul = value1 * value2;
     stack_push(current_frame->operand_stack, mul);
 }
 // 0x6A
@@ -958,7 +955,7 @@ void fmul(MethodData *method_data)
     float value1 = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     float *mul = malloc(sizeof(float));
-    *mul = value1*value2;
+    *mul = value1 * value2;
     stack_push(current_frame->operand_stack, mul);
 }
 // 0x6B
@@ -970,7 +967,7 @@ void dmul(MethodData *method_data)
     double value1 = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     double *mul = malloc(sizeof(double));
-    *mul = value1*value2;
+    *mul = value1 * value2;
     stack_push(current_frame->operand_stack, mul);
 }
 // 0x6C

@@ -5,5 +5,6 @@ public class Arithmetic_Operations {
       int y = 49;
       //int z = x-y;
       int z = x*y;
+      System.out.println(z);
     }
 }
