@@ -24,9 +24,12 @@ void nop(MethodData *method_data)
 // 0x01
 void aconst_null(MethodData *method_data)
 {
-    // Colocar a referencia de objeto "NULL" na pilha de operandos.
-    // Observacao: a JVM nao obriga um valor concreto para "NULL".
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *null_ref = NULL;
+    stack_push(current_frame->operand_stack, null_ref);
 }
+
 // 0x02
 void iconst_m1(MethodData *method_data)
 {
@@ -179,7 +182,17 @@ void ldc(MethodData *method_data)
 // 0x13
 void ldc_w(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u1 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u1 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+
+    method_data->pc += 2;
 }
+
 // 0x14
 void ldc2_w(MethodData *method_data)
 {
