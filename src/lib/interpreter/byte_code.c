@@ -231,9 +231,9 @@ void iload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    int *value  = (int *)malloc(sizeof(int));
+    int *buffer  = (int *)malloc(sizeof(int));
     int *value  = (int *)(current_frame->local_variables[index]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
     method_data->pc += 2;
 }
 
@@ -242,9 +242,9 @@ void lload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    long *value  = (long *)malloc(sizeof(long));
+    long *buffer  = (long *)malloc(sizeof(long));
      *value  = (long *)(current_frame->local_variables[index]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
     method_data->pc += 2;
 }
 
@@ -253,9 +253,9 @@ void fload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    float *value  = (float *)malloc(sizeof(float));
+    float *buffer  = (float *)malloc(sizeof(float));
     float *value  = (float *)(current_frame->local_variables[index]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
     method_data->pc += 2;
 }
 
@@ -264,9 +264,9 @@ void dload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    double *value  = (double *)malloc(sizeof(double));
+    double *buffer  = (double *)malloc(sizeof(double));
      double *value  = (double *)(current_frame->local_variables[index]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
     method_data->pc += 2;
 }
 
@@ -275,9 +275,9 @@ void aload(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     u1 index = method_data->code.code[method_data->pc + 1];
-    void *ref  = (double *)malloc(sizeof(double));
+    void *buffer  = (double *)malloc(sizeof(double));
     void *ref  = current_frame->local_variables[index];
-    stack_push(current_frame->operand_stack, ref);
+    stack_push(current_frame->operand_stack, buffer);
     method_data->pc += 2;
 }
 
@@ -285,18 +285,18 @@ void aload(MethodData *method_data)
 void iload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value  = (int *)malloc(sizeof(int));
+    int *buffer  = (int *)malloc(sizeof(int));
    int *value  = (int *)(current_frame->local_variables[0]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x1B
 void iload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value  = (int *)malloc(sizeof(int));
+    int *buffer  = (int *)malloc(sizeof(int));
     int *value  = (int *)(current_frame->local_variables[1]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 
@@ -304,162 +304,162 @@ void iload_1(MethodData *method_data)
 void iload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value  = (int *)malloc(sizeof(int));
+    int *buffer  = (int *)malloc(sizeof(int));
      int *value  = (int *)(current_frame->local_variables[2]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x1D
 void iload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int *value  = (int *)malloc(sizeof(int));
+    int *buffer  = (int *)malloc(sizeof(int));
      int *value  = (int *)(current_frame->local_variables[3]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x1E
 void lload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value  = (long *)malloc(sizeof(long));
+    long *buffer  = (long *)malloc(sizeof(long));
     long *value  = (long *)(current_frame->local_variables[0]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x1F
 void lload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value  = (long *)malloc(sizeof(long));
+    long *buffer  = (long *)malloc(sizeof(long));
     long *value  = (long *)(current_frame->local_variables[1]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x20
 void lload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value  = (long *)malloc(sizeof(long));
+    long *buffer  = (long *)malloc(sizeof(long));
     long *value  = (long *)(current_frame->local_variables[2]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x21
 void lload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    long *value  = (long *)malloc(sizeof(long));
+    long *buffer  = (long *)malloc(sizeof(long));
     long *value  = (long *)(current_frame->local_variables[3]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x22
 void fload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value  = (float *)malloc(sizeof(float));
+    float *buffer  = (float *)malloc(sizeof(float));
     float *value  = (float *)(current_frame->local_variables[0]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x23
 void fload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value  = (float *)malloc(sizeof(float));
+    float *buffer  = (float *)malloc(sizeof(float));
    float *value  = (float *)(current_frame->local_variables[1]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x24
 void fload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value  = (float *)malloc(sizeof(float));
+    float *buffer  = (float *)malloc(sizeof(float));
       float *value  = (float *)(current_frame->local_variables[2]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x25
 void fload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    float *value  = (float *)malloc(sizeof(float));
+    float *buffer  = (float *)malloc(sizeof(float));
      float *value  = (float *)(current_frame->local_variables[3]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x26
 void dload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value  = (double *)malloc(sizeof(double));
+    double *buffer  = (double *)malloc(sizeof(double));
       double *value  = (double *)(current_frame->local_variables[0]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x27
 void dload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value  = (double *)malloc(sizeof(double));
+    double *buffer  = (double *)malloc(sizeof(double));
         double *value  = (double *)(current_frame->local_variables[1]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x28
 void dload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value  = (double *)malloc(sizeof(double));
+    double *buffer  = (double *)malloc(sizeof(double));
        double *value  = (double *)(current_frame->local_variables[2]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x29
 void dload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    double *value  = (double *)malloc(sizeof(double));
+    double *buffer  = (double *)malloc(sizeof(double));
       double *value  = (double *)(current_frame->local_variables[3]);
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x2A
 void aload_0(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value  = (double *)malloc(sizeof(double));
+    void *buffer  = (double *)malloc(sizeof(double));
        void *value  = current_frame->local_variables[0];
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x2B
 void aload_1(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value  = (double *)malloc(sizeof(double));
+    void *buffer  = (double *)malloc(sizeof(double));
        void *value  = current_frame->local_variables[1];
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x2C
 void aload_2(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value  = (double *)malloc(sizeof(double));
+    void *buffer  = (double *)malloc(sizeof(double));
        void *value  = current_frame->local_variables[2];
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // 0x2D
 void aload_3(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    void *value  = (double *)malloc(sizeof(double));
+    void *buffer  = (double *)malloc(sizeof(double));
        void *value  = current_frame->local_variables[3];
-    stack_push(current_frame->operand_stack, value);
+    stack_push(current_frame->operand_stack, buffer);
 }
 
 // Carrega um inteiro de um array especificado pelo índice e pela referência do array na pilha de operandos.
