@@ -94,42 +94,66 @@ Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 // 0x09
 void lconst_0(MethodData *method_data)
 {
-    // Colocar a constante long 0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 *m1 = malloc(sizeof(u8));
+    *m1 = 0;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0A
 void lconst_1(MethodData *method_data)
 {
-    // Colocar a constante long 1 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 *m1 = malloc(sizeof(u8));
+    *m1 = 1;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0B
 void fconst_0(MethodData *method_data)
 {
-    // Colocar a constante float 0.0 na pilha de operandos.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float *m1 = malloc(sizeof(float));
+    *m1 = 0.0f;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0C
 void fconst_1(MethodData *method_data)
 {
-    // Colocar a constante float 1.0 na pilha de operandos.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float *m1 = malloc(sizeof(float));
+    *m1 = 1.0f;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0D
 void fconst_2(MethodData *method_data)
 {
-    // Colocar a constante float 2.0 na pilha de operandos.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    float *m1 = malloc(sizeof(float));
+    *m1 = 2.0f;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0E
 void dconst_0(MethodData *method_data)
 {
-    // Colocar a constante double 0.0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double *m1 = malloc(sizeof(double));
+    *m1 = 0.0;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x0F
 void dconst_1(MethodData *method_data)
 {
-    // Colocar a constante double 1.0 na pilha de operandos.
-    // Usa 2 espacos na pilha.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    double *m1 = malloc(sizeof(double));
+    *m1 = 1.0;
+    stack_push(current_frame->operand_stack, m1);
 }
+
 // 0x10
 void bipush(MethodData *method_data)
 {
