@@ -534,7 +534,20 @@ void iastore(MethodData *method_data)
 // 0x50
 void lastore(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u8 value = *(u8 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    u8 *array_ref = (u8 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    array_ref[index] = value;
 }
+
 // 0x51
 void fastore(MethodData *method_data)
 {
