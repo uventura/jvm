@@ -399,7 +399,19 @@ void aload_3(MethodData *method_data)
 // 0x2E
 void iaload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *array_ref = (int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *value = malloc(sizeof(int));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x2F
 void laload(MethodData *method_data)
 {
