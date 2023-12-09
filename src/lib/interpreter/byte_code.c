@@ -962,19 +962,71 @@ void swap(MethodData *method_data)
 // 0x60
 void iadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *sum = malloc(sizeof(int));
+    *sum = value1 + value2;
+
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x61
 void ladd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *sum = malloc(sizeof(long long));
+    *sum = value1 + value2;
+
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x62
 void fadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *sum = malloc(sizeof(float));
+    *sum = value1 + value2;
+
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x63
 void dadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *sum = malloc(sizeof(double));
+    *sum = value1 + value2;
+
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x64
 void isub(MethodData *method_data)
 {
@@ -994,23 +1046,88 @@ void dsub(MethodData *method_data)
 // 0x68
 void imul(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *product = malloc(sizeof(int));
+    *product = value1 * value2;
+
+    stack_push(current_frame->operand_stack, product);
 }
+
 // 0x69
 void lmul(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *product = malloc(sizeof(long long));
+    *product = value1 * value2;
+
+    stack_push(current_frame->operand_stack, product);
 }
+
 // 0x6A
 void fmul(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *product = malloc(sizeof(float));
+    *product = value1 * value2;
+
+    stack_push(current_frame->operand_stack, product);
 }
+
 // 0x6B
 void dmul(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *product = malloc(sizeof(double));
+    *product = value1 * value2;
+
+    stack_push(current_frame->operand_stack, product);
 }
+
 // 0x6C
 void idiv(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *quotient = malloc(sizeof(int));
+    *quotient = value1 / value2;
+
+    stack_push(current_frame->operand_stack, quotient);
 }
+
 // 0x6D
 void ldiv(MethodData *method_data)
 {
