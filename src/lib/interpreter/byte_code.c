@@ -4,6 +4,7 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
 #include "lib/environment/jvm_debug.h"
+#include "lib/interpreter/opcodes_generic.h"
 #include "lib/runtime_data_area/frame.h"
 #include "lib/runtime_data_area/method_area.h"
 
@@ -1181,6 +1182,22 @@ void if_icmpeq(MethodData *method_data)
 // 0xA0
 void if_icmpne(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 == value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA1
 void if_icmplt(MethodData *method_data)
