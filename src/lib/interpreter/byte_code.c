@@ -40,16 +40,28 @@ void iconst_m1(MethodData *method_data)
 void iconst_0(MethodData *method_data)
 {
     // Colocar a constante inteira 0 na pilha de operandos.
+Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int *m1 = malloc(sizeof(int));
+    *m1 = 0;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x04
 void iconst_1(MethodData *method_data)
 {
     // Colocar a constante inteira 1 na pilha de operandos.
+Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int *m1 = malloc(sizeof(int));
+    *m1 = 1;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x05
 void iconst_2(MethodData *method_data)
 {
     // Colocar a constante inteira 2 na pilha de operandos.
+Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int *m1 = malloc(sizeof(int));
+    *m1 = 2;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x06
 void iconst_3(MethodData *method_data)
@@ -65,11 +77,19 @@ void iconst_3(MethodData *method_data)
 void iconst_4(MethodData *method_data)
 {
     // Colocar a constante inteira 4 na pilha de operandos.
+Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int *m1 = malloc(sizeof(int));
+    *m1 = 4;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x08
 void iconst_5(MethodData *method_data)
 {
     // Colocar a constante inteira 5 na pilha de operandos.
+Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int *m1 = malloc(sizeof(int));
+    *m1 = 5;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x09
 void lconst_0(MethodData *method_data)
