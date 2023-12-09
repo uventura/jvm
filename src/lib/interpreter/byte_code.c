@@ -432,22 +432,56 @@ void fstore_3(MethodData *method_data)
 // 0x47
 void dstore_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    *((double *)current_frame->local_variables[0]) = value;
 }
+
 // 0x48
 void dstore_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    *((double *)current_frame->local_variables[1]) = value;
 }
+
 // 0x49
 void dstore_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    *((double *)current_frame->local_variables[2]) = value;
 }
+
 // 0x4A
 void dstore_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    *((double *)current_frame->local_variables[3]) = value;
 }
+
 // 0x4B
 void astore_0(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *value = (void *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    current_frame->local_variables[0] = value;
 }
 // 0x4C
 void astore_1(MethodData *method_data)
@@ -463,10 +497,22 @@ void astore_1(MethodData *method_data)
 // 0x4D
 void astore_2(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *value = (void *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    current_frame->local_variables[2] = value;
 }
 // 0x4E
 void astore_3(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void *value = (void *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    current_frame->local_variables[3] = value;
 }
 // 0x4F
 void iastore(MethodData *method_data)
