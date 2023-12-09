@@ -197,7 +197,17 @@ void ldc_w(MethodData *method_data)
 // 0x14
 void ldc2_w(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u1 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u1 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+
+    method_data->pc += 2;
 }
+
 // 0x15
 void iload(MethodData *method_data)
 {
