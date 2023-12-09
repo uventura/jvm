@@ -32,7 +32,7 @@ void iconst_m1(MethodData *method_data)
 {
     // Colocar a constante inteira -1 na pilha de operandos.
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    int* m1 = malloc(sizeof(int));
+    int *m1 = malloc(sizeof(int));
     *m1 = -1;
     stack_push(current_frame->operand_stack, m1);
 }
@@ -1021,6 +1021,10 @@ void invokevirtual(MethodData *method_data)
             printf("%c\n", *value);
         }
 
+        if (strcmp(descriptor, "(Ljava/lang/String;)V"))
+        {
+            free(stack_top(current_frame->operand_stack));
+        }
         stack_pop(current_frame->operand_stack);
     }
 
@@ -1110,7 +1114,6 @@ void invokestatic(MethodData *method_data)
 
         ClassFile *current_class = class_file_list_get(method_data->loaded_classes, class_name);
         method_info *current_method = method_area_search_method(name, current_class);
-        u2 object_stack_position = current_method->attributes->info.code.max_locals;
 
         jvm_debug_print("[Changing to class %s]", class_name);
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
