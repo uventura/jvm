@@ -1225,7 +1225,7 @@ void frem(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
 
     float *remainder = malloc(sizeof(float));
-    *remainder = fmod(value1, value2);
+    //sem fmod fica dificil
 
     stack_push(current_frame->operand_stack, remainder);
 }
@@ -1242,7 +1242,7 @@ void drem(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
 
     double *remainder = malloc(sizeof(double));
-    *remainder = fmod(value1, value2);
+    //sem fmod fica dificil
 
     stack_push(current_frame->operand_stack, remainder);
 }
