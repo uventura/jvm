@@ -1,3 +1,4 @@
+char *string = NULL; // Declaração temporária para 'string'
 #include "lib/interpreter/byte_code.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/structures/stack.h"
@@ -723,8 +724,8 @@ void istore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    *(double *)    current_frame->local_variables[2]  = value;
-}void lstore_0(MethodData *method_data) {
+    double * = (current_frame->local_variables[2]  = value;
+}
     Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
 
     Node *value_node = (Node *)stack_top(current_frame->operand_stack);
@@ -784,7 +785,7 @@ void lstore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    *(double *)    current_frame->local_variables[2]  = value;
+    double * = (current_frame->local_variables[2]  = value;
 }
 
 // 0x42
@@ -836,7 +837,7 @@ void fstore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    *(double *)    current_frame->local_variables[2]  = value;
+    double * = (current_frame->local_variables[2]  = value;
 }
 
 // 0x46
@@ -888,7 +889,7 @@ void dstore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    *(double *)    current_frame->local_variables[2]  = value;
+    double * = (current_frame->local_variables[2]  = value;
 }
 
 // 0x4A
@@ -938,7 +939,7 @@ void astore_2(MethodData *method_data) {
     stack_pop(current_frame->operand_stack);
 
     current_frame->local_variables[2]  = (double *)malloc(sizeof(double));
-    *(double *)    current_frame->local_variables[2]  = value;
+    double * = (current_frame->local_variables[2]  = value;
 }
 
 // 0x4E
