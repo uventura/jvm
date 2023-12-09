@@ -361,18 +361,35 @@ void istore_3(MethodData *method_data)
 // 0x3F
 void lstore_0(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 value = *((u8 *)stack_top(current_frame->operand_stack));
+    stack_pop(current_frame->operand_stack);
+    *((u8 *)(current_frame->local_variables[1])) = value;
 }
+
 // 0x40
 void lstore_1(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 value = *((u8 *)stack_top(current_frame->operand_stack));
+    stack_pop(current_frame->operand_stack);
+    *((u8 *)(current_frame->local_variables[1])) = value;
 }
 // 0x41
 void lstore_2(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 value = *((u8 *)stack_top(current_frame->operand_stack));
+    stack_pop(current_frame->operand_stack);
+    *((u8 *)(current_frame->local_variables[2])) = value;
 }
 // 0x42
 void lstore_3(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    u8 value = *((u8 *)stack_top(current_frame->operand_stack));
+    stack_pop(current_frame->operand_stack);
+    *((u8 *)(current_frame->local_variables[3])) = value;
 }
 // 0x43
 void fstore_0(MethodData *method_data)
