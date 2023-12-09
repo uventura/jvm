@@ -1211,7 +1211,6 @@ void land(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-
     long long *and = malloc(sizeof(long long));
     *and = value1 & value2;
     stack_push(current_frame->operand_stack, and);
@@ -1521,6 +1520,9 @@ void areturn(MethodData *method_data)
 // 0xB1 ("return" is a C keyword, hence the nameMethodData* method_data)
 void jvm_return(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int * value = (int *) current_frame->local_variables[3];
+    jvm_debug_print("VALUE... %d\n", *value);
 }
 // 0xB2
 void getstatic(MethodData *method_data)
