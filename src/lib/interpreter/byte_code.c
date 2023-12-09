@@ -415,31 +415,114 @@ void iaload(MethodData *method_data)
 // 0x2F
 void laload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    u8 *array_ref = (u8 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    u8 *value = malloc(sizeof(u8));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x30
 void faload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *array_ref = (float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *value = malloc(sizeof(float));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x31
 void daload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *array_ref = (double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *value = malloc(sizeof(double));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x32
 void aaload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void **array_ref = (void **)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x33
 void baload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array_ref = (char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *value = malloc(sizeof(char));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x34
 void caload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array_ref = (char *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *value = malloc(sizeof(char));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x35
 void saload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int index = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    short *array_ref = (short *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    short *value = malloc(sizeof(short));
+    *value = array_ref[index];
+    stack_push(current_frame->operand_stack, value);
 }
+
 // 0x36
 void istore(MethodData *method_data)
 {
