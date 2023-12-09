@@ -1131,35 +1131,136 @@ void idiv(MethodData *method_data)
 // 0x6D
 void ldiv(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *quotient = malloc(sizeof(long long));
+    *quotient = value1 / value2;
+
+    stack_push(current_frame->operand_stack, quotient);
 }
+
 // 0x6E
 void fdiv(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *quotient = malloc(sizeof(float));
+    *quotient = value1 / value2;
+
+    stack_push(current_frame->operand_stack, quotient);
 }
+
 // 0x6F
 void ddiv(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *quotient = malloc(sizeof(double));
+    *quotient = value1 / value2;
+
+    stack_push(current_frame->operand_stack, quotient);
 }
+
 // 0x70
 void irem(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *remainder = malloc(sizeof(int));
+    *remainder = value1 % value2;
+
+    stack_push(current_frame->operand_stack, remainder);
 }
+
 // 0x71
 void lrem(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *remainder = malloc(sizeof(long long));
+    *remainder = value1 % value2;
+
+    stack_push(current_frame->operand_stack, remainder);
 }
+
 // 0x72
 void frem(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *remainder = malloc(sizeof(float));
+    *remainder = fmod(value1, value2);
+
+    stack_push(current_frame->operand_stack, remainder);
 }
+
 // 0x73
 void drem(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *remainder = malloc(sizeof(double));
+    *remainder = fmod(value1, value2);
+
+    stack_push(current_frame->operand_stack, remainder);
 }
+
 // 0x74
 void ineg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *negated = malloc(sizeof(int));
+    *negated = -value;
+
+    stack_push(current_frame->operand_stack, negated);
 }
+
 // 0x75
 void lneg(MethodData *method_data)
 {
