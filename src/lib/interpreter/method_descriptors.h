@@ -1,4 +1,0 @@
-#ifndef JVM_METHOD_DESCRIPTORS
-#define JVM_METHOD_DESCRIPTORS
-
-#endif

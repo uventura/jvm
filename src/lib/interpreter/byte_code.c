@@ -31,6 +31,10 @@ void aconst_null(MethodData *method_data)
 void iconst_m1(MethodData *method_data)
 {
     // Colocar a constante inteira -1 na pilha de operandos.
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int* m1 = malloc(sizeof(int));
+    *m1 = -1;
+    stack_push(current_frame->operand_stack, m1);
 }
 // 0x03
 void iconst_0(MethodData *method_data)
@@ -198,9 +202,12 @@ void fload_1(MethodData *method_data)
 void fload_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    cp_info *value = current_frame->local_variables[2];
-    u4 *float_value = (u4 *)malloc(sizeof(u4));
-    *float_value = value->info.Float.bytes;
+    cp_info *element = current_frame->local_variables[2];
+    u4 fvalue = element->info.Float.bytes;
+
+    float *float_value = (float *)malloc(sizeof(float));
+    *float_value = ieee754_single(fvalue);
+
     stack_push(current_frame->operand_stack, float_value);
 }
 // 0x25
@@ -328,11 +335,8 @@ void istore_0(MethodData *method_data)
 void istore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-
-    int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
+    current_frame->local_variables[1] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-
-    *((int32_t *)current_frame->local_variables[1]) = value;
 }
 // 0x3D
 void istore_2(MethodData *method_data)
@@ -889,14 +893,11 @@ void getfield(MethodData *method_data)
 
     u2 field_name_type_index = object->class->constant_pool[index - 1].info.Fieldref.name_and_type_index;
     u2 field_name_index = object->class->constant_pool[field_name_type_index - 1].info.NameAndType.name_index;
-    u2 field_type_index = object->class->constant_pool[field_name_type_index - 1].info.NameAndType.descriptor_index;
 
     CONSTANT_Utf8_info field_name = object->class->constant_pool[field_name_index - 1].info.Utf8;
     u2 field_name_size = field_name.length;
     char field_get[field_name_size + 1];
     get_utf8_value(field_name_index - 1, object->class->constant_pool, field_get);
-
-    char descriptor_get = object->class->constant_pool[field_type_index - 1].info.Utf8.bytes[0];
 
     for (u2 element = 0; element < object->class->fields_count; element++)
     {
@@ -909,44 +910,7 @@ void getfield(MethodData *method_data)
         if (!strcmp(current_field, field_get))
         {
             void *value = object->data[element].value;
-            cp_info *dynamic_info = (cp_info *)malloc(sizeof(cp_info));
-
-            switch (descriptor_get)
-            {
-            case VOID_TYPE: {
-            }
-            break;
-            case CHAR_TYPE:
-            case SHORT_TYPE:
-            case BYTE_TYPE:
-            case BOOLEAD_TYPE:
-            case INT_TYPE: {
-                int *val = value;
-                dynamic_info->tag = CONSTANT_Integer;
-                dynamic_info->info.Integer.bytes = *val;
-            }
-            break;
-            case LONG_TYPE: {
-            }
-            break;
-            case FLOAT_TYPE: {
-                u4 *fvalue = value;
-                dynamic_info->tag = CONSTANT_Float;
-                dynamic_info->info.Integer.bytes = *fvalue;
-            }
-            break;
-            case DOUBLE_TYPE: {
-            }
-            break;
-            default: {
-                dynamic_info->tag = CONSTANT_Class;
-                // Must be implemented
-            }
-            break;
-            }
-
-            stack_push(current_frame->operand_stack, dynamic_info);
-            break;
+            stack_push(current_frame->operand_stack, value);
         }
     }
 
@@ -996,44 +960,68 @@ void invokevirtual(MethodData *method_data)
 
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    u2 class_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
-    char class_name[300];
-    get_class_name(class_index, current_frame->constant_pool, class_name);
+    CONSTANT_Fieldref_info field = current_frame->constant_pool[index - 1].info.Fieldref;
+    char class_name[400];
+    get_class_name(field.class_index, current_frame->constant_pool, class_name);
 
     if (!strcmp(class_name, "java/io/PrintStream"))
     {
-        cp_info *element = (cp_info *)stack_top(current_frame->operand_stack);
-        stack_pop(current_frame->operand_stack);
+        u2 descriptor_index =
+            current_frame->constant_pool[field.name_and_type_index - 1].info.NameAndType.descriptor_index;
+        char descriptor[400];
+        get_utf8_value(descriptor_index - 1, current_frame->constant_pool, descriptor);
 
-        switch (element->tag)
+        if (!strcmp(descriptor, "(Ljava/lang/String;)V"))
         {
-        case CONSTANT_String: {
+            cp_info *element = (cp_info *)stack_top(current_frame->operand_stack);
+            switch (element->tag)
+            {
+            case CONSTANT_String: {
+                u2 index = element->info.String.string_index - 1;
+                element = (cp_info *)(&current_frame->constant_pool[index]);
+            }
+            case CONSTANT_Utf8: {
+                u2 size = element->info.Utf8.length;
+                char string[size + 1];
+                for (u2 string_index = 0; string_index < size; ++string_index)
+                {
+                    string[string_index] = element->info.Utf8.bytes[string_index];
+                }
+                string[size] = '\0';
+                printf("%s\n", string);
+            }
+            }
             u2 index = element->info.String.string_index - 1;
             element = (cp_info *)(&current_frame->constant_pool[index]);
         }
-        case CONSTANT_Utf8: {
-            u2 size = element->info.Utf8.length;
-            char string[size + 1];
-            for (u2 string_index = 0; string_index < size; ++string_index)
-            {
-                string[string_index] = element->info.Utf8.bytes[string_index];
-            }
-            string[size] = '\0';
-            printf("%s\n", string);
+        else if (!strcmp(descriptor, "(I)V") || !strcmp(descriptor, "(B)V") || !strcmp(descriptor, "(Z)V") ||
+                 !strcmp(descriptor, "(S)V"))
+        {
+            int *value = stack_top(current_frame->operand_stack);
+            printf("%d\n", *value);
         }
-        break;
-        case CONSTANT_Integer: {
-            printf("%d\n", element->info.Integer.bytes);
+        else if (!strcmp(descriptor, "(F)V"))
+        {
+            float *value = stack_top(current_frame->operand_stack);
+            printf("%f\n", *value);
         }
-        break;
-        case CONSTANT_Float: {
-            printf("%f\n", ieee754_single(element->info.Float.bytes));
+        else if (!strcmp(descriptor, "(J)V"))
+        {
+            long long int *value = stack_top(current_frame->operand_stack);
+            printf("%lld\n", *value);
         }
-        break;
-        case CONSTANT_Double: {
-            jvm_debug_print("Double not implemented yet.\n");
+        else if (!strcmp(descriptor, "(D)V"))
+        {
+            double *value = stack_top(current_frame->operand_stack);
+            printf("%lf\n", *value);
         }
+        else if (!strcmp(descriptor, "(C)V"))
+        {
+            char *value = stack_top(current_frame->operand_stack);
+            printf("%c\n", *value);
         }
+
+        stack_pop(current_frame->operand_stack);
     }
 
     method_data->pc += 2;
