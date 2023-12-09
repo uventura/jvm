@@ -1135,25 +1135,42 @@ void dup(MethodData *method_data) {
 // Duplica o valor do topo da pilha de operandos e insere duas posições abaixo.
 void dup_x1(MethodData *method_data) {
     Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
-    void *value1 = stack_pop(current_frame->operand_stack);
-    void *value2 = stack_pop(current_frame->operand_stack);
+    Node *value1_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value1 = value1_node->data;
+    stack_pop(current_frame->operand_stack);
+    
+    Node *value2_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value2 = value2_node->data;
+    stack_pop(current_frame->operand_stack);
+    
     stack_push(current_frame->operand_stack, value1);
     stack_push(current_frame->operand_stack, value2);
     stack_push(current_frame->operand_stack, value1);
 }
 
+
 // 0x5B (optional implementation?MethodData* method_data)
 // Duplica o valor do topo da pilha de operandos e insere três ou duas posições abaixo.
 void dup_x2(MethodData *method_data) {
     Frame *current_frame = (Frame *)(Frame *)stack_top(method_data->frame_stack);
-    void *value1 = stack_pop(current_frame->operand_stack);
-    void *value2 = stack_pop(current_fram->operand_stack);
-    void *value3 = stack_pop(current_frame->operand_stack);
+    Node *value1_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value1 = value1_node->data;
+    stack_pop(current_frame->operand_stack);
+    
+    Node *value2_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value2 = value2_node->data;
+    stack_pop(current_frame->operand_stack);
+    
+    Node *value3_node = (Node *)stack_top(current_frame->operand_stack);
+    void *value3 = value3_node->data;
+    stack_pop(current_frame->operand_stack);
+    
     stack_push(current_frame->operand_stack, value1);
     stack_push(current_frame->operand_stack, value3);
     stack_push(current_frame->operand_stack, value2);
     stack_push(current_frame->operand_stack, value1);
 }
+
 
 // 0x5C (optional implementation?MethodData* method_data)
 // Duplica os dois valores do topo da pilha de operandos.
