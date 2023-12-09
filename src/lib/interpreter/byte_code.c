@@ -1407,47 +1407,160 @@ void ixor(MethodData *method_data)
 // 0x83
 void lxor(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *result = malloc(sizeof(long long));
+    *result = value1 ^ value2;
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x84
 void iinc(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index = method_data->code.code[method_data->pc + 1];
+    int8_t constant = (int8_t)method_data->code.code[method_data->pc + 2];
+
+    int *value = (int *)current_frame->local_variables[index];
+    *value += constant;
+
+    method_data->pc += 2;
 }
+
 // 0x85
 void i2l(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *converted = malloc(sizeof(long long));
+    *converted = (long long)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x86
 void i2f(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *converted = malloc(sizeof(float));
+    *converted = (float)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x87
 void i2d(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *converted = malloc(sizeof(double));
+    *converted = (double)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x88
 void l2i(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *converted = malloc(sizeof(int));
+    *converted = (int)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x89
 void l2f(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *converted = malloc(sizeof(float));
+    *converted = (float)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8A
 void l2d(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *converted = malloc(sizeof(double));
+    *converted = (double)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8B
 void f2i(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *converted = malloc(sizeof(int));
+    *converted = (int)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8C
 void f2l(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *converted = malloc(sizeof(long long));
+    *converted = (long long)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8D
 void f2d(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *converted = malloc(sizeof(double));
+    *converted = (double)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8E
 void d2i(MethodData *method_data)
 {
