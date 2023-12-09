@@ -1288,7 +1288,7 @@ void tableswitch(MethodData *method_data)
         o2 = method_data->code.code[method_data->pc + offset_from + 1];    // +2?
         o3 = method_data->code.code[method_data->pc + offset_from + 2];    // +3?
         o4 = method_data->code.code[method_data->pc + offset_from + 3];    // +4?
-        offset = (o1 << 24) | (o2 << 16) | (o3 << 8) | o4
+        offset = (o1 << 24) | (o2 << 16) | (o3 << 8) | o4;
         method_data->pc += offset;
     }
 }
