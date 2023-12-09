@@ -1564,39 +1564,160 @@ void f2d(MethodData *method_data)
 // 0x8E
 void d2i(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *converted = malloc(sizeof(int));
+    *converted = (int)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x8F
 void d2l(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *converted = malloc(sizeof(long long));
+    *converted = (long long)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x90
 void d2f(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *converted = malloc(sizeof(float));
+    *converted = (float)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x91
 void i2b(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *converted = malloc(sizeof(char));
+    *converted = (char)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x92
 void i2c(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *converted = malloc(sizeof(char));
+    *converted = (char)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x93
 void i2s(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    short *converted = malloc(sizeof(short));
+    *converted = (short)value;
+
+    stack_push(current_frame->operand_stack, converted);
 }
+
 // 0x94
 void lcmp(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *result = malloc(sizeof(int));
+    if (value1 > value2) {
+        *result = 1;
+    } else if (value1 < value2) {
+        *result = -1;
+    } else {
+        *result = 0;
+    }
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x95
 void fcmpl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *result = malloc(sizeof(int));
+    if (isnan(value1) || isnan(value2)) {
+        *result = -1;
+    } else if (value1 > value2) {
+        *result = 1;
+    } else if (value1 < value2) {
+        *result = -1;
+    } else {
+        *result = 0;
+    }
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x96
 void fcmpg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *result = malloc(sizeof(int));
+    if (isnan(value1) || isnan(value2)) {
+        *result = 1;
+    } else if (value1 > value2) {
+        *result = 1;
+    } else if (value1 < value2) {
+        *result = -1;
+    } else {
+        *result = 0;
+    }
+
+    stack_push(current_frame->operand_stack, result);
 }
+
 // 0x97
 void dcmpl(MethodData *method_data)
 {
