@@ -1238,6 +1238,59 @@ void ret(MethodData *method_data)
 // 0xAA
 void tableswitch(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    
+    u1 padding;
+    int32_t table_default, low, high, d1, d2, d3, d4, l1, l2, l3, l4, h1, h2, h3, h4, index, offset_from, offset, o1, o2, o3, o4;
+
+    // First: define padding. Used when acessing the bytecode.
+    for(padding = 0; padding < 4; padding++)
+    {
+        if(((method_data->pc + 1 + padding) % 4) == 0)
+        {
+            break;
+        }
+    }
+    // Second: construct "default".
+    d1 = method_data->code.code[method_data->pc + 1 + padding];
+    d2 = method_data->code.code[method_data->pc + 2 + padding];
+    d3 = method_data->code.code[method_data->pc + 3 + padding];
+    d4 = method_data->code.code[method_data->pc + 4 + padding];
+
+    table_default = (d1 << 24) | (d2 << 16) | (d3 << 8) | d4;
+    // Third: construct "low".
+    l1 = method_data->code.code[method_data->pc + 5 + padding];
+    l2 = method_data->code.code[method_data->pc + 6 + padding];
+    l3 = method_data->code.code[method_data->pc + 7 + padding];
+    l4 = method_data->code.code[method_data->pc + 8 + padding];
+
+    low = (l1 << 24) | (l2 << 16) | (l3 << 8) | l4;
+    // Fourth: construct "high" (low < high).
+    h1 = method_data->code.code[method_data->pc + 9 + padding];
+    h2 = method_data->code.code[method_data->pc + 10 + padding];
+    h3 = method_data->code.code[method_data->pc + 11 + padding];
+    h4 = method_data->code.code[method_data->pc + 12 + padding];
+
+    high = (h1 << 24) | (h2 << 16) | (h3 << 8) | h4;
+    // Fifth: get "index" from top of operand stack. Pop operand stack.
+    index = *(int32_t *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    // Sixth: calculate address.
+    if((index < low) || (high < index))
+    {
+        method_data->pc += table_default;
+    }
+    else
+    {
+        offset_from = index - low;
+        // If there is a problem, it's probably in here.
+        o1 = method_data->code.code[method_data->pc + offset_from];        // +1?
+        o2 = method_data->code.code[method_data->pc + offset_from + 1];    // +2?
+        o3 = method_data->code.code[method_data->pc + offset_from + 2];    // +3?
+        o4 = method_data->code.code[method_data->pc + offset_from + 3];    // +4?
+        offset = (o1 << 24) | (o2 << 16) | (o3 << 8) | o4
+        method_data->pc += offset;
+    }
 }
 // 0xAB
 void lookupswitch(MethodData *method_data)
