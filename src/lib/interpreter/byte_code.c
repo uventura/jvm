@@ -210,26 +210,50 @@ void ldc2_w(MethodData *method_data)
 // 0x15
 void iload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, current_frame->local_variables[index_byte]);
+    method_data->pc += 1;
 }
+
 // 0x16
 void lload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, current_frame->local_variables[index_byte]);
+    method_data->pc += 1;
 }
-// 0x17
+
 void fload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, current_frame->local_variables[index_byte]);
+    method_data->pc += 1;
 }
-// 0x18
+
 void dload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, current_frame->local_variables[index_byte]);
+    method_data->pc += 1;
 }
-// 0x19
+
 void aload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    stack_push(current_frame->operand_stack, current_frame->local_variables[index_byte]);
+    method_data->pc += 1;
 }
+
 // 0x1A
 void iload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[0]);
 }
 // 0x1B
 void iload_1(MethodData *method_data)
@@ -240,10 +264,14 @@ void iload_1(MethodData *method_data)
 // 0x1C
 void iload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x1D
 void iload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
 }
 // 0x1E
 void lload_0(MethodData *method_data)
