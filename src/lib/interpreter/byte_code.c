@@ -1,4 +1,3 @@
-char *string = NULL; // Declaração temporária para 'string'
 #include "lib/interpreter/byte_code.h"
 #include "lib/base/class_file/cp_info.h"
 #include "lib/base/structures/stack.h"
