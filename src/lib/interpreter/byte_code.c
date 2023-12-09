@@ -801,8 +801,8 @@ void fstore_0(MethodData *method_data) {
     float value = *((float *)(value_node->data));
     stack_pop(current_frame->operand_stack);
 
-    current_frame->local_variables[0]  = (double *)malloc(sizeof(double));
-     current_frame->local_variables[0]  = value;
+    current_frame->local_variables[0]  = (float *)malloc(sizeof(float));
+    current_frame->local_variables[0]  = value;
 }
 
 // 0x44
