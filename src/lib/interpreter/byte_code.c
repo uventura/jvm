@@ -299,7 +299,17 @@ void istore(MethodData *method_data)
 // 0x37
 void lstore(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    u8 value = *(u8 *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    *((u8 *)current_frame->local_variables[index_byte]) = value;
+
+    method_data->pc += 1;
 }
+
 // 0x38
 void fstore(MethodData *method_data)
 {
@@ -316,11 +326,31 @@ void fstore(MethodData *method_data)
 // 0x39
 void dstore(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    double value = *(double *)stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    *((double *)current_frame->local_variables[index_byte]) = value;
+
+    method_data->pc += 1;
 }
+
 // 0x3A
 void astore(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    void *value = stack_top(current_frame->operand_stack);
+
+    stack_pop(current_frame->operand_stack);
+    current_frame->local_variables[index_byte] = value;
+
+    method_data->pc += 1;
 }
+
 // 0x3B
 void istore_0(MethodData *method_data)
 {
