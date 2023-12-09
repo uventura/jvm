@@ -277,26 +277,51 @@ void iload_3(MethodData *method_data)
 // 0x1E
 void lload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[0]);
 }
+
 // 0x1F
 void lload_1(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x20
 void lload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x21
 void lload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
 }
 // 0x22
 void fload_0(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    cp_info *element = current_frame->local_variables[0];
+    u4 fvalue = element->info.Float.bytes;
+
+    float *float_value = (float *)malloc(sizeof(float));
+    *float_value = ieee754_single(fvalue);
+
+    stack_push(current_frame->operand_stack, float_value);
 }
 // 0x23
 void fload_1(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    cp_info *element = current_frame->local_variables[1];
+    u4 fvalue = element->info.Float.bytes;
+
+    float *float_value = (float *)malloc(sizeof(float));
+    *float_value = ieee754_single(fvalue);
+
+    stack_push(current_frame->operand_stack, float_value);
 }
 // 0x24
 void fload_2(MethodData *method_data)
@@ -313,22 +338,39 @@ void fload_2(MethodData *method_data)
 // 0x25
 void fload_3(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    cp_info *element = current_frame->local_variables[3];
+    u4 fvalue = element->info.Float.bytes;
+
+    float *float_value = (float *)malloc(sizeof(float));
+    *float_value = ieee754_single(fvalue);
+
+    stack_push(current_frame->operand_stack, float_value);
 }
 // 0x26
 void dload_0(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[0]);
 }
+
 // 0x27
 void dload_1(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
 }
 // 0x28
 void dload_2(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x29
 void dload_3(MethodData *method_data)
 {
+Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
 }
 // 0x2A
 void aload_0(MethodData *method_data)
@@ -346,10 +388,14 @@ void aload_1(MethodData *method_data)
 // 0x2C
 void aload_2(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
 }
 // 0x2D
 void aload_3(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
 }
 // 0x2E
 void iaload(MethodData *method_data)
