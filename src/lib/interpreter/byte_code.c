@@ -1514,9 +1514,6 @@ void areturn(MethodData *method_data)
 // 0xB1 ("return" is a C keyword, hence the nameMethodData* method_data)
 void jvm_return(MethodData *method_data)
 {
-    Frame *current_frame = stack_top(method_data->frame_stack);
-    int * value = (int *) current_frame->local_variables[3];
-    jvm_debug_print("VALUE... %d\n", *value);
 }
 // 0xB2
 void getstatic(MethodData *method_data)
