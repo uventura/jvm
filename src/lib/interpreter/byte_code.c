@@ -1261,12 +1261,8 @@ void lxor(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-<<<<<<< HEAD
 
     long long * xor = malloc(sizeof(long long));
-=======
-    long long *xor = malloc(sizeof(long long));
->>>>>>> 493423f (conversion and return opcodes + examples)
     *xor = value1 ^ value2;
     stack_push(current_frame->operand_stack, xor);
 }
