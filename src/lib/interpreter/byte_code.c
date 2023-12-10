@@ -4,6 +4,7 @@
 #include "lib/class_loader/bootstrap/bootstrap.h"
 #include "lib/class_loader/class_file_list.h"
 #include "lib/environment/jvm_debug.h"
+#include "lib/interpreter/array.h"
 #include "lib/interpreter/opcodes_generic.h"
 #include "lib/runtime_data_area/frame.h"
 #include "lib/runtime_data_area/method_area.h"
@@ -434,10 +435,8 @@ void istore(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
 
     u1 index_byte = method_data->code.code[method_data->pc + 1];
-    int32_t value = *(int32_t *)stack_top(current_frame->operand_stack);
-
+    current_frame->local_variables[index_byte] = (int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    *((int32_t *)current_frame->local_variables[index_byte]) = value;
 
     method_data->pc += 1;
 }
@@ -486,12 +485,10 @@ void dstore(MethodData *method_data)
 void astore(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-
     u1 index_byte = method_data->code.code[method_data->pc + 1];
-    void *value = stack_top(current_frame->operand_stack);
 
+    current_frame->local_variables[index_byte] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    current_frame->local_variables[index_byte] = value;
 
     method_data->pc += 1;
 }
@@ -861,6 +858,14 @@ void swap(MethodData *method_data)
 // 0x60
 void iadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int *sub = malloc(sizeof(int));
+    *sub = value1 + value2;
+    stack_push(current_frame->operand_stack, sub);
 }
 // 0x61
 void ladd(MethodData *method_data)
@@ -2086,6 +2091,49 @@ void new_func(MethodData *method_data)
 // 0xBC
 void newarray(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u1 type = method_data->code.code[method_data->pc + 1];
+
+    u2 size = *(u2 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    JVMArray *array = (JVMArray *)malloc(sizeof(JVMArray));
+    array->type = type;
+    array->size = size;
+
+    switch (type)
+    {
+    case T_BOOLEAN:
+        array->array = (u1 *)calloc(size, sizeof(u1));
+        break;
+    case T_CHAR:
+        array->array = (char *)calloc(size, sizeof(char));
+        break;
+    case T_FLOAT:
+        array->array = (float *)calloc(size, sizeof(float));
+        break;
+    case T_DOUBLE:
+        array->array = (double *)calloc(size, sizeof(double));
+        break;
+    case T_BYTE:
+        array->array = (u1 *)calloc(size, sizeof(u1));
+        break;
+    case T_SHORT:
+        array->array = (short *)calloc(size, sizeof(short));
+        break;
+    case T_INT:
+        array->array = (int *)calloc(size, sizeof(int));
+        break;
+    case T_LONG:
+        array->array = (long long *)calloc(size, sizeof(long long));
+        break;
+    default:
+        break;
+    }
+
+    stack_push(current_frame->operand_stack, array);
+    method_data->pc += 1;
 }
 // 0xBD
 void anewarray(MethodData *method_data)

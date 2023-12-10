@@ -13,8 +13,9 @@ public class Store {
 
         // Armazenando um valor no array (conversão de int para short)
         shortArray[index] = (short)sum; // Pode gerar um opcode sastore
+        int r = shortArray[index];
 
         // Exibindo o resultado
-        System.out.println("Valor armazenado no array: " + shortArray[index]);
+        System.out.println(r);
     }
 }

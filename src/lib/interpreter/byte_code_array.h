@@ -23,7 +23,7 @@ opcode_function jvm_opcodes[202] = {
     &dup_x1,    &dup_x2,      &dup2,          &dup2_x1,       &dup2_x2,      &swap,
     &iadd,      &ladd,        &fadd,          &dadd,          &isub,         &lsub,
     &fsub,      &dsub,        &imul,          &lmul,          &fmul,         &dmul,
-    &idiv,      &jvm_ldiv,        &fdiv,          &ddiv,          &irem,         &lrem,
+    &idiv,      &jvm_ldiv,    &fdiv,          &ddiv,          &irem,         &lrem,
     &frem,      &drem,        &ineg,          &lneg,          &fneg,         &dneg,
     &ishl,      &lshl,        &ishr,          &lshr,          &iushr,        &lushr,
     &iand,      &land,        &ior,           &lor,           &ixor,         &lxor,
@@ -70,9 +70,9 @@ const char opcode_names[][199] = {
     "ifge",      "ifgt",        "ifle",          "if_icmpeq",     "if_icmpne",    "if_icmplt",
     "if_icmpge", "if_icmpgt",   "if_icmple",     "if_acmpeg",     "if_acmpne",    "goto",
     "jsr",       "ret",         "tableswitch",   "lookupswitch",  "ireturn",      "lreturn",
-    "freturn",   "dreturn",     "areturn",       "return",    "getstatic",    "putstatic",
+    "freturn",   "dreturn",     "areturn",       "return",        "getstatic",    "putstatic",
     "getfield",  "putfield",    "invokevirtual", "invokespecial", "invokestatic", "invokeinterface",
-    "nop",       "new",    "newarray",      "anewarray",     "arraylength",  "athrow",
+    "nop",       "new",         "newarray",      "anewarray",     "arraylength",  "athrow",
     "checkcast", "instanceof",  "monitorenter",  "monitorexit",   "wide",         "multianewarray",
     "ifnull",    "ifnonnull",   "goto_w",        "jsr_w"};
 

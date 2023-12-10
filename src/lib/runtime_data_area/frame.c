@@ -23,7 +23,8 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
 
     if (code.max_locals != 0)
     {
-        frame->local_variables = (void **)malloc(code.max_locals);
+        frame->local_variables = (void **)calloc(code.max_locals + 1, sizeof(void *));
+        jvm_debug_print("\tCreating local variables with sizeof: %d\n", code.max_locals);
         frame->max_locals = code.max_locals;
     }
 

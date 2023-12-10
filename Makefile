@@ -13,7 +13,6 @@ CFLAGS+=-ansi
 CFLAGS+=-pedantic
 CFLAGS+=-std=c99
 CFLAGS+=-g
-CFLAGS+=-O3
 CFLAGS+=-Wno-unused-parameter
 CFLAGS+=-Wno-implicit-fallthrough
 
