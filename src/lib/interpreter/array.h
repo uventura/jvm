@@ -10,13 +10,4 @@
 #define T_INT 0
 #define T_LONG 1
 
-#include "lib/base/defines.h"
-
-typedef struct
-{
-    u1 type;
-    void *array;
-    u2 size;
-} JVMArray;
-
 #endif
