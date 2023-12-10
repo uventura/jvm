@@ -23,7 +23,7 @@ opcode_function jvm_opcodes[202] = {
     &dup_x1,    &dup_x2,      &dup2,          &dup2_x1,       &dup2_x2,      &swap,
     &iadd,      &ladd,        &fadd,          &dadd,          &isub,         &lsub,
     &fsub,      &dsub,        &imul,          &lmul,          &fmul,         &dmul,
-    &idiv,      &ldiv,        &fdiv,          &ddiv,          &irem,         &lrem,
+    &idiv,      &jvm_ldiv,        &fdiv,          &ddiv,          &irem,         &lrem,
     &frem,      &drem,        &ineg,          &lneg,          &fneg,         &dneg,
     &ishl,      &lshl,        &ishr,          &lshr,          &iushr,        &lushr,
     &iand,      &land,        &ior,           &lor,           &ixor,         &lxor,
