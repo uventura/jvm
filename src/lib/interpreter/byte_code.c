@@ -1632,6 +1632,22 @@ void ifle(MethodData *method_data)
 // 0x9F
 void if_icmpeq(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 != value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA0
 void if_icmpne(MethodData *method_data)
@@ -1639,10 +1655,10 @@ void if_icmpne(MethodData *method_data)
     u2 offset = get_branch_offset(method_data);
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
     if (value1 == value2)
@@ -1656,26 +1672,129 @@ void if_icmpne(MethodData *method_data)
 // 0xA1
 void if_icmplt(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 < value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA2
 void if_icmpge(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    jvm_debug_print("offset: %d\n", offset);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 >= value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
+
 }
 // 0xA3
 void if_icmpgt(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 <= value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA4
 void if_icmple(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value2 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    jvm_debug_print("value1: %d, value2: %d\n", value1, value2);
+
+    if (value1 > value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA5
 void if_acmpeg(MethodData *method_data)
 {
+    // TODO: to be tested...
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void* value2 = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void* value1 = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 != value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA6
 void if_acmpne(MethodData *method_data)
 {
+    // TODO: to be tested...
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void* value2 = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void* value1 = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 == value2)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0xA7 ("goto" is a C keyword, hence the nameMethodData* method_data)
 void jvm_goto(MethodData *method_data)
