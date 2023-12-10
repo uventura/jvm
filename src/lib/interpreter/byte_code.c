@@ -400,31 +400,101 @@ void aload_3(MethodData *method_data)
 // 0x2E
 void iaload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    int *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x2F
 void laload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x30
 void faload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x31
 void daload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x32
 void aaload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    void **array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, array[index_byte]);
 }
+
 // 0x33
 void baload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x34
 void caload(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    char *array = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, &(array[index_byte]));
 }
+
 // 0x35
 void saload(MethodData *method_data)
 {
