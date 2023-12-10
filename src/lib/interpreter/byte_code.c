@@ -908,15 +908,48 @@ void iadd(MethodData *method_data)
 // 0x61
 void ladd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    long long *sum = malloc(sizeof(long long));
+    *sum = value1 + value2;
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x62
 void fadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    float *sum = malloc(sizeof(float));
+    *sum = value1 + value2;
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x63
 void dadd(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    double *sum = malloc(sizeof(double));
+    *sum = value1 + value2;
+    stack_push(current_frame->operand_stack, sum);
 }
+
 // 0x64
 void isub(MethodData *method_data)
 {
