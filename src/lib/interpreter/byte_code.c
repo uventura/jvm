@@ -984,7 +984,7 @@ void idiv(MethodData *method_data)
     stack_push(current_frame->operand_stack, div);
 }
 // 0x6D
-void ldiv(MethodData *method_data)
+void jvm_ldiv(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value2 = *(long long *)stack_top(current_frame->operand_stack);
