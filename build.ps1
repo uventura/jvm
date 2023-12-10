@@ -17,7 +17,7 @@ function CompileSourceFiles {
 
     foreach ($file in $sourceFiles) {
         $outputFile = "obj\" + $file.Replace("src\", "").Replace(".c", ".o")
-        $compileCommand = "gcc -W -Wall -ansi -pedantic -std=c99 -g -O3 -Wno-unused-parameter -o $outputFile -c $file -Isrc"
+        $compileCommand = "gcc -W -Wall -ansi -pedantic -std=c99 -g -O3 -Wno-unused-parameter -Wno-implicit-fallthrough -o $outputFile -c $file -Isrc"
         Invoke-Expression $compileCommand
     }
 }
@@ -70,5 +70,5 @@ CompileSourceFiles -sourceFiles $sourceFiles
 $objectFiles = Get-ChildItem "obj\*.o" -Recurse | ForEach-Object { $_.FullName }
 Write-Output $objectFiles
 $executable = "bin\jvm"
-$linkCommand = "gcc -o $executable $objectFiles -W -Wall -ansi -pedantic -std=c99 -g -O3 -Wno-unused-parameter -O3 -Isrc"
+$linkCommand = "gcc -o $executable $objectFiles -W -Wall -ansi -pedantic -std=c99 -g -O3 -Wno-unused-parameter -Wno-implicit-fallthrough -O3 -Isrc"
 Invoke-Expression $linkCommand
