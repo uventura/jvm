@@ -1289,6 +1289,7 @@ void i2l(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1298,6 +1299,7 @@ void i2f(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1307,6 +1309,7 @@ void i2d(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1316,6 +1319,7 @@ void l2i(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1325,6 +1329,7 @@ void l2f(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1334,6 +1339,7 @@ void l2d(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1343,6 +1349,7 @@ void f2i(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1352,6 +1359,7 @@ void f2l(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1361,6 +1369,7 @@ void f2d(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1370,6 +1379,7 @@ void d2i(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1379,6 +1389,7 @@ void d2l(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1388,6 +1399,7 @@ void d2f(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1397,6 +1409,7 @@ void i2b(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     char *result = malloc(sizeof(char));
     *result = (char)value;
     stack_push(current_frame->operand_stack, result);
@@ -1406,6 +1419,7 @@ void i2c(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
     char *result = malloc(sizeof(char));
     *result = (char)value;
     stack_push(current_frame->operand_stack, result);
