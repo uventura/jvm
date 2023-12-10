@@ -657,10 +657,10 @@ void iastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    int *array_ref = (int *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    int *array = (int *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x50
@@ -674,10 +674,10 @@ void lastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    u8 *array_ref = (u8 *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    u8 *array = (u8 *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x51
@@ -691,10 +691,10 @@ void fastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    float *array_ref = (float *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    float *array = (float *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x52
@@ -708,10 +708,10 @@ void dastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    double *array_ref = (double *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    double *array = (double *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x53
@@ -725,10 +725,10 @@ void aastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    void **array_ref = (void **)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    short **array = (short **)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x54
@@ -742,10 +742,10 @@ void bastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array_ref = (char *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    char *array = (char *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x55
@@ -759,10 +759,10 @@ void castore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array_ref = (char *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    char *array = (char *)stack_top(current_frame->operand_stack);
+    array[index] = value;
 
-    array_ref[index] = value;
+    stack_pop(current_frame->operand_stack);
 }
 
 // 0x56
