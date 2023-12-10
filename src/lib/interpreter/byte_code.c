@@ -980,7 +980,7 @@ void idiv(MethodData *method_data)
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     int *div = malloc(sizeof(int));
-    *div = value1/value2;
+    *div = value1 / value2;
     stack_push(current_frame->operand_stack, div);
 }
 // 0x6D
@@ -992,7 +992,7 @@ void ldiv(MethodData *method_data)
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     long long *div = malloc(sizeof(long long));
-    *div = value1/value2;
+    *div = value1 / value2;
     stack_push(current_frame->operand_stack, div);
 }
 // 0x6E
@@ -1004,7 +1004,7 @@ void fdiv(MethodData *method_data)
     float value1 = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     float *div = malloc(sizeof(float));
-    *div = value1/value2;
+    *div = value1 / value2;
     stack_push(current_frame->operand_stack, div);
 }
 // 0x6F
@@ -1016,7 +1016,7 @@ void ddiv(MethodData *method_data)
     double value1 = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     double *div = malloc(sizeof(double));
-    *div = value1/value2;
+    *div = value1 / value2;
     stack_push(current_frame->operand_stack, div);
 }
 // 0x70
@@ -1029,7 +1029,7 @@ void irem(MethodData *method_data)
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     int *rem = malloc(sizeof(int));
-    *rem =  value1 - (value1 / value2) * value2;
+    *rem = value1 - (value1 / value2) * value2;
     stack_push(current_frame->operand_stack, rem);
 }
 // 0x71
@@ -1042,7 +1042,7 @@ void lrem(MethodData *method_data)
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     long long *rem = malloc(sizeof(long long));
-    *rem =  value1 - (value1 / value2) * value2;
+    *rem = value1 - (value1 / value2) * value2;
     stack_push(current_frame->operand_stack, rem);
 }
 // 0x72
@@ -1062,7 +1062,7 @@ void ineg(MethodData *method_data)
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     int *neg = malloc(sizeof(int));
-    *neg = 0-value;
+    *neg = 0 - value;
     stack_push(current_frame->operand_stack, neg);
 }
 // 0x75
@@ -1072,7 +1072,7 @@ void lneg(MethodData *method_data)
     long long value = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     long long *neg = malloc(sizeof(long long));
-    *neg = 0-value;
+    *neg = 0 - value;
     stack_push(current_frame->operand_stack, neg);
 }
 // 0x76
@@ -1082,7 +1082,7 @@ void fneg(MethodData *method_data)
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     float *neg = malloc(sizeof(float));
-    *neg = 0-value;
+    *neg = 0 - value;
     stack_push(current_frame->operand_stack, neg);
 }
 // 0x77
@@ -1092,8 +1092,8 @@ void dneg(MethodData *method_data)
     double value = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     double *neg = malloc(sizeof(double));
-    *neg = 0-value;
-    stack_push(current_frame->operand_stack, neg);   
+    *neg = 0 - value;
+    stack_push(current_frame->operand_stack, neg);
 }
 // 0x78
 void ishl(MethodData *method_data)
@@ -1106,7 +1106,7 @@ void ishl(MethodData *method_data)
     int s = value2 & 0x1F;
     int *shl = malloc(sizeof(int));
     *shl = value1 << s;
-    stack_push(current_frame->operand_stack, shl); 
+    stack_push(current_frame->operand_stack, shl);
 }
 // 0x79
 void lshl(MethodData *method_data)
@@ -1119,7 +1119,7 @@ void lshl(MethodData *method_data)
     long long s = value2 & 0x1F;
     long long *shl = malloc(sizeof(long long));
     *shl = value1 << s;
-    stack_push(current_frame->operand_stack, shl); 
+    stack_push(current_frame->operand_stack, shl);
 }
 // 0x7A
 void ishr(MethodData *method_data)
@@ -1158,9 +1158,12 @@ void iushr(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     int s = value2 & 0x1F;
     int *shr = malloc(sizeof(int));
-    if(value1>=0){
+    if (value1 >= 0)
+    {
         *shr = value1 >> s;
-    }else{
+    }
+    else
+    {
         *shr = (value1 >> s) + (2 << ~s);
     }
     stack_push(current_frame->operand_stack, shr);
@@ -1177,9 +1180,12 @@ void lushr(MethodData *method_data)
     long long s = value2 & 0x3F;
     long long *shr = malloc(sizeof(long long));
     long long two = 2;
-    if(value1>=0){
+    if (value1 >= 0)
+    {
         *shr = value1 >> s;
-    }else{
+    }
+    else
+    {
         *shr = (value1 >> s) + (two << ~s);
     }
     stack_push(current_frame->operand_stack, shr);
@@ -1192,10 +1198,10 @@ void iand(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     int *and = malloc(sizeof(int));
     *and = value1 & value2;
-    stack_push(current_frame->operand_stack, and); 
+    stack_push(current_frame->operand_stack, and);
 }
 // 0x7F
 void land(MethodData *method_data)
@@ -1205,7 +1211,7 @@ void land(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
+
     long long *and = malloc(sizeof(long long));
     *and = value1 & value2;
     stack_push(current_frame->operand_stack, and);
@@ -1218,9 +1224,9 @@ void ior(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
-    int *or = malloc(sizeof(int));
-    *or = value1 | value2;
+
+    int * or = malloc(sizeof(int));
+    * or = value1 | value2;
     stack_push(current_frame->operand_stack, or);
 }
 // 0x81
@@ -1231,9 +1237,9 @@ void lor(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
-    long long *or = malloc(sizeof(long long));
-    *or = value1 | value2;
+
+    long long * or = malloc(sizeof(long long));
+    * or = value1 | value2;
     stack_push(current_frame->operand_stack, or);
 }
 // 0x82
@@ -1244,8 +1250,8 @@ void ixor(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
-    int *xor = malloc(sizeof(int));
+
+    int * xor = malloc(sizeof(int));
     *xor = value1 ^ value2;
     stack_push(current_frame->operand_stack, xor);
 }
@@ -1257,8 +1263,8 @@ void lxor(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    
-    long long *xor = malloc(sizeof(long long));
+
+    long long * xor = malloc(sizeof(long long));
     *xor = value1 ^ value2;
     stack_push(current_frame->operand_stack, xor);
 }
@@ -1434,14 +1440,15 @@ void ret(MethodData *method_data)
 void tableswitch(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    
+
     u1 padding;
-    int32_t table_default, low, high, d1, d2, d3, d4, l1, l2, l3, l4, h1, h2, h3, h4, index, offset_from, offset, o1, o2, o3, o4;
+    int32_t table_default, low, high, d1, d2, d3, d4, l1, l2, l3, l4, h1, h2, h3, h4, index, offset_from, offset, o1,
+        o2, o3, o4;
 
     // First: define padding. Used when acessing the bytecode.
-    for(padding = 0; padding < 4; padding++)
+    for (padding = 0; padding < 4; padding++)
     {
-        if(((method_data->pc + 1 + padding) % 4) == 0)
+        if (((method_data->pc + 1 + padding) % 4) == 0)
         {
             break;
         }
@@ -1471,7 +1478,7 @@ void tableswitch(MethodData *method_data)
     index = *(int32_t *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
     // Sixth: calculate address.
-    if((index < low) || (high < index))
+    if ((index < low) || (high < index))
     {
         method_data->pc += table_default;
     }
@@ -1479,10 +1486,10 @@ void tableswitch(MethodData *method_data)
     {
         offset_from = index - low;
         // If there is a problem, it's probably in here.
-        o1 = method_data->code.code[method_data->pc + offset_from];        // +1?
-        o2 = method_data->code.code[method_data->pc + offset_from + 1];    // +2?
-        o3 = method_data->code.code[method_data->pc + offset_from + 2];    // +3?
-        o4 = method_data->code.code[method_data->pc + offset_from + 3];    // +4?
+        o1 = method_data->code.code[method_data->pc + offset_from];     // +1?
+        o2 = method_data->code.code[method_data->pc + offset_from + 1]; // +2?
+        o3 = method_data->code.code[method_data->pc + offset_from + 2]; // +3?
+        o4 = method_data->code.code[method_data->pc + offset_from + 3]; // +4?
         offset = (o1 << 24) | (o2 << 16) | (o3 << 8) | o4;
         method_data->pc += offset;
     }
