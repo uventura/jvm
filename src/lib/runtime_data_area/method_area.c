@@ -45,7 +45,7 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
         #ifdef JVM_WINDOWS
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-            jvm_debug_print("%s", opcode_names[opcode]);
+            jvm_debug_print("%s ", opcode_names[opcode]);
             SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         #else
             jvm_debug_print("\033[1;31m%s\033[0m ", opcode_names[opcode]);
