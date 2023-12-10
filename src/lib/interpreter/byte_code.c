@@ -1743,12 +1743,13 @@ void invokespecial(MethodData *method_data)
             node_pos = node_pos->next;
         }
 
-        jvm_debug_print("[Changing to class %s]\n", class_name);
+        jvm_debug_print("\n[Changing to class %s]\n", class_name);
 
         JVMObject *object = node_pos->data;
         method_area_call_method(current_method, current_class->constant_pool, method_data->frame_stack,
                                 method_data->loaded_classes, object);
         jvm_debug_print("[Exiting from class %s]\n\n", class_name);
+        jvm_debug_print("\t[Continuing previous code...]\n\n");
     }
 
     method_data->pc += 2;

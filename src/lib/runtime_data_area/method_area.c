@@ -36,7 +36,8 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     // Executing Code
     for (method_data.pc = 0; method_data.pc < method_data.code.code_length; method_data.pc++)
     {
-        jvm_debug_print("\tCode: \t%0x\n", method_data.code.code[method_data.pc]);
+        u2 opcode = method_data.code.code[method_data.pc];
+        jvm_debug_print("\tOpcode: \033[1;31m%s\033[0m (0x%02x)\n", opcode_names[opcode], opcode);
         u2 current_opcode = method_data.code.code[method_data.pc];
 
         jvm_opcodes[current_opcode](&method_data);
