@@ -8,6 +8,10 @@
 #include <malloc.h>
 #include <string.h>
 
+#ifdef JVM_WINDOWS
+#include <windows.h>
+#endif
+
 void method_area_call_method(method_info *method, cp_info *constant_pool, Stack *stack_frame,
                              ClassFileList *loaded_classes, JVMObject *object /*NULL*/)
 {
@@ -32,12 +36,22 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     stack_push(stack_frame, &new_frame);
 
     method_data.frame_stack = stack_frame;
-
     // Executing Code
     for (method_data.pc = 0; method_data.pc < method_data.code.code_length; method_data.pc++)
     {
         u2 opcode = method_data.code.code[method_data.pc];
-        jvm_debug_print("\tOpcode: \033[1;31m%s\033[0m (0x%02x)\n", opcode_names[opcode], opcode);
+
+        jvm_debug_print("\tOpcode: ");
+        #ifdef JVM_WINDOWS
+            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+            jvm_debug_print("%s", opcode_names[opcode]);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        #else
+            jvm_debug_print("\033[1;31m%s\033[0m ", opcode_names[opcode]);
+        #endif
+        jvm_debug_print("(0x%02x)\n",opcode);
+
         u2 current_opcode = method_data.code.code[method_data.pc];
 
         jvm_opcodes[current_opcode](&method_data);
