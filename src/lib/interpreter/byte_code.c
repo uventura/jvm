@@ -1408,46 +1408,209 @@ void i2s(MethodData *method_data)
 // 0x94
 void lcmp(MethodData *method_data)
 {
+    // TODO: test 0x94 to 0x98.
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    long long value2 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    long long value1 = *(long long *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int* result = malloc(sizeof(int));
+    if(value1 > value2){
+        *result = 1;
+        stack_push(current_frame->operand_stack, result);
+    }else if(value1 == value2){
+        *result = 0;
+        stack_push(current_frame->operand_stack, result);
+    }else{
+        *result = -1;
+        stack_push(current_frame->operand_stack, result);
+    }
 }
 // 0x95
 void fcmpl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int* result = malloc(sizeof(int));
+    if(value1 > value2){
+        *result = 1;
+        stack_push(current_frame->operand_stack, result);
+    }else if(value1 == value2){
+        *result = 0;
+        stack_push(current_frame->operand_stack, result);
+    }else{
+        *result = -1;
+        stack_push(current_frame->operand_stack, result);
+    }
+    // TODO: if value1 or value2 is NaN
 }
 // 0x96
 void fcmpg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int* result = malloc(sizeof(int));
+    if(value1 > value2){
+        *result = 1;
+        stack_push(current_frame->operand_stack, result);
+    }else if(value1 == value2){
+        *result = 0;
+        stack_push(current_frame->operand_stack, result);
+    }else{
+        *result = -1;
+        stack_push(current_frame->operand_stack, result);
+    }
+    // TODO: if value1 or value2 is NaN
 }
 // 0x97
 void dcmpl(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int* result = malloc(sizeof(int));
+    if(value1 > value2){
+        *result = 1;
+        stack_push(current_frame->operand_stack, result);
+    }else if(value1 == value2){
+        *result = 0;
+        stack_push(current_frame->operand_stack, result);
+    }else{
+        *result = -1;
+        stack_push(current_frame->operand_stack, result);
+    }
+    // TODO: if value1 or value2 is NaN
 }
 // 0x98
 void dcmpg(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    int* result = malloc(sizeof(int));
+    if(value1 > value2){
+        *result = 1;
+        stack_push(current_frame->operand_stack, result);
+    }else if(value1 == value2){
+        *result = 0;
+        stack_push(current_frame->operand_stack, result);
+    }else{
+        *result = -1;
+        stack_push(current_frame->operand_stack, result);
+    }
+    // TODO: if value1 or value2 is NaN
 }
 // 0x99
 void ifeq(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 != 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9A
 void ifne(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 == 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9B
 void iflt(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 >= 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9C
 void ifge(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 < 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9D
 void ifgt(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 <= 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9E
 void ifle(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    int value1 = *(int *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value1 > 0)
+    {
+        method_data->pc += 2;
+        return;
+    }
+
+    method_data->pc += offset;
 }
 // 0x9F
 void if_icmpeq(MethodData *method_data)
