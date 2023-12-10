@@ -19,12 +19,12 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
 
     stack_initialize(operand_stack);
     frame->operand_stack = operand_stack;
-    jvm_debug_print("\tCreating operand stack with sizeof: %d\n", code.max_stack);
+    jvm_debug_print("\t| Operand stack with sizeof: %d\n", code.max_stack);
 
     if (code.max_locals != 0)
     {
         frame->local_variables = (void **)calloc(code.max_locals + 1, sizeof(void *));
-        jvm_debug_print("\tCreating local variables with sizeof: %d\n", code.max_locals);
+        jvm_debug_print("\t| Local variables with sizeof: %d\n", code.max_locals);
         frame->max_locals = code.max_locals;
     }
 
@@ -35,7 +35,7 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
         for (u2 local_index = 0; local_index < code.max_locals; ++local_index)
         {
             void *value = stack_top(operands);
-            jvm_debug_print("\tPtr to local variable[%d]: %p\n", code.max_locals - local_index - 1, value);
+            jvm_debug_print("\t|    Ptr to local variable[%d]: %p\n", code.max_locals - local_index - 1, value);
             frame->local_variables[code.max_locals - local_index - 1] = stack_top(operands);
             stack_pop(operands);
         }

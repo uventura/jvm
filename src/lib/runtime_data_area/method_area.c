@@ -41,7 +41,7 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     {
         u2 opcode = method_data.code.code[method_data.pc];
 
-        jvm_debug_print("\tOpcode: ");
+        jvm_debug_print("\t%d: ", method_data.pc);
 #ifdef JVM_WINDOWS
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN);
