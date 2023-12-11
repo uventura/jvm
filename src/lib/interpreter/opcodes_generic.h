@@ -5,5 +5,6 @@
 #include "lib/runtime_data_area/method_area.h"
 
 u2 get_branch_offset(MethodData *method_data);
+int get_branch_offset_int(MethodData *method_data);
 
 #endif

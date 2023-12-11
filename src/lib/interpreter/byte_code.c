@@ -1407,6 +1407,13 @@ void lxor(MethodData *method_data)
 // 0x84
 void iinc(MethodData *method_data)
 {
+    Frame *current_frame = stack_top(method_data->frame_stack);
+
+    u1 index = method_data->code.code[method_data->pc + 1];
+    int const_value = method_data->code.code[method_data->pc + 2];
+    *(int*)current_frame->local_variables[index] += const_value;
+
+    method_data->pc += 2;
 }
 // 0x85
 void i2l(MethodData *method_data)
@@ -1867,11 +1874,11 @@ void if_icmpge(MethodData *method_data)
 
     if (value1 >= value2)
     {
-        method_data->pc += 2;
+        method_data->pc += offset;
         return;
     }
 
-    method_data->pc += offset;
+    method_data->pc += 2;
 }
 // 0xA3
 void if_icmpgt(MethodData *method_data)
@@ -1960,6 +1967,8 @@ void if_acmpne(MethodData *method_data)
 // 0xA7 ("goto" is a C keyword, hence the nameMethodData* method_data)
 void jvm_goto(MethodData *method_data)
 {
+    int offset = get_branch_offset_int(method_data);
+    method_data->pc += offset;
 }
 // 0xA8
 void jsr(MethodData *method_data)
