@@ -1859,8 +1859,6 @@ void if_icmpge(MethodData *method_data)
     u2 offset = get_branch_offset(method_data);
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    jvm_debug_print("offset: %d\n", offset);
-
     int value2 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
