@@ -1875,6 +1875,7 @@ void if_acmpne(MethodData *method_data)
 // 0xA7 ("goto" is a C keyword, hence the nameMethodData* method_data)
 void jvm_goto(MethodData *method_data)
 {
+    // TODO: to be tested...
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
     u2 branchoffset = get_branch_offset(method_data);
@@ -1884,10 +1885,27 @@ void jvm_goto(MethodData *method_data)
 // 0xA8
 void jsr(MethodData *method_data)
 {
+    // TODO: to be tested...
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 branchoffset = get_branch_offset(method_data);
+    u2 *ret_address = (u2 *)malloc(sizeof(u2));
+    *ret_address = method_data->pc + 3;
+    
+    stack_push(current_frame->operand_stack, ret_address);
+
+    method_data->pc += branchoffset;
 }
 // 0xA9
 void ret(MethodData *method_data)
 {
+    // TODO: to be tested...
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u1 index_byte = method_data->code.code[method_data->pc + 1];
+    u2 ret_address = *(current_frame->local_variables[index_byte]);
+    
+    method_data->pc = ret_address - 1;
 }
 // 0xAA
 void tableswitch(MethodData *method_data)
@@ -1933,7 +1951,7 @@ void tableswitch(MethodData *method_data)
     // Sixth: calculate address.
     if ((index < low) || (high < index))
     {
-        method_data->pc += table_default;
+        method_data->pc += (table_default - 1);
     }
     else
     {
@@ -1944,7 +1962,7 @@ void tableswitch(MethodData *method_data)
         o3 = method_data->code.code[method_data->pc + offset_from + 2]; // +3?
         o4 = method_data->code.code[method_data->pc + offset_from + 3]; // +4?
         offset = (o1 << 24) | (o2 << 16) | (o3 << 8) | o4;
-        method_data->pc += offset;
+        method_data->pc += (offset - 1);
     }
 }
 // 0xAB
