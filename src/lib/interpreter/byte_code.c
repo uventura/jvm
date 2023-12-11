@@ -1875,6 +1875,11 @@ void if_acmpne(MethodData *method_data)
 // 0xA7 ("goto" is a C keyword, hence the nameMethodData* method_data)
 void jvm_goto(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 branchoffset = get_branch_offset(method_data);
+
+    method_data->pc += branchoffset;
 }
 // 0xA8
 void jsr(MethodData *method_data)
