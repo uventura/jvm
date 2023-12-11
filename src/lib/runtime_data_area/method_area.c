@@ -20,7 +20,7 @@ void method_area_call_method(method_info *method, cp_info *constant_pool, Stack 
     {
         u2 method_name_index = method->name_index;
         get_utf8_value(method_name_index - 1, constant_pool, method_name);
-        jvm_debug_print("\t[Calling %s]\n", method_name);
+        jvm_debug_print("\n\t[Calling %s]\n", method_name);
     }
 
     MethodData method_data;
