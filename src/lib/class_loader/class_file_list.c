@@ -43,6 +43,7 @@ void class_file_list_insert(ClassFileList *list, ClassFile *class, char *name)
     new_element->class = class;
     new_element->class_name = name;
     new_element->next = NULL;
+    new_element->static_fields = NULL;
 
     if (list->head == NULL)
     {
