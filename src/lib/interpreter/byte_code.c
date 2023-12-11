@@ -175,21 +175,61 @@ void sipush(MethodData *method_data)
 void ldc(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-
     u2 index = method_data->code.code[method_data->pc + 1];
-    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+
+    cp_info *element = current_frame->constant_pool + index - 1;
+    if (element->tag == CONSTANT_Float)
+    {
+        float *value = (float *)malloc(sizeof(float));
+        CONSTANT_Float_info cp_float = element->info.Float;
+
+        *value = ieee754_single(cp_float.bytes);
+        stack_push(current_frame->operand_stack, value);
+    }
+    else if (element->tag == CONSTANT_Integer)
+    {
+        int *value = (int *)malloc(sizeof(int));
+        CONSTANT_Integer_info cp_int = element->info.Integer;
+
+        *value = cp_int.bytes;
+        stack_push(current_frame->operand_stack, value);
+    }
+    else
+    {
+        stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+    }
+
     method_data->pc += 1;
 }
 // 0x13
 void ldc_w(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-
     u1 index_byte1 = method_data->code.code[method_data->pc + 1];
     u1 index_byte2 = method_data->code.code[method_data->pc + 2];
     u2 index = (index_byte1 << 8) | index_byte2;
 
-    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+    cp_info *element = current_frame->constant_pool + index - 1;
+    if (element->tag == CONSTANT_Float)
+    {
+        float *value = (float *)malloc(sizeof(float));
+        CONSTANT_Float_info cp_float = element->info.Float;
+
+        *value = ieee754_single(cp_float.bytes);
+        stack_push(current_frame->operand_stack, value);
+    }
+    else if (element->tag == CONSTANT_Integer)
+    {
+        int *value = (int *)malloc(sizeof(int));
+        CONSTANT_Integer_info cp_int = element->info.Integer;
+
+        *value = cp_int.bytes;
+        stack_push(current_frame->operand_stack, value);
+    }
+    else
+    {
+        stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+    }
 
     method_data->pc += 2;
 }
@@ -203,7 +243,29 @@ void ldc2_w(MethodData *method_data)
     u1 index_byte2 = method_data->code.code[method_data->pc + 2];
     u2 index = (index_byte1 << 8) | index_byte2;
 
-    stack_push(current_frame->operand_stack, current_frame->constant_pool + index - 1);
+    cp_info *element = current_frame->constant_pool + index - 1;
+    if (element->tag == CONSTANT_Double)
+    {
+        double *value = (double *)malloc(sizeof(double));
+        CONSTANT_Double_info cp_double = element->info.Double;
+
+        u8 long_value = (u8)cp_double.high_bytes << 32;
+        long_value = long_value + cp_double.low_bytes;
+
+        *value = ieee754_double(long_value);
+        stack_push(current_frame->operand_stack, value);
+    }
+    else if (element->tag == CONSTANT_Long)
+    {
+        long long *value = (long long *)malloc(sizeof(long long));
+        CONSTANT_Long_info cp_double = element->info.Long;
+
+        long long long_value = (long long)cp_double.high_bytes << 32;
+        long_value = long_value + cp_double.low_bytes;
+
+        *value = long_value;
+        stack_push(current_frame->operand_stack, value);
+    }
 
     method_data->pc += 2;
 }
@@ -1472,8 +1534,9 @@ void i2b(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    char *result = malloc(sizeof(char));
-    *result = (char)value;
+    int *result = malloc(sizeof(int)); // Because print considers I
+    *result = (u1)value;
+
     stack_push(current_frame->operand_stack, result);
 }
 // 0x92
@@ -1490,11 +1553,11 @@ void i2c(MethodData *method_data)
 void i2s(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    int value = *(int *)stack_top(current_frame->operand_stack);
+    int value = *(int *)stack_top(current_frame->operand_stack); // Because print considers I.
     stack_pop(current_frame->operand_stack);
 
-    short *result = malloc(sizeof(short));
-    *result = (short)value;
+    int *result = malloc(sizeof(int));
+    *result = (int)value;
 
     stack_push(current_frame->operand_stack, result);
 }
