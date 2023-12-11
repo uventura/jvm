@@ -6,11 +6,19 @@
 #include "lib/base/class_file/class_file.h"
 #include "lib/base/defines.h"
 
+typedef struct
+{
+    void *value;
+    CONSTANT_Fieldref_info *field;
+    void *next;
+} FieldStatic;
+
 typedef struct class_file_element
 {
     char *class_name;
     ClassFile *class;
     struct class_file_element *next;
+    FieldStatic *static_fields;
 } ClassFileElement;
 
 typedef struct

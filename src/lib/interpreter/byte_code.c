@@ -529,7 +529,6 @@ void lstore(MethodData *method_data)
     method_data->pc += 1;
 }
 
-
 // 0x38
 void fstore(MethodData *method_data)
 {
@@ -551,7 +550,6 @@ void dstore(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     method_data->pc += 1;
 }
-
 
 // 0x3A
 void astore(MethodData *method_data)
@@ -600,7 +598,6 @@ void lstore_0(MethodData *method_data)
     current_frame->local_variables[0] = (u8 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 }
-
 
 // 0x40
 void lstore_1(MethodData *method_data)
@@ -698,7 +695,7 @@ void astore_0(MethodData *method_data)
 void astore_1(MethodData *method_data)
 {
     // Armazena uma referência na segunda posição das variáveis locais.
-     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     current_frame->local_variables[1] = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 }
@@ -1004,10 +1001,13 @@ void imul(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value2 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int *mul = malloc(sizeof(int));
     *mul = value1 * value2;
+
     stack_push(current_frame->operand_stack, mul);
 }
 // 0x69
@@ -1507,14 +1507,19 @@ void lcmp(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     long long value1 = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    int* result = malloc(sizeof(int));
-    if(value1 > value2){
+    int *result = malloc(sizeof(int));
+    if (value1 > value2)
+    {
         *result = 1;
         stack_push(current_frame->operand_stack, result);
-    }else if(value1 == value2){
+    }
+    else if (value1 == value2)
+    {
         *result = 0;
         stack_push(current_frame->operand_stack, result);
-    }else{
+    }
+    else
+    {
         *result = -1;
         stack_push(current_frame->operand_stack, result);
     }
@@ -1527,14 +1532,19 @@ void fcmpl(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     float value1 = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    int* result = malloc(sizeof(int));
-    if(value1 > value2){
+    int *result = malloc(sizeof(int));
+    if (value1 > value2)
+    {
         *result = 1;
         stack_push(current_frame->operand_stack, result);
-    }else if(value1 == value2){
+    }
+    else if (value1 == value2)
+    {
         *result = 0;
         stack_push(current_frame->operand_stack, result);
-    }else{
+    }
+    else
+    {
         *result = -1;
         stack_push(current_frame->operand_stack, result);
     }
@@ -1548,14 +1558,19 @@ void fcmpg(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     float value1 = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    int* result = malloc(sizeof(int));
-    if(value1 > value2){
+    int *result = malloc(sizeof(int));
+    if (value1 > value2)
+    {
         *result = 1;
         stack_push(current_frame->operand_stack, result);
-    }else if(value1 == value2){
+    }
+    else if (value1 == value2)
+    {
         *result = 0;
         stack_push(current_frame->operand_stack, result);
-    }else{
+    }
+    else
+    {
         *result = -1;
         stack_push(current_frame->operand_stack, result);
     }
@@ -1569,14 +1584,19 @@ void dcmpl(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     double value1 = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    int* result = malloc(sizeof(int));
-    if(value1 > value2){
+    int *result = malloc(sizeof(int));
+    if (value1 > value2)
+    {
         *result = 1;
         stack_push(current_frame->operand_stack, result);
-    }else if(value1 == value2){
+    }
+    else if (value1 == value2)
+    {
         *result = 0;
         stack_push(current_frame->operand_stack, result);
-    }else{
+    }
+    else
+    {
         *result = -1;
         stack_push(current_frame->operand_stack, result);
     }
@@ -1590,14 +1610,19 @@ void dcmpg(MethodData *method_data)
     stack_pop(current_frame->operand_stack);
     double value1 = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    int* result = malloc(sizeof(int));
-    if(value1 > value2){
+    int *result = malloc(sizeof(int));
+    if (value1 > value2)
+    {
         *result = 1;
         stack_push(current_frame->operand_stack, result);
-    }else if(value1 == value2){
+    }
+    else if (value1 == value2)
+    {
         *result = 0;
         stack_push(current_frame->operand_stack, result);
-    }else{
+    }
+    else
+    {
         *result = -1;
         stack_push(current_frame->operand_stack, result);
     }
@@ -1786,7 +1811,6 @@ void if_icmpge(MethodData *method_data)
     }
 
     method_data->pc += offset;
-
 }
 // 0xA3
 void if_icmpgt(MethodData *method_data)
@@ -1837,10 +1861,10 @@ void if_acmpeg(MethodData *method_data)
     u2 offset = get_branch_offset(method_data);
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    void* value2 = stack_top(current_frame->operand_stack);
+    void *value2 = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    void* value1 = stack_top(current_frame->operand_stack);
+    void *value1 = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
     if (value1 != value2)
@@ -1858,10 +1882,10 @@ void if_acmpne(MethodData *method_data)
     u2 offset = get_branch_offset(method_data);
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    void* value2 = stack_top(current_frame->operand_stack);
+    void *value2 = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    void* value1 = stack_top(current_frame->operand_stack);
+    void *value1 = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
     if (value1 == value2)
@@ -2009,9 +2033,26 @@ void getstatic(MethodData *method_data)
     char descriptor_content[300];
     get_utf8_value(descriptor_index - 1, current_frame->constant_pool, descriptor_content);
 
-    if (!strcmp(class_name, "java/lang/System"))
+    if (strcmp(class_name, "java/lang/System"))
     {
-        // Need to be implemented
+        ClassFileElement *current = method_data->loaded_classes->head;
+        for (u4 i = 0; i < method_data->loaded_classes->num_elements; ++i)
+        {
+            if (!strcmp(current->class_name, class_name))
+            {
+                FieldStatic *current_field = current->static_fields;
+                while (current_field != NULL)
+                {
+                    if (&current_frame->constant_pool[index - 1].info.Fieldref == current_field->field)
+                    {
+                        stack_push(current_frame->operand_stack, current_field->value);
+                        break;
+                    }
+                    current_field = current_field->next;
+                }
+                break;
+            }
+        }
     }
 
     method_data->pc += 2;
@@ -2019,6 +2060,48 @@ void getstatic(MethodData *method_data)
 // 0xB3
 void putstatic(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    u2 index_byte1 = method_data->code.code[method_data->pc + 1];
+    u2 index_byte2 = method_data->code.code[method_data->pc + 2];
+    u2 index = (index_byte1 << 8) | index_byte2;
+
+    u2 class_field_index = current_frame->constant_pool[index - 1].info.Fieldref.class_index;
+    char class_name[400];
+    get_class_name(class_field_index, current_frame->constant_pool, class_name);
+
+    ClassFileElement *current = method_data->loaded_classes->head;
+    for (u4 i = 0; i < method_data->loaded_classes->num_elements; i++)
+    {
+        if (!strcmp(current->class_name, class_name))
+        {
+            FieldStatic *field_static = (FieldStatic *)malloc(sizeof(FieldStatic));
+            field_static->field = &current->class->constant_pool[index - 1].info.Fieldref;
+            field_static->next = NULL;
+            field_static->value = stack_top(current_frame->operand_stack);
+            stack_pop(current_frame->operand_stack);
+
+            if (current->static_fields == NULL)
+            {
+                current->static_fields = field_static;
+                break;
+            }
+
+            FieldStatic *cfstatic = current->static_fields;
+            while (cfstatic->next != NULL)
+            {
+                if (cfstatic->field == field_static->field)
+                {
+                    cfstatic->value = field_static->value;
+                    break;
+                }
+                cfstatic = cfstatic->next;
+            }
+            cfstatic->next = field_static;
+        }
+    }
+
+    method_data->pc += 2;
 }
 // 0xB4
 void getfield(MethodData *method_data)
@@ -2161,10 +2244,10 @@ void invokevirtual(MethodData *method_data)
             printf("%c\n", *value);
         }
 
-        if (strcmp(descriptor, "(Ljava/lang/String;)V"))
-        {
-            free(stack_top(current_frame->operand_stack));
-        }
+        // if (strcmp(descriptor, "(Ljava/lang/String;)V"))
+        // {
+        //     free(stack_top(current_frame->operand_stack));
+        // }
         stack_pop(current_frame->operand_stack);
     }
 
