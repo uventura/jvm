@@ -1876,8 +1876,6 @@ void if_acmpne(MethodData *method_data)
 void jvm_goto(MethodData *method_data)
 {
     // TODO: to be tested...
-    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-
     u2 branchoffset = get_branch_offset(method_data);
 
     method_data->pc += branchoffset;
@@ -1903,9 +1901,9 @@ void ret(MethodData *method_data)
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
     u1 index_byte = method_data->code.code[method_data->pc + 1];
-    u2 ret_address = *(current_frame->local_variables[index_byte]);
+    u2 *ret_address = (u2 *)current_frame->local_variables[index_byte];
     
-    method_data->pc = ret_address - 1;
+    method_data->pc = *ret_address - 1;
 }
 // 0xAA
 void tableswitch(MethodData *method_data)
