@@ -2531,14 +2531,42 @@ void multianewarray(MethodData *method_data)
 // 0xC6
 void ifnull(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void* value = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value == NULL)
+    {
+        method_data->pc += offset;
+        return;
+    }
+
+    method_data->pc += 2;
 }
 // 0xC7
 void ifnonnull(MethodData *method_data)
 {
+    u2 offset = get_branch_offset(method_data);
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    void* value = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    if (value != NULL)
+    {
+        method_data->pc += offset;
+        return;
+    }
+
+    method_data->pc += 2;
 }
 // 0xC8
 void goto_w(MethodData *method_data)
 {
+    int offset = get_branch_offset_int_2(method_data);
+    method_data->pc += offset;
 }
 // 0xC9
 void jsr_w(MethodData *method_data)
