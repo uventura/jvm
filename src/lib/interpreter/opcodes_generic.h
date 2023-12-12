@@ -6,5 +6,6 @@
 
 u2 get_branch_offset(MethodData *method_data);
 int get_branch_offset_int(MethodData *method_data);
+int get_branch_offset_int_2(MethodData *method_data);
 
 #endif
