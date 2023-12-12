@@ -1973,6 +1973,9 @@ void jvm_goto(MethodData *method_data)
 // 0xA8
 void jsr(MethodData *method_data)
 {
+    int offset = get_branch_offset_int(method_data);
+    push_stack(method_data, method_data->pc + 3); 
+    method_data->pc += offset;
 }
 // 0xA9
 void ret(MethodData *method_data)
