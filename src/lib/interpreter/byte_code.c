@@ -2521,8 +2521,6 @@ void anewarray(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    u2 class_index = *(u2 *)(method_data->code.code + method_data->pc + 1);
-
     u2 size = *(u2 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
