@@ -1186,11 +1186,26 @@ void lrem(MethodData *method_data)
 void frem(MethodData *method_data)
 {
     // Gotta work with NaN and infinite values...
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    float value2 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float value1 = *(float *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    float *rem = malloc(sizeof(float));
+    *rem = value1 - (value1 / value2) * value2;
+    stack_push(current_frame->operand_stack, rem);
 }
 // 0x73
 void drem(MethodData *method_data)
 {
-    // Gotta work with NaN and infinite values...
+    Frame *current_frame = stack_top(method_data->frame_stack);
+    double value2 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double value1 = *(double *)stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+    double *rem = malloc(sizeof(double));
+    *rem = value1 - (value1 / value2) * value2;
+    stack_push(current_frame->operand_stack, rem);
 }
 // 0x74
 void ineg(MethodData *method_data)
