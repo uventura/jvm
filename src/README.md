@@ -1,3 +1,3 @@
 # JVM Architecture
 
-<img src = "../data/images/jvm_architecture.png" width="50%">
+![Example Image](../../data/images/jvm_architecture.png){width=300px height=200px}

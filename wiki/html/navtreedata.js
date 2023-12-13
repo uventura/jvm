@@ -25,45 +25,28 @@
 var NAVTREE =
 [
   [ "JVM", "index.html", [
-    [ "Java Virtual Machine (jvm)", "md__r_e_a_d_m_e.html", [
-      [ "How to Build on Windows?", "md__r_e_a_d_m_e.html#autotoc_md1", null ],
-      [ "How to Run and Build (Linux)?", "md__r_e_a_d_m_e.html#autotoc_md2", null ],
-      [ "How to Run Analyzers and Formaters (Linux)", "md__r_e_a_d_m_e.html#autotoc_md3", null ],
-      [ "Requirements", "md__r_e_a_d_m_e.html#autotoc_md4", null ]
+    [ "Java Virtual Machine (JVM)", "index.html", [
+      [ "Compilando o projeto no Windows", "index.html#autotoc_md2", null ],
+      [ "Compilando o projeto no Linux", "index.html#autotoc_md3", null ],
+      [ "Modo de Leitura", "index.html#autotoc_md4", null ],
+      [ "Modo de Execução", "index.html#autotoc_md5", null ],
+      [ "Modo de Execução com Depuração", "index.html#autotoc_md6", null ]
     ] ],
-    [ "How to Create Tests?", "md_test_2_r_e_a_d_m_e.html", null ],
-    [ "Data Structures", "annotated.html", [
-      [ "Data Structures", "annotated.html", "annotated_dup" ],
-      [ "Data Structure Index", "classes.html", null ],
-      [ "Data Fields", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
+    [ "JVM Architecture", "md_src_README.html", null ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "Globals", "globals.html", [
-        [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", "globals_defs" ]
-      ] ]
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_exemplo_excecao_8java.html",
-"struct_c_o_n_s_t_a_n_t___utf8__info.html#ad01efb9db3818b64eae5965bf341710f",
-"unity_8h.html#a12f576736e055fd6c81595b9544c99d8",
-"unity_8h.html#a99f0fe512ccf8028ab33cb7c0a7cce46",
-"unity__internals_8h.html#a3418a0ce36198179677864ad3194091d",
-"unity__internals_8h.html#af032691a9e32795aa06770185ac14a48"
+"annotated.html",
+"structmethod__info.html#ab91d62d0658b77bba83f6bb685e3bbb9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
