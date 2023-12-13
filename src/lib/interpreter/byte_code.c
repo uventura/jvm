@@ -316,25 +316,25 @@ void aload(MethodData *method_data)
 void iload_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    stack_push(current_frame->operand_stack, current_frame->local_variables[0]);
+    iload_generic(current_frame, 0);
 }
 // 0x1B
 void iload_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
+    iload_generic(current_frame, 1);
 }
 // 0x1C
 void iload_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    stack_push(current_frame->operand_stack, current_frame->local_variables[2]);
+    iload_generic(current_frame, 2);
 }
 // 0x1D
 void iload_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
+    iload_generic(current_frame, 3);
 }
 // 0x1E
 void lload_0(MethodData *method_data)
@@ -632,30 +632,26 @@ void astore(MethodData *method_data)
 void istore_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[0] = (int32_t *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    istore_generic(current_frame, 0);
 }
 
 // 0x3C
 void istore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[1] = stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    istore_generic(current_frame, 1);
 }
 // 0x3D
 void istore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[2] = stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    istore_generic(current_frame, 2);
 }
 // 0x3E
 void istore_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[3] = stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    istore_generic(current_frame, 3);
 }
 // 0x3F
 void lstore_0(MethodData *method_data)
@@ -690,32 +686,27 @@ void lstore_3(MethodData *method_data)
 void fstore_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[0] = (float *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    fstore_generic(current_frame, 0);
 }
 
 // 0x44
 void fstore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[1] = (float *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    fstore_generic(current_frame, 1);
 }
 
 // 0x45
 void fstore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-
-    current_frame->local_variables[2] = stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    fstore_generic(current_frame, 2);
 }
 // 0x46
 void fstore_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[3] = (float *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    fstore_generic(current_frame, 3);
 }
 
 // 0x47
@@ -1436,6 +1427,7 @@ void i2l(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1446,6 +1438,7 @@ void i2f(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1456,6 +1449,7 @@ void i2d(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1466,6 +1460,7 @@ void l2i(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1476,6 +1471,7 @@ void l2f(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1486,6 +1482,7 @@ void l2d(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     long long value = *(long long *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1496,6 +1493,7 @@ void f2i(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1506,6 +1504,7 @@ void f2l(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1516,6 +1515,7 @@ void f2d(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     float value = *(float *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     double *result = malloc(sizeof(double));
     *result = (double)value;
     stack_push(current_frame->operand_stack, result);
@@ -1526,6 +1526,7 @@ void d2i(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int *result = malloc(sizeof(int));
     *result = (int)value;
     stack_push(current_frame->operand_stack, result);
@@ -1536,6 +1537,7 @@ void d2l(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     long long *result = malloc(sizeof(long long));
     *result = (long long)value;
     stack_push(current_frame->operand_stack, result);
@@ -1546,6 +1548,7 @@ void d2f(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     double value = *(double *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     float *result = malloc(sizeof(float));
     *result = (float)value;
     stack_push(current_frame->operand_stack, result);
@@ -1556,6 +1559,7 @@ void i2b(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     int *result = malloc(sizeof(int)); // Because print considers I
     *result = (u1)value;
 
@@ -1567,6 +1571,7 @@ void i2c(MethodData *method_data)
     Frame *current_frame = stack_top(method_data->frame_stack);
     int value = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
+
     char *result = malloc(sizeof(char));
     *result = (char)value;
     stack_push(current_frame->operand_stack, result);
@@ -1927,8 +1932,6 @@ void if_icmple(MethodData *method_data)
     int value1 = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    jvm_debug_print("value1: %d, value2: %d\n", value1, value2);
-
     if (value1 > value2)
     {
         method_data->pc += 2;
@@ -2069,6 +2072,9 @@ void ireturn(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     int *result = (int *)stack_top(current_frame->operand_stack);
+
+    if(method_data->frame_stack->top->next == NULL) return;
+
     Frame *old_frame = method_data->frame_stack->top->next->data;
     stack_push(old_frame->operand_stack, result);
 }
@@ -2077,6 +2083,9 @@ void lreturn(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     long long *result = (long long *)stack_top(current_frame->operand_stack);
+
+    if(method_data->frame_stack->top->next == NULL) return;
+
     Frame *old_frame = method_data->frame_stack->top->next->data;
     stack_push(old_frame->operand_stack, result);
 }
@@ -2085,6 +2094,9 @@ void freturn(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     float *result = (float *)stack_top(current_frame->operand_stack);
+
+    if(method_data->frame_stack->top->next == NULL) return;
+
     Frame *old_frame = method_data->frame_stack->top->next->data;
     stack_push(old_frame->operand_stack, result);
 }
@@ -2093,6 +2105,9 @@ void dreturn(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     double *result = (double *)stack_top(current_frame->operand_stack);
+
+    if(method_data->frame_stack->top->next == NULL) return;
+
     Frame *old_frame = method_data->frame_stack->top->next->data;
     stack_push(old_frame->operand_stack, result);
 }
@@ -2101,6 +2116,9 @@ void areturn(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
     void *result = stack_top(current_frame->operand_stack);
+
+    if(method_data->frame_stack->top->next == NULL) return;
+
     Frame *old_frame = method_data->frame_stack->top->next->data;
     stack_push(old_frame->operand_stack, result);
 }
