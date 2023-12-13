@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quicksort_0',['QuickSort',['../class_quick_sort.html',1,'']]]
+  ['parameters_86',['Parameters',['../structParameters.html',1,'']]]
 ];

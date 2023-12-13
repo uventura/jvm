@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['helloworld_0',['HelloWorld',['../class_hello_world.html',1,'']]]
+  ['innerclasses_5fattribute_75',['InnerClasses_attribute',['../structInnerClasses__attribute.html',1,'']]]
 ];
