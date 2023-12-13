@@ -1973,6 +1973,14 @@ void jvm_goto(MethodData *method_data)
 // 0xA8
 void jsr(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+    int offset = get_branch_offset_int(method_data);
+
+    int *return_address = malloc(sizeof(int));
+    *return_address = method_data->pc + 3;
+    stack_push(current_frame->operand_stack, return_address);
+
+    method_data->pc += offset;
 }
 // 0xA9
 void ret(MethodData *method_data)
