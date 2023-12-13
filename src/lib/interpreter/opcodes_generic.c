@@ -29,9 +29,29 @@ int get_branch_offset_int_2(MethodData *method_data)
     return offset - 1;
 }
 
+void fstore_generic(Frame* current_frame, u2 index)
+{
+    float* value = stack_top(current_frame->operand_stack);
+    current_frame->local_variables[index] = value;
+    stack_pop(current_frame->operand_stack);
+}
+
 void dstore_generic(Frame* current_frame, u2 index)
 {
     double* value = stack_top(current_frame->operand_stack);
-    current_frame->local_variables[2] = value;
+    current_frame->local_variables[index] = value;
     stack_pop(current_frame->operand_stack);
+}
+
+void istore_generic(Frame* current_frame, u2 index)
+{
+    int* value = (int*)stack_top(current_frame->operand_stack);
+    current_frame->local_variables[index] = value;
+    stack_pop(current_frame->operand_stack);
+}
+
+void iload_generic(Frame* current_frame, u2 index)
+{
+    int* value = current_frame->local_variables[index];
+    stack_push(current_frame->operand_stack, value);
 }
