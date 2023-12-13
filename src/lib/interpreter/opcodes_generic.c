@@ -1,4 +1,5 @@
 #include "lib/interpreter/opcodes_generic.h"
+#include "lib/environment/jvm_debug.h"
 
 u2 get_branch_offset(MethodData *method_data)
 {
@@ -26,4 +27,11 @@ int get_branch_offset_int_2(MethodData *method_data)
     u4 offset_un = (branchbyte1 << 24) | (branchbyte2 << 16) | (branchbyte3 << 8) | branchbyte4;
     int offset = offset_un;
     return offset - 1;
+}
+
+void dstore_generic(Frame* current_frame, u2 index)
+{
+    double* value = stack_top(current_frame->operand_stack);
+    current_frame->local_variables[2] = value;
+    stack_pop(current_frame->operand_stack);
 }

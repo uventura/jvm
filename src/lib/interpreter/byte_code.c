@@ -421,6 +421,8 @@ void dload_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[1]);
+    double* e = current_frame->local_variables[1];
+    jvm_debug_print("V: %lf\n", *e);
 }
 // 0x28
 void dload_2(MethodData *method_data)
@@ -433,6 +435,8 @@ void dload_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
+    double* e = current_frame->local_variables[3];
+    jvm_debug_print("V: %lf\n", *e);
 }
 // 0x2A
 void aload_0(MethodData *method_data)
@@ -718,31 +722,27 @@ void fstore_3(MethodData *method_data)
 void dstore_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[0] = (double *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    dstore_generic(current_frame, 0);
 }
 
 // 0x48
 void dstore_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[1] = (double *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    dstore_generic(current_frame, 1);
 }
 // 0x49
 void dstore_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[2] = (double *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    dstore_generic(current_frame, 2);
 }
 
 // 0x4A
 void dstore_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    current_frame->local_variables[3] = (double *)stack_top(current_frame->operand_stack);
-    stack_pop(current_frame->operand_stack);
+    dstore_generic(current_frame, 3);
 }
 
 // 0x4B
@@ -2310,6 +2310,12 @@ void invokevirtual(MethodData *method_data)
             }
             u2 index = element->info.String.string_index - 1;
             element = (cp_info *)(&current_frame->constant_pool[index]);
+        }
+        else if(stack_is_empty(current_frame->operand_stack))
+        {
+            printf("%d\n", 0);
+            method_data->pc += 2;
+            return;
         }
         else if (!strcmp(descriptor, "(I)V") || !strcmp(descriptor, "(B)V") || !strcmp(descriptor, "(Z)V") ||
                  !strcmp(descriptor, "(S)V"))
