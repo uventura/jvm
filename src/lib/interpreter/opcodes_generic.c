@@ -1,6 +1,8 @@
 #include "lib/interpreter/opcodes_generic.h"
 #include "lib/environment/jvm_debug.h"
 
+#include <malloc.h>
+
 u2 get_branch_offset(MethodData *method_data)
 {
     u2 branchbyte1 = method_data->code.code[method_data->pc + 1];
@@ -54,4 +56,10 @@ void iload_generic(Frame* current_frame, u2 index)
 {
     int* value = current_frame->local_variables[index];
     stack_push(current_frame->operand_stack, value);
+}
+
+void fload_generic(Frame* current_frame, u2 index)
+{
+    float* fvalue = current_frame->local_variables[index];
+    stack_push(current_frame->operand_stack, fvalue);
 }
