@@ -365,49 +365,25 @@ void lload_3(MethodData *method_data)
 void fload_0(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    cp_info *element = current_frame->local_variables[0];
-    u4 fvalue = element->info.Float.bytes;
-
-    float *float_value = (float *)malloc(sizeof(float));
-    *float_value = ieee754_single(fvalue);
-
-    stack_push(current_frame->operand_stack, float_value);
+    fload_generic(current_frame, 0);
 }
 // 0x23
 void fload_1(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    cp_info *element = current_frame->local_variables[1];
-    u4 fvalue = element->info.Float.bytes;
-
-    float *float_value = (float *)malloc(sizeof(float));
-    *float_value = ieee754_single(fvalue);
-
-    stack_push(current_frame->operand_stack, float_value);
+    fload_generic(current_frame, 1);
 }
 // 0x24
 void fload_2(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    cp_info *element = current_frame->local_variables[2];
-    u4 fvalue = element->info.Float.bytes;
-
-    float *float_value = (float *)malloc(sizeof(float));
-    *float_value = ieee754_single(fvalue);
-
-    stack_push(current_frame->operand_stack, float_value);
+    fload_generic(current_frame, 2);
 }
 // 0x25
 void fload_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
-    cp_info *element = current_frame->local_variables[3];
-    u4 fvalue = element->info.Float.bytes;
-
-    float *float_value = (float *)malloc(sizeof(float));
-    *float_value = ieee754_single(fvalue);
-
-    stack_push(current_frame->operand_stack, float_value);
+    fload_generic(current_frame, 3);
 }
 // 0x26
 void dload_0(MethodData *method_data)
