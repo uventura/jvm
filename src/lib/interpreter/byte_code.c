@@ -2560,8 +2560,9 @@ void arraylength(MethodData *method_data)
 
     JVMArray *element = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-
-    stack_push(current_frame->operand_stack, element->size);
+    u4* size = malloc(sizeof(u4));
+    *size = element->size;
+    stack_push(current_frame->operand_stack, size);
 }
 // 0xBF (optional implementation?MethodData* method_data)
 void athrow(MethodData *method_data)
