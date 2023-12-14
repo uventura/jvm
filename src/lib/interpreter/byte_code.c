@@ -2411,7 +2411,6 @@ void invokestatic(MethodData *method_data)
     char class_name[400];
     get_class_name(class_index, current_frame->constant_pool, class_name);
 
-    int* arr = stack_top(current_frame->operand_stack);
     if (!strcmp(class_name, "java/lang/Object"))
     {
     }

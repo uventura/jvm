@@ -47,6 +47,7 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
         {
             frame->local_variables[index] = stack_top(&temp_stack);
             stack_pop(&temp_stack);
+            index += 1;
         }
     }
     jvm_debug_print("\t........................\n");
