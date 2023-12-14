@@ -1,7 +1,7 @@
 public class TableSwitch {
     public static void main(String args[]) {
       int a = 1;
-      
+
       switch (a) {
         case 0:
             a = 1;
@@ -15,5 +15,7 @@ public class TableSwitch {
         default:
             a = 7;
       }
+
+      System.out.println(a);
     }
 }

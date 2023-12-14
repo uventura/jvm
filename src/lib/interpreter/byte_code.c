@@ -411,8 +411,6 @@ void dload_3(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
     stack_push(current_frame->operand_stack, current_frame->local_variables[3]);
-    double* e = current_frame->local_variables[3];
-    jvm_debug_print("V: %lf\n", *e);
 }
 // 0x2A
 void aload_0(MethodData *method_data)
@@ -752,7 +750,7 @@ void iastore(MethodData *method_data)
 
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-
+    jvm_debug_print("%d %d\n", value, index);
     int *array = (int *)stack_top(current_frame->operand_stack);
     array[index] = value;
 
@@ -890,7 +888,7 @@ void pop2(MethodData *method_data)
 void dup(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
-    Node *top = stack_top(current_frame->operand_stack);
+    void *top = stack_top(current_frame->operand_stack);
     stack_push(current_frame->operand_stack, top);
 }
 // 0x5A (optional implementation?MethodData* method_data)
@@ -2120,7 +2118,7 @@ void getstatic(MethodData *method_data)
     u2 descriptor_index = current_frame->constant_pool[name_type_index - 1].info.NameAndType.descriptor_index;
     char descriptor_content[300];
     get_utf8_value(descriptor_index - 1, current_frame->constant_pool, descriptor_content);
-
+    
     if (strcmp(class_name, "java/lang/System"))
     {
         ClassFileElement *current = method_data->loaded_classes->head;
@@ -2413,6 +2411,7 @@ void invokestatic(MethodData *method_data)
     char class_name[400];
     get_class_name(class_index, current_frame->constant_pool, class_name);
 
+    int* arr = stack_top(current_frame->operand_stack);
     if (!strcmp(class_name, "java/lang/Object"))
     {
     }

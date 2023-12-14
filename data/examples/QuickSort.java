@@ -42,10 +42,21 @@ public class QuickSort {
 
 		int[] vetor = { 5, 9, 7, 4, 6, 1, 2, 3, 10, -1, };
 
-		System.out.println(Arrays.toString(vetor));
+		print_array(vetor);
 		quickSort(vetor, 0, vetor.length - 1);
-		System.out.println(Arrays.toString(vetor));
+		print_array(vetor);
 
+	}
+
+	private static void print_array(int[] vetor)
+	{
+		int i = 0;
+		int fim = 10;
+		while(i < fim)
+		{
+			System.out.println(vetor[i]);
+			i += 1;
+		}
 	}
 
 	private static void quickSort(int[] vetor, int inicio, int fim) {
@@ -77,6 +88,5 @@ public class QuickSort {
 		vetor[fim] = pivo;
 		return fim;
 	}
-	
 
 }

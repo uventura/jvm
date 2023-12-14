@@ -32,12 +32,21 @@ void frame_initialize(Frame *frame, Stack *operand_stack, cp_info *constant_pool
     {
         Frame *current_frame = (Frame *)stack_top(stack_frame);
         Stack *operands = current_frame->operand_stack;
-        for (u2 local_index = 0; local_index < code.max_locals; ++local_index)
+
+        Stack temp_stack;
+        stack_initialize(&temp_stack);
+        while(temp_stack.size != code.max_locals)
         {
-            void *value = stack_top(operands);
-            jvm_debug_print("\t|    Ptr to local variable[%d]: %p\n", code.max_locals - local_index - 1, value);
-            frame->local_variables[code.max_locals - local_index - 1] = stack_top(operands);
+            if(stack_is_empty(operands)) break;
+            stack_push(&temp_stack, stack_top(operands));
             stack_pop(operands);
+        }
+
+        u4 index = 0;
+        while(!stack_is_empty(&temp_stack))
+        {
+            frame->local_variables[index] = stack_top(&temp_stack);
+            stack_pop(&temp_stack);
         }
     }
     jvm_debug_print("\t........................\n");
