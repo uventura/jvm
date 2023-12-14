@@ -2480,7 +2480,7 @@ void newarray(MethodData *method_data)
     u2 size = *(u2 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    void *array;
+    void *array = NULL;
     switch (type)
     {
     case T_BOOLEAN:
