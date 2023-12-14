@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>JVM: src/lib/interpreter/array.h Source File</title>
+<title>JVM: JVMArray Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,7 +63,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('array_8h_source.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structJVMArray.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -82,39 +82,35 @@ $(document).ready(function(){initNavTree('array_8h_source.html',''); initResizab
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structJVMArray-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">array.h</div>  </div>
+<div class="title">JVMArray Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef JVM_ARRAY</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define JVM_ARRAY</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define T_BOOLEAN 4</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#define T_CHAR 5</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define T_FLOAT 6</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define T_DOUBLE 7</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define T_BYTE 8</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define T_SHORT 9</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define T_INT 10</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define T_LONG 11</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;lib/base/defines.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structJVMArray.html">   15</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span>* array;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    u4 size;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;} <a class="code" href="structJVMArray.html">JVMArray</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructJVMArray_html"><div class="ttname"><a href="structJVMArray.html">JVMArray</a></div><div class="ttdef"><b>Definition:</b> <a href="array_8h_source.html#l00015">array.h:16</a></div></div>
-</div><!-- fragment --></div><!-- contents -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a14a71d9b5c04a3b0d663d5f24de8d4f6"><td class="memItemLeft" align="right" valign="top"><a id="a14a71d9b5c04a3b0d663d5f24de8d4f6"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>array</b></td></tr>
+<tr class="separator:a14a71d9b5c04a3b0d663d5f24de8d4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a114da0781546c9e89d7a1bb26e5006"><td class="memItemLeft" align="right" valign="top"><a id="a3a114da0781546c9e89d7a1bb26e5006"></a>
+u4&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
+<tr class="separator:a3a114da0781546c9e89d7a1bb26e5006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="array_8h_source.html#l00015">15</a> of file <a class="el" href="array_8h_source.html">array.h</a>.</p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/lib/interpreter/<a class="el" href="array_8h_source.html">array.h</a></li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><a class="el" href="dir_a225d844e9dc495bd2049530d69b00f5.html">interpreter</a></li><li class="navelem"><b>array.h</b></li>
+    <li class="navelem"><a class="el" href="structJVMArray.html">JVMArray</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
