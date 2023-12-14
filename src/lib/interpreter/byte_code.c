@@ -445,7 +445,8 @@ void iaload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    int *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    int *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -459,7 +460,8 @@ void laload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    long long *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    long long *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -473,7 +475,8 @@ void faload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    float *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    float *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -487,7 +490,8 @@ void daload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    double *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    double *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -501,7 +505,8 @@ void aaload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    void **array = stack_top(current_frame->operand_stack);
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    void **array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, array[index_byte]);
@@ -515,7 +520,8 @@ void baload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    char *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -529,7 +535,8 @@ void caload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    char *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, &(array[index_byte]));
@@ -543,11 +550,13 @@ void saload(MethodData *method_data)
     u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    short *array = stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    short *array = element->array;
     stack_pop(current_frame->operand_stack);
 
     stack_push(current_frame->operand_stack, array + index_byte);
 }
+
 // 0x36
 void istore(MethodData *method_data)
 {
@@ -750,8 +759,9 @@ void iastore(MethodData *method_data)
 
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
-    jvm_debug_print("%d %d\n", value, index);
-    int *array = (int *)stack_top(current_frame->operand_stack);
+
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    int *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -768,7 +778,8 @@ void lastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    u8 *array = (u8 *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    long long* array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -785,7 +796,8 @@ void fastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    float *array = (float *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    float *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -802,7 +814,8 @@ void dastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    double *array = (double *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    double *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -819,7 +832,8 @@ void aastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    short **array = (short **)stack_top(current_frame->operand_stack);
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    void **array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -836,7 +850,8 @@ void bastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array = (char *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    char *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -853,7 +868,8 @@ void castore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    char *array = (char *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    char *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -870,7 +886,8 @@ void sastore(MethodData *method_data)
     int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    short *array = (short *)stack_top(current_frame->operand_stack);
+    JVMArray *element = (JVMArray *)stack_top(current_frame->operand_stack);
+    short *array = element->array;
     array[index] = value;
 
     stack_pop(current_frame->operand_stack);
@@ -2511,7 +2528,10 @@ void newarray(MethodData *method_data)
         break;
     }
 
-    stack_push(current_frame->operand_stack, array);
+    JVMArray *array_structure = (JVMArray *)malloc(sizeof(JVMArray));
+    array_structure->array = array;
+    array_structure->size = size;
+    stack_push(current_frame->operand_stack, array_structure);
     method_data->pc += 1;
 }
 // 0xBD
@@ -2524,6 +2544,10 @@ void anewarray(MethodData *method_data)
 
     void **array = (void **)calloc(size, sizeof(void *));
 
+    JVMArray *array_structure = (JVMArray *)malloc(sizeof(JVMArray));
+    array_structure->array = array;
+    array_structure->size = size;
+
     stack_push(current_frame->operand_stack, array);
 
     method_data->pc += 2;
@@ -2532,6 +2556,12 @@ void anewarray(MethodData *method_data)
 // 0xBE
 void arraylength(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, element->size);
 }
 // 0xBF (optional implementation?MethodData* method_data)
 void athrow(MethodData *method_data)
