@@ -30,6 +30,7 @@ var annotated_dup =
     [ "FieldStatic", "structFieldStatic.html", "structFieldStatic" ],
     [ "Frame", "structFrame.html", "structFrame" ],
     [ "InnerClasses_attribute", "structInnerClasses__attribute.html", "structInnerClasses__attribute" ],
+    [ "JVMArray", "structJVMArray.html", "structJVMArray" ],
     [ "JVMObject", "structJVMObject.html", "structJVMObject" ],
     [ "JVMObjectValue", "structJVMObjectValue.html", "structJVMObjectValue" ],
     [ "Line_number_table", "structLine__number__table.html", "structLine__number__table" ],
