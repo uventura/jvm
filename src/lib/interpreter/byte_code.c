@@ -502,14 +502,14 @@ void aaload(MethodData *method_data)
 {
     Frame *current_frame = stack_top(method_data->frame_stack);
 
-    // Not properly defined
-    // u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
+    u1 index_byte = *(u1 *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    // void **array = stack_top(current_frame->operand_stack);
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    void **array = element->array;
     stack_pop(current_frame->operand_stack);
 
-    stack_push(current_frame->operand_stack, NULL);
+    stack_push(current_frame->operand_stack, array[index_byte]);
 }
 
 // 0x33
@@ -556,7 +556,7 @@ void saload(MethodData *method_data)
 
     stack_push(current_frame->operand_stack, array + index_byte);
 }
-//////////////////////////////////////////////////////
+
 // 0x36
 void istore(MethodData *method_data)
 {
@@ -826,16 +826,15 @@ void aastore(MethodData *method_data)
 {
     Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
 
-    // Not implemented properly
-
-    // void *value = stack_top(current_frame->operand_stack);
+    void *value = stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    // int index = *(int *)stack_top(current_frame->operand_stack);
+    int index = *(int *)stack_top(current_frame->operand_stack);
     stack_pop(current_frame->operand_stack);
 
-    // short **array = (short **)stack_top(current_frame->operand_stack);
-    // array[index] = value;
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    void **array = element->array;
+    array[index] = value;
 
     stack_pop(current_frame->operand_stack);
 }
@@ -893,7 +892,7 @@ void sastore(MethodData *method_data)
 
     stack_pop(current_frame->operand_stack);
 }
-///////////////////////////////////////////////////////////////////////////////
+
 // 0x57 (optional implementation?MethodData* method_data)
 void pop(MethodData *method_data)
 {
@@ -2531,6 +2530,7 @@ void newarray(MethodData *method_data)
 
     JVMArray *array_structure = (JVMArray *)malloc(sizeof(JVMArray));
     array_structure->array = array;
+    array_structure->size = size;
     stack_push(current_frame->operand_stack, array_structure);
     method_data->pc += 1;
 }
@@ -2544,6 +2544,10 @@ void anewarray(MethodData *method_data)
 
     void **array = (void **)calloc(size, sizeof(void *));
 
+    JVMArray *array_structure = (JVMArray *)malloc(sizeof(JVMArray));
+    array_structure->array = array;
+    array_structure->size = size;
+
     stack_push(current_frame->operand_stack, array);
 
     method_data->pc += 2;
@@ -2552,6 +2556,12 @@ void anewarray(MethodData *method_data)
 // 0xBE
 void arraylength(MethodData *method_data)
 {
+    Frame *current_frame = (Frame *)stack_top(method_data->frame_stack);
+
+    JVMArray *element = stack_top(current_frame->operand_stack);
+    stack_pop(current_frame->operand_stack);
+
+    stack_push(current_frame->operand_stack, element->size);
 }
 // 0xBF (optional implementation?MethodData* method_data)
 void athrow(MethodData *method_data)
